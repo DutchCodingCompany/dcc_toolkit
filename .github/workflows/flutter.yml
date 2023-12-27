@@ -17,12 +17,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - uses: dart-lang/setup-dart@v1
       - uses: subosito/flutter-action@v2
       - name: Install dependencies
         run: flutter pub get
 
       - name: Check code format
-        run: flutter format . -o none --set-exit-if-changed
+        run: dart format . -o none --set-exit-if-changed
 
       - name: Analyze project source
         run: flutter analyze --fatal-infos
