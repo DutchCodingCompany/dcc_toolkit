@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 extension ThemingExtensions on BuildContext {
   /// Get [ThemeData] from [BuildContext].
   ThemeData get theme => Theme.of(this);
+
   /// Get Theme [ColorScheme] from [BuildContext].
   ColorScheme get colors => theme.colorScheme;
 

@@ -26,16 +26,20 @@ class JsonSerializableConverter extends JsonConverter {
   T _decodeMap<T>(Map<String, dynamic> values) {
     final jsonFactory = factories[T];
     if (jsonFactory == null) {
-      throw JsonUnsupportedObjectError(T, cause: 'No fromJson was registered for JsonSerializableConverter for $T');
+      throw JsonUnsupportedObjectError(T,
+          cause:
+              'No fromJson was registered for JsonSerializableConverter for $T');
     }
     if (jsonFactory is! JsonFactory<T>) {
-      throw JsonUnsupportedObjectError(T, cause: 'fromJson type does not match $T');
+      throw JsonUnsupportedObjectError(T,
+          cause: 'fromJson type does not match $T');
     }
 
     return jsonFactory(values);
   }
 
-  List<T> _decodeList<T>(Iterable<dynamic> values) => values.whereNotNull().map<T>((v) => _decode<T>(v) as T).toList();
+  List<T> _decodeList<T>(Iterable<dynamic> values) =>
+      values.whereNotNull().map<T>((v) => _decode<T>(v) as T).toList();
 
   dynamic _decode<T>(dynamic entity) {
     if (entity is Iterable) return _decodeList<T>(entity as List);
@@ -51,6 +55,7 @@ class JsonSerializableConverter extends JsonConverter {
   ) async {
     final jsonRes = await super.convertResponse<dynamic, dynamic>(response);
 
-    return jsonRes.copyWith<BodyType>(body: _decode<InnerType>(jsonRes.body) as BodyType);
+    return jsonRes.copyWith<BodyType>(
+        body: _decode<InnerType>(jsonRes.body) as BodyType);
   }
 }

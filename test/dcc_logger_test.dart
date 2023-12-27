@@ -8,8 +8,10 @@ class MockLogger extends Mock implements Logger {}
 void main() {
   group('uninitialised tests', () {
     test('throws assertion error when logger is not initialised', () {
-      expect(() => DCCLogger.info('test message'), throwsA(isA<AssertionError>()));
-      expect(() => DCCLogger.severe('test message'), throwsA(isA<AssertionError>()));
+      expect(
+          () => DCCLogger.info('test message'), throwsA(isA<AssertionError>()));
+      expect(() => DCCLogger.severe('test message'),
+          throwsA(isA<AssertionError>()));
     });
   });
 

@@ -14,7 +14,8 @@ class DCCLogger {
     String? tag,
     Logger? logger,
   ]) {
-    _logger = logger ?? Logger('${name ?? 'DCC'}${tag != null ? ' ($tag)' : ''}');
+    _logger =
+        logger ?? Logger('${name ?? 'DCC'}${tag != null ? ' ($tag)' : ''}');
     final rootLogger = Logger.root;
     rootLogger.onRecord.listen((event) {
       if (kDebugMode) {
@@ -26,12 +27,16 @@ class DCCLogger {
   static void _prettyPrinter(LogRecord record) {
     final error = record.error;
     final stacktrace = record.stackTrace;
-    final message = record.object is DCCLogRecord ? record.object.toString() : record.message;
+    final message = record.object is DCCLogRecord
+        ? record.object.toString()
+        : record.message;
 
     debugPrint(_formatLogPrint(record, message));
-    if (error != null) debugPrint(_formatLogPrint(record, '${error.runtimeType}: $error'));
+    if (error != null)
+      debugPrint(_formatLogPrint(record, '${error.runtimeType}: $error'));
     if (stacktrace != null) {
-      final lines = stacktrace.toString().split('\n').where((e) => e.isNotEmpty);
+      final lines =
+          stacktrace.toString().split('\n').where((e) => e.isNotEmpty);
       for (final line in lines) {
         debugPrint(_formatLogPrint(record, line));
       }
@@ -39,8 +44,11 @@ class DCCLogger {
   }
 
   static String _formatLogPrint(LogRecord record, String message) {
-    final logMessage = '[${_formatter.format(record.time)}] [${record.level.name}] ${record.loggerName}: $message';
-    return record.level == Level.SEVERE ? _addWarningColor(logMessage) : logMessage;
+    final logMessage =
+        '[${_formatter.format(record.time)}] [${record.level.name}] ${record.loggerName}: $message';
+    return record.level == Level.SEVERE
+        ? _addWarningColor(logMessage)
+        : logMessage;
   }
 
   static String _addWarningColor(String message) {

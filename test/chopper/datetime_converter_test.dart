@@ -13,7 +13,7 @@ void main() {
 
   test('HHmm tests', () {
     const converter = DateTimeConverter.HHmm();
-    final date = DateTime(1970, 1, 1, 10,30);
+    final date = DateTime(1970, 1, 1, 10, 30);
     const dateString = '10:30';
 
     expect(converter.toJson(date), dateString);

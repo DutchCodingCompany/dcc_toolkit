@@ -13,33 +13,41 @@ void main() {
 
     const converter = JsonSerializableConverter({});
 
-    expect(() => converter.convertResponse<TestModel, TestModel>(response), throwsA(isA<JsonUnsupportedObjectError>()));
+    expect(() => converter.convertResponse<TestModel, TestModel>(response),
+        throwsA(isA<JsonUnsupportedObjectError>()));
   });
 
   test('Error is thrown when wrong factory is added', () {
     final response = Response(baseResponse, '{"name":"John"}');
 
-    const converter = JsonSerializableConverter({TestModel: TestModel2.fromJson});
+    const converter =
+        JsonSerializableConverter({TestModel: TestModel2.fromJson});
 
-    expect(() => converter.convertResponse<TestModel, TestModel>(response), throwsA(isA<JsonUnsupportedObjectError>()));
+    expect(() => converter.convertResponse<TestModel, TestModel>(response),
+        throwsA(isA<JsonUnsupportedObjectError>()));
   });
 
   test('Uses model to convert json into model', () async {
     final response = Response(baseResponse, '{"name":"John"}');
 
-    const converter = JsonSerializableConverter({TestModel: TestModel.fromJson});
+    const converter =
+        JsonSerializableConverter({TestModel: TestModel.fromJson});
 
-    final result = await converter.convertResponse<TestModel, TestModel>(response);
+    final result =
+        await converter.convertResponse<TestModel, TestModel>(response);
 
     expect(result.body?.name, 'John');
   });
 
   test('Uses model to convert json into List<model>', () async {
-    final response = Response(baseResponse, '[{"name":"John"},{"name":"John2"}]');
+    final response =
+        Response(baseResponse, '[{"name":"John"},{"name":"John2"}]');
 
-    const converter = JsonSerializableConverter({TestModel: TestModel.fromJson});
+    const converter =
+        JsonSerializableConverter({TestModel: TestModel.fromJson});
 
-    final result = await converter.convertResponse<List<TestModel>, TestModel>(response);
+    final result =
+        await converter.convertResponse<List<TestModel>, TestModel>(response);
 
     expect(result.body?[0].name, 'John');
     expect(result.body?[1].name, 'John2');
@@ -49,7 +57,8 @@ void main() {
 class TestModel {
   TestModel(this.name);
 
-  factory TestModel.fromJson(Map<String, dynamic> json) => TestModel(json['name'] as String);
+  factory TestModel.fromJson(Map<String, dynamic> json) =>
+      TestModel(json['name'] as String);
 
   final String name;
 
@@ -59,7 +68,8 @@ class TestModel {
 class TestModel2 {
   TestModel2(this.name);
 
-  factory TestModel2.fromJson(Map<String, dynamic> json) => TestModel2(json['name'] as String);
+  factory TestModel2.fromJson(Map<String, dynamic> json) =>
+      TestModel2(json['name'] as String);
 
   final String name;
 
