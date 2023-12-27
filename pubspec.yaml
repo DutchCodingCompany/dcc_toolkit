@@ -21,8 +21,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  mocktail: ^1.0.2
   http: ^1.1.2
+  mocktail: ^1.0.2
   parameterized_test: ^1.1.1
   very_good_analysis: ^5.1.0
 

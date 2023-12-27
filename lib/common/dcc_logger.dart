@@ -32,8 +32,11 @@ class DCCLogger {
         : record.message;
 
     debugPrint(_formatLogPrint(record, message));
-    if (error != null)
+
+    if (error != null) {
       debugPrint(_formatLogPrint(record, '${error.runtimeType}: $error'));
+    }
+
     if (stacktrace != null) {
       final lines =
           stacktrace.toString().split('\n').where((e) => e.isNotEmpty);

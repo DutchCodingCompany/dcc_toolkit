@@ -21,18 +21,23 @@ class JsonSerializableConverter extends JsonConverter {
   ///  User: User.fromJson,
   ///  NoContent: NoContent.fromJson,
   ///  });
+  ///  ```
   final Map<Type, JsonFactory<dynamic>> factories;
 
   T _decodeMap<T>(Map<String, dynamic> values) {
     final jsonFactory = factories[T];
     if (jsonFactory == null) {
-      throw JsonUnsupportedObjectError(T,
-          cause:
-              'No fromJson was registered for JsonSerializableConverter for $T');
+      throw JsonUnsupportedObjectError(
+        T,
+        cause:
+            'No fromJson was registered for JsonSerializableConverter for $T',
+      );
     }
     if (jsonFactory is! JsonFactory<T>) {
-      throw JsonUnsupportedObjectError(T,
-          cause: 'fromJson type does not match $T');
+      throw JsonUnsupportedObjectError(
+        T,
+        cause: 'fromJson type does not match $T',
+      );
     }
 
     return jsonFactory(values);

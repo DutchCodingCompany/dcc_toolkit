@@ -13,8 +13,10 @@ void main() {
 
     const converter = JsonSerializableConverter({});
 
-    expect(() => converter.convertResponse<TestModel, TestModel>(response),
-        throwsA(isA<JsonUnsupportedObjectError>()));
+    expect(
+      () => converter.convertResponse<TestModel, TestModel>(response),
+      throwsA(isA<JsonUnsupportedObjectError>()),
+    );
   });
 
   test('Error is thrown when wrong factory is added', () {
@@ -23,8 +25,10 @@ void main() {
     const converter =
         JsonSerializableConverter({TestModel: TestModel2.fromJson});
 
-    expect(() => converter.convertResponse<TestModel, TestModel>(response),
-        throwsA(isA<JsonUnsupportedObjectError>()));
+    expect(
+      () => converter.convertResponse<TestModel, TestModel>(response),
+      throwsA(isA<JsonUnsupportedObjectError>()),
+    );
   });
 
   test('Uses model to convert json into model', () async {
