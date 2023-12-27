@@ -61,6 +61,7 @@ class JsonSerializableConverter extends JsonConverter {
     final jsonRes = await super.convertResponse<dynamic, dynamic>(response);
 
     return jsonRes.copyWith<BodyType>(
-        body: _decode<InnerType>(jsonRes.body) as BodyType);
+      body: _decode<InnerType>(jsonRes.body) as BodyType,
+    );
   }
 }
