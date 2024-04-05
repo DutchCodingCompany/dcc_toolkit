@@ -2,7 +2,7 @@
 library dcc_toolkit;
 
 export 'chopper/chopper.dart';
-export 'common/dcc_logger.dart';
+export 'logger/bolt_logger.dart';
 export 'common/dimensions.dart';
 export 'common/extensions/build_context.dart';
 export 'common/extensions/color.dart';
