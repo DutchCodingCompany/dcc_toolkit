@@ -3,12 +3,14 @@ import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 
 /// A logger that can be used to log messages.
+@Deprecated('Use BoltLogger instead')
 class DCCLogger {
   static Logger? _logger;
   static final DateFormat _formatter = DateFormat(DateFormat.HOUR24_MINUTE);
 
   /// Initialise the logger. This needs to be called before using the logger.
   /// Using this is done in the main.dart file.
+  @Deprecated('Use BoltLogger.charge instead')
   static void initialise([
     String? name,
     String? tag,
@@ -65,6 +67,7 @@ class DCCLogger {
   /// DCCLogger.info('test bericht', tag: 'test');
   /// ```
   /// prints: [[13:46]] [[INFO]] DCC: <test> test bericht
+  @Deprecated('Use BoltLogger.zap instead')
   static void info(
     String message, {
     Object? error,
@@ -82,6 +85,7 @@ class DCCLogger {
   /// DCCLogger.severe('test bericht', tag: 'test');
   /// ```
   /// prints: [[13:46]] [[SEVERE]] DCC: <test> test bericht
+  @Deprecated('Use BoltLogger.shock instead')
   static void severe(
     String message, {
     Object? error,

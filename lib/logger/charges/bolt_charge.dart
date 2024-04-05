@@ -1,5 +1,4 @@
 import 'package:dcc_toolkit/logger/bolt_logger.dart';
-import 'package:dcc_toolkit/logger/zap_event.dart';
 
 export 'package:dcc_toolkit/logger/charges/debug_console_charge.dart';
 export 'package:dcc_toolkit/logger/charges/file_charge.dart';

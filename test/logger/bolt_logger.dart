@@ -1,8 +1,4 @@
 import 'package:dcc_toolkit/logger/bolt_logger.dart';
-import 'package:dcc_toolkit/logger/charges/debug_console_charge.dart';
-import 'package:dcc_toolkit/logger/charges/memory_charge.dart';
-import 'package:dcc_toolkit/logger/extensions/stacktrace.dart';
-import 'package:dcc_toolkit/logger/extensions/zap_extension.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:logging/logging.dart';
 

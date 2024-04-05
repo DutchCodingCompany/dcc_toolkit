@@ -1,5 +1,4 @@
 import 'package:dcc_toolkit/logger/bolt_logger.dart';
-import 'package:dcc_toolkit/logger/charges/memory_charge.dart';
 import 'package:flutter/material.dart';
 
 /// {@template bolt_logger_view}
