@@ -8,7 +8,8 @@ typedef OnError = void Function(Object error, StackTrace? stackTrace);
 
 /// Run a Flutter app with a bootstrap that catches errors.
 /// By default [onError] will use BoltLogger to log the error.
-Future<void> runAppBootstrap(Future<Widget> Function() builder, {OnError? onError}) async {
+Future<void> runAppBootstrap(Future<Widget> Function() builder,
+    {OnError? onError}) async {
   final errorLogger = onError ??
       (exception, stackTrace) {
         BoltLogger.shock([exception, stackTrace]);
@@ -17,7 +18,8 @@ Future<void> runAppBootstrap(Future<Widget> Function() builder, {OnError? onErro
   await runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
-      FlutterError.onError = (details) => errorLogger(details.exception, details.stack);
+      FlutterError.onError =
+          (details) => errorLogger(details.exception, details.stack);
 
       runApp(await builder());
     },
