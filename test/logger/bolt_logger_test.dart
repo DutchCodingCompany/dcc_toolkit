@@ -1,3 +1,5 @@
+// Mocktail doesn't work properly with tear-offs
+//ignore_for_file: unnecessary_lambdas
 import 'package:dcc_toolkit/dcc_toolkit.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:logging/logging.dart';
@@ -10,7 +12,8 @@ void main() {
   tearDown(() => BoltLogger.discharge());
 
   group('charge tests', () {
-    test('BoltLogger without a charge only redirect log event to root Logger', () {
+    test('BoltLogger without a charge only redirect log event to root Logger',
+        () {
       final records = <LogRecord>[];
       Logger.root.level = Level.ALL;
       final sub = Logger.root.onRecord.listen(records.add);
@@ -71,7 +74,8 @@ void main() {
       BoltLogger.charge([memoryCharge]);
     });
 
-    parameterizedGroup1('BoltLogger/extension function tests', [true, false], (bool useBoltLogger) {
+    parameterizedGroup1('BoltLogger/extension function tests', [true, false],
+        (bool useBoltLogger) {
       test('zap/shock sends a message via a ZapEvent to a charge', () {
         if (useBoltLogger) {
           BoltLogger.zap('zap');
@@ -83,9 +87,11 @@ void main() {
 
         expect(memoryCharge.items.length, 2);
         expect(memoryCharge.items[0].origin.message, 'zap');
-        expect(memoryCharge.items[0].origin.loggerName, useBoltLogger ? 'BoltLogger' : 'TestReferenceClass');
+        expect(memoryCharge.items[0].origin.loggerName,
+            useBoltLogger ? 'BoltLogger' : 'TestReferenceClass',);
         expect(memoryCharge.items[1].origin.message, 'shock');
-        expect(memoryCharge.items[1].origin.loggerName, useBoltLogger ? 'BoltLogger' : 'TestReferenceClass');
+        expect(memoryCharge.items[1].origin.loggerName,
+            useBoltLogger ? 'BoltLogger' : 'TestReferenceClass',);
         expect(memoryCharge.items[1].origin.level, Level.SEVERE);
       });
 
@@ -104,7 +110,8 @@ void main() {
         expect(memoryCharge.items[1].origin.level, Level.SEVERE);
       });
 
-      parameterizedTest1('zap/shock sends a LogLevel via a ZapEvent to a Charge', [
+      parameterizedTest1(
+          'zap/shock sends a LogLevel via a ZapEvent to a Charge', [
         Level.ALL,
         Level.CONFIG,
         Level.FINE,
@@ -223,16 +230,27 @@ void main() {
         expect(memoryCharge.items[1].origin.stackTrace, stackTrace);
       });
 
-      test('zap/shock sends a List with more than 3 elements via a ZapEvent to a Charge', () {
+      test(
+          'zap/shock sends a List with more than 3 elements via a ZapEvent to a Charge',
+          () {
         final exception = Exception('exception');
         final stackTrace = StackTrace.current;
         final error = Error();
         if (useBoltLogger) {
-          expect(() => BoltLogger.zap(['zap', exception, stackTrace, error]), throwsAssertionError);
-          expect(() => BoltLogger.shock(['shock', exception, stackTrace, error]), throwsAssertionError);
+          expect(() => BoltLogger.zap(['zap', exception, stackTrace, error]),
+              throwsAssertionError,);
+          expect(
+              () => BoltLogger.shock(['shock', exception, stackTrace, error]),
+              throwsAssertionError,);
         } else {
-          expect(() => TestReferenceClass().zapExtension(['zap', exception, stackTrace, error]), throwsAssertionError);
-          expect(() => TestReferenceClass().shockExtension(['shock', exception, stackTrace, error]), throwsAssertionError);
+          expect(
+              () => TestReferenceClass()
+                  .zapExtension(['zap', exception, stackTrace, error]),
+              throwsAssertionError,);
+          expect(
+              () => TestReferenceClass()
+                  .shockExtension(['shock', exception, stackTrace, error]),
+              throwsAssertionError,);
         }
       });
     });
@@ -240,8 +258,10 @@ void main() {
 }
 
 class TestReferenceClass {
-  void zapExtension(Object? message, {String? tag, Level level = Level.INFO}) => zap(message, tag: tag, level: level);
+  void zapExtension(Object? message, {String? tag, Level level = Level.INFO}) =>
+      zap(message, tag: tag, level: level);
 
-  void shockExtension(Object? message, {String? tag, Level level = Level.SEVERE}) =>
+  void shockExtension(Object? message,
+          {String? tag, Level level = Level.SEVERE,}) =>
       shock(message, tag: tag, level: level);
 }

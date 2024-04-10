@@ -1,5 +1,6 @@
 import 'package:dcc_toolkit/logger/log_record_formatter.dart';
 import 'package:logging/logging.dart';
+
 /// {@template zap_event}
 /// A zap event that contains the [lines] of a log record and the [origin] [LogRecord].
 /// {@endtemplate}

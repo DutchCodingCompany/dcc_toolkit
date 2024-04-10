@@ -13,21 +13,23 @@ import 'package:intl/intl.dart';
 ///
 /// {@endtemplate}
 class FileCharge implements BoltCharge {
-
   /// {@macro file_charge}
-  FileCharge(this.path, {this.bufferSize = 1000, this.writeDelay = const Duration(seconds: 5)}) {
+  FileCharge(this.path,
+      {this.bufferSize = 1000, this.writeDelay = const Duration(seconds: 5),}) {
     final fileName = '${DateFormat('yyyy-MM-dd').format(DateTime.now())}.log';
     _file = File('$path/$fileName');
 
     Timer.periodic(writeDelay, (_) => _flush());
   }
   @override
-   String get name => 'FileCharge';
+  String get name => 'FileCharge';
 
   /// The size of the buffer (in lines) before writing to the file.
   final int bufferSize;
+
   /// The path to the directory where the log files will be written.
   final String path;
+
   /// The delay between writing to the file.
   final Duration writeDelay;
   File? _file;

@@ -27,7 +27,9 @@ class DebugConsoleCharge implements BoltCharge {
             event.origin.stackTrace != null ||
             event.origin.error != null);
 
-    return shouldPaint ? event.lines.map((line) => '$_red$line$_reset').toList() : event.lines;
+    return shouldPaint
+        ? event.lines.map((line) => '$_red$line$_reset').toList()
+        : event.lines;
   }
 
   @override

@@ -16,7 +16,7 @@ class MemoryCharge implements BoltCharge {
   MemoryCharge({this.maxItems = 1000});
 
   @override
-   String get name => 'MemoryCharge';
+  String get name => 'MemoryCharge';
 
   /// The maximum amount of logs to store in memory.
   final int maxItems;
@@ -41,7 +41,7 @@ class MemoryCharge implements BoltCharge {
 
   @override
   void discharge() {
-   _controller.close();
-   _items.clear();
+    _controller.close();
+    _items.clear();
   }
 }

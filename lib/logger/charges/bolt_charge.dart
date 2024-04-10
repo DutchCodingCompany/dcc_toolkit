@@ -6,9 +6,9 @@ export 'package:dcc_toolkit/logger/charges/memory_charge.dart';
 
 /// Interface for creating [BoltCharge]s to power the [BoltLogger]
 abstract interface class BoltCharge {
-
   /// The name of the charge.
   abstract final String name;
+
   /// Log the output of the [ZapEvent].
   void logOutput(ZapEvent event);
 

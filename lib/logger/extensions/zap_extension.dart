@@ -15,10 +15,10 @@ extension ZapExtension on Object {
 
   /// {@macro shock}
   void shock(
-      Object? message, {
-        String? tag,
-        Level level = Level.SEVERE,
-      }) {
+    Object? message, {
+    String? tag,
+    Level level = Level.SEVERE,
+  }) {
     //ignore: no_runtimeType_toString
     BoltLogger.shock(message, tag: tag ?? runtimeType.toString(), level: level);
   }

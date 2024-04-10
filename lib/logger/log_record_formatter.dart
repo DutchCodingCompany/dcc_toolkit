@@ -25,7 +25,7 @@ class LogRecordFormatter {
   }
 
   List<String> _formatMessage(LogRecord record) {
-    if (record.message == 'null'|| record.message.trim().isEmpty) return [];
+    if (record.message == 'null' || record.message.trim().isEmpty) return [];
 
     return record.message.split('\n');
   }
@@ -36,7 +36,8 @@ class LogRecordFormatter {
     return record.error.toString().split('\n').map((e) => e.trim()).toList();
   }
 
-  List<String> _formatStacktrace(LogRecord record) => record.stackTrace?.strike.split('\n') ?? [];
+  List<String> _formatStacktrace(LogRecord record) =>
+      record.stackTrace?.strike.split('\n') ?? [];
 
   String _prefix(LogRecord record) {
     final tag = record.loggerName;

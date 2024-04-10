@@ -21,6 +21,8 @@ class BoltLogger {
 
   static final _instance = BoltLogger._();
 
+  // Is cancelled in discharge
+  //ignore: cancel_subscriptions
   StreamSubscription<LogRecord>? _subscription;
 
   final Map<String, BoltCharge> _outputs = {};
