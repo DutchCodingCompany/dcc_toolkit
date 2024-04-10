@@ -14,8 +14,11 @@ import 'package:intl/intl.dart';
 /// {@endtemplate}
 class FileCharge implements BoltCharge {
   /// {@macro file_charge}
-  FileCharge(this.path,
-      {this.bufferSize = 1000, this.writeDelay = const Duration(seconds: 5),}) {
+  FileCharge(
+    this.path, {
+    this.bufferSize = 1000,
+    this.writeDelay = const Duration(seconds: 5),
+  }) {
     final fileName = '${DateFormat('yyyy-MM-dd').format(DateTime.now())}.log';
     _file = File('$path/$fileName');
 

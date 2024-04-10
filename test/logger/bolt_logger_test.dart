@@ -87,11 +87,15 @@ void main() {
 
         expect(memoryCharge.items.length, 2);
         expect(memoryCharge.items[0].origin.message, 'zap');
-        expect(memoryCharge.items[0].origin.loggerName,
-            useBoltLogger ? 'BoltLogger' : 'TestReferenceClass',);
+        expect(
+          memoryCharge.items[0].origin.loggerName,
+          useBoltLogger ? 'BoltLogger' : 'TestReferenceClass',
+        );
         expect(memoryCharge.items[1].origin.message, 'shock');
-        expect(memoryCharge.items[1].origin.loggerName,
-            useBoltLogger ? 'BoltLogger' : 'TestReferenceClass',);
+        expect(
+          memoryCharge.items[1].origin.loggerName,
+          useBoltLogger ? 'BoltLogger' : 'TestReferenceClass',
+        );
         expect(memoryCharge.items[1].origin.level, Level.SEVERE);
       });
 
@@ -237,20 +241,25 @@ void main() {
         final stackTrace = StackTrace.current;
         final error = Error();
         if (useBoltLogger) {
-          expect(() => BoltLogger.zap(['zap', exception, stackTrace, error]),
-              throwsAssertionError,);
           expect(
-              () => BoltLogger.shock(['shock', exception, stackTrace, error]),
-              throwsAssertionError,);
+            () => BoltLogger.zap(['zap', exception, stackTrace, error]),
+            throwsAssertionError,
+          );
+          expect(
+            () => BoltLogger.shock(['shock', exception, stackTrace, error]),
+            throwsAssertionError,
+          );
         } else {
           expect(
-              () => TestReferenceClass()
-                  .zapExtension(['zap', exception, stackTrace, error]),
-              throwsAssertionError,);
+            () => TestReferenceClass()
+                .zapExtension(['zap', exception, stackTrace, error]),
+            throwsAssertionError,
+          );
           expect(
-              () => TestReferenceClass()
-                  .shockExtension(['shock', exception, stackTrace, error]),
-              throwsAssertionError,);
+            () => TestReferenceClass()
+                .shockExtension(['shock', exception, stackTrace, error]),
+            throwsAssertionError,
+          );
         }
       });
     });
@@ -261,7 +270,10 @@ class TestReferenceClass {
   void zapExtension(Object? message, {String? tag, Level level = Level.INFO}) =>
       zap(message, tag: tag, level: level);
 
-  void shockExtension(Object? message,
-          {String? tag, Level level = Level.SEVERE,}) =>
+  void shockExtension(
+    Object? message, {
+    String? tag,
+    Level level = Level.SEVERE,
+  }) =>
       shock(message, tag: tag, level: level);
 }
