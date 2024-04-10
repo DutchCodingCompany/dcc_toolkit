@@ -7,7 +7,7 @@ import 'package:parameterized_test/parameterized_test.dart';
 class _MockCharge extends Mock implements BoltCharge {}
 
 void main() {
-  tearDown(() => BoltLogger().discharge());
+  tearDown(() => BoltLogger.discharge());
 
   group('charge tests', () {
     test('BoltLogger without a charge only redirect log event to root Logger', () {
@@ -57,7 +57,7 @@ void main() {
       when(() => charge2.discharge()).thenReturn(null);
 
       BoltLogger.charge([charge, charge2]);
-      BoltLogger().discharge();
+      BoltLogger.discharge();
 
       verify(() => charge.discharge()).called(1);
       verify(() => charge2.discharge()).called(1);

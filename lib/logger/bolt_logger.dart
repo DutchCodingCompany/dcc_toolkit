@@ -59,13 +59,13 @@ class BoltLogger {
   }
 
   /// Discharge the logger and all charges.
-  void discharge() {
-    _subscription?.cancel();
-    _subscription = null;
-    for (final output in _outputs.values) {
+  static void discharge() {
+    _instance._subscription?.cancel();
+    _instance._subscription = null;
+    for (final output in _instance._outputs.values) {
       output.discharge();
     }
-    _outputs.clear();
+    _instance._outputs.clear();
   }
 
   /// {@template zap}
@@ -113,7 +113,7 @@ class BoltLogger {
       for (final Object? value in message) {
         zapMap(value);
       }
-    }else {
+    } else {
       zapMap(message);
     }
 
@@ -126,11 +126,11 @@ class BoltLogger {
   /// {@macro zap}
   ///
   /// {@endtemplate}
-     static void shock(
-      Object? message, {
-        String? tag,
-        Level level = Level.SEVERE,
-      }) {
+  static void shock(
+    Object? message, {
+    String? tag,
+    Level level = Level.SEVERE,
+  }) {
     zap(message, tag: tag, level: level);
-     }
+  }
 }
