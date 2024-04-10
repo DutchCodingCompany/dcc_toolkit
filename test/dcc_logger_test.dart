@@ -1,3 +1,4 @@
+//ignore_for_file: deprecated_member_use_from_same_package
 import 'package:dcc_toolkit/common/dcc_logger.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:logging/logging.dart';
