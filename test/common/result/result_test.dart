@@ -4,7 +4,7 @@ import 'package:parameterized_test/parameterized_test.dart';
 
 void main() {
   final testExceptionResult = Failure<int>(Exception('test'));
-  parameterizedTest3('comparing 2 results should return true if equal', [
+  parameterizedTest('comparing 2 results should return true if equal', [
     [const Success<int>(1), const Success<int>(1), true],
     [const Success<int>(1), const Success<int>(2), false],
     [const Success<int>(1), const Loading<int>(), false],

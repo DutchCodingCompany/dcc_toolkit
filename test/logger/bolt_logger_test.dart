@@ -74,7 +74,7 @@ void main() {
       BoltLogger.charge([memoryCharge]);
     });
 
-    parameterizedGroup1('BoltLogger/extension function tests', [true, false],
+    parameterizedGroup('BoltLogger/extension function tests', [true, false],
         (bool useBoltLogger) {
       test('zap/shock sends a message via a ZapEvent to a charge', () {
         if (useBoltLogger) {
@@ -114,7 +114,7 @@ void main() {
         expect(memoryCharge.items[1].origin.level, Level.SEVERE);
       });
 
-      parameterizedTest1(
+      parameterizedTest(
           'zap/shock sends a LogLevel via a ZapEvent to a Charge', [
         Level.ALL,
         Level.CONFIG,
