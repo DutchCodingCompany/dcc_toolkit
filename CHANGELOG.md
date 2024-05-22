@@ -1,3 +1,7 @@
+## 0.0.4
+
+* :arrow_up: Updated dependencies
+
 ## 0.0.3
 
 * :sparkles: Added addBetween iterable extension by @Guldem in https://github.com/DutchCodingCompany/dcc_toolkit/pull/3
