@@ -1,3 +1,7 @@
+## 0.0.6
+
+* :arrow_up: Updated dependencies
+
 ## 0.0.5
 
 * :bug: Exported addBetween function.
