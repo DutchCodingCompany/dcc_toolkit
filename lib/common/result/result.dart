@@ -39,32 +39,32 @@ sealed class Result<T> {
       _ => this as Result<R>,
     };
   }
+}
 
-  /// Executes the given API call [fn]. When the call succeeds, [Result.success] is returned with the response.
-  /// When the call fails the optional [onError] is executed and the exceptions are handled.
-  /// If there is no [onError] provided, an error of type [BaseError] is returned in [Result.failure].
-  Future<Result<S>> tryCall<S>(
-    FutureOr<S> Function() fn, {
-    Future<Result<S>> Function(Exception error)? onError,
-  }) async {
-    try {
-      return Result.success(await fn());
-    } on Exception catch (e) {
-      if (onError != null) {
-        return onError(e);
-      }
-      return switch (e) {
-        ChopperHttpException() => Result.failure(
-            switch (e.response.statusCode) {
-              401 => const AuthenticationFailedError(),
-              _ => const ServerError(),
-            },
-          ),
-        ClientException() => Result.failure(const NoInternetError()),
-        CheckedFromJsonException() => Result.failure(const ServerError()),
-        _ => Result.failure(const UnknownError()),
-      };
+/// Executes the given API call [fn]. When the call succeeds, [Result.success] is returned with the response.
+/// When the call fails the optional [onError] is executed and the exceptions are handled.
+/// If there is no [onError] provided, an error of type [BaseError] is returned in [Result.failure].
+Future<Result<S>> tryCall<S>(
+  FutureOr<S> Function() fn, {
+  Future<Result<S>> Function(Exception error)? onError,
+}) async {
+  try {
+    return Result.success(await fn());
+  } on Exception catch (e) {
+    if (onError != null) {
+      return onError(e);
     }
+    return switch (e) {
+      ChopperHttpException() => Result.failure(
+          switch (e.response.statusCode) {
+            401 => const AuthenticationFailedError(),
+            _ => const ServerError(),
+          },
+        ),
+      ClientException() => Result.failure(const NoInternetError()),
+      CheckedFromJsonException() => Result.failure(const ServerError()),
+      _ => Result.failure(const UnknownError()),
+    };
   }
 }
 
@@ -79,10 +79,7 @@ final class Success<T> extends Result<T> {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is Success<T> &&
-            runtimeType == other.runtimeType &&
-            value == other.value;
+    return identical(this, other) || other is Success<T> && runtimeType == other.runtimeType && value == other.value;
   }
 
   @override
@@ -100,10 +97,7 @@ final class Failure<T> extends Result<T> {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is Failure<T> &&
-            runtimeType == other.runtimeType &&
-            other.error == error;
+    return identical(this, other) || other is Failure<T> && runtimeType == other.runtimeType && other.error == error;
   }
 
   @override
