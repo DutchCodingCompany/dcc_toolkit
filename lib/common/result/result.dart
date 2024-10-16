@@ -36,8 +36,19 @@ sealed class Result<T> {
   Result<R> map<R>(R Function(T value) transform) {
     return switch (this) {
       Success(value: final value) => Result.success(transform(value)),
-      _ => this as Result<R>,
+      Failure(error: final error) => Result.failure(error),
     };
+  }
+
+  TResult when<TResult extends Object?>({
+    required TResult Function(BaseError? error) error,
+    required TResult Function(T? response) success,
+  }) {
+    if (this.isSuccess) {
+      return success(getOrNull);
+    } else {
+      return error(errorOrNull);
+    }
   }
 }
 
