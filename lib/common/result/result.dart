@@ -40,6 +40,7 @@ sealed class Result<T> {
     };
   }
 
+  /// Maps the value of the result and returns the error or success [TResult]
   TResult when<TResult extends Object?>({
     required TResult Function(BaseError? error) error,
     required TResult Function(T? response) success,
