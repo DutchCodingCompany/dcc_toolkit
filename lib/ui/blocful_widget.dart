@@ -6,10 +6,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 ///
 /// Example:
 /// /// ```dart
-/// BlocfulWidget<MyBloc, MyState, MyEvent>(
-///   onPresentationEvent: (context, event) => showSomeUIChange(),
-///   child: SomeWidget(),
-/// )
+/// class SomePage extends BlocfulWidget<SomeCubit, SomeState, SomeEvent> {
+///   const SomePage({super.key})
+///       : super(onCreateBloc: SomeCubit());
+
+///   @override
+///   void onPresentationEvent(BuildContext context, SomeEvent event) {
+///     SomeFunction();
+///   }
+
+///   @override
+///   Widget builder(BuildContext context, SomeCubit bloc, SomeState state) {
+///     return SomeWidget();
+///   }
+/// }
 /// ```dart
 abstract class BlocfulWidget<BLOC extends BlocPresentationMixin<STATE, EVENT>,
     STATE, EVENT> extends StatelessWidget {
@@ -27,7 +37,6 @@ abstract class BlocfulWidget<BLOC extends BlocPresentationMixin<STATE, EVENT>,
             child: BlocPresentationListener<BLOC, EVENT>(
               listener: onPresentationEvent,
               child: BlocConsumer<BLOC, STATE>(
-                listenWhen: (previous, current) => previous != current,
                 listener: (context, state) =>
                     listener(context, context.read<BLOC>(), state),
                 builder: (context, state) =>
@@ -38,7 +47,6 @@ abstract class BlocfulWidget<BLOC extends BlocPresentationMixin<STATE, EVENT>,
         : BlocPresentationListener<BLOC, EVENT>(
             listener: onPresentationEvent,
             child: BlocConsumer<BLOC, STATE>(
-              listenWhen: (previous, current) => previous != current,
               listener: (context, state) =>
                   listener(context, context.read<BLOC>(), state),
               builder: (context, state) =>
