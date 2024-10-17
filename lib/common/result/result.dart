@@ -12,7 +12,7 @@ sealed class Result<T> {
 
   factory Result.success(T value) => Success(value);
 
-  factory Result.failure(BaseError? exception) => Failure(exception);
+  factory Result.failure(Object? error) => Failure(error);
 
   /// Returns the value if [Result] is [Success] or null otherwise.
   T? get getOrNull => switch (this) {
@@ -21,7 +21,7 @@ sealed class Result<T> {
       };
 
   /// Returns the exception if [Result] is [Failure] or null otherwise.
-  BaseError? get errorOrNull => switch (this) {
+  Object? get errorOrNull => switch (this) {
         Failure(error: final error) => error,
         _ => null,
       };
@@ -43,7 +43,7 @@ sealed class Result<T> {
   /// Maps the value of the result and returns the error or success [TResult]
   TResult when<TResult extends Object?>({
     required TResult Function(T response) success,
-    required TResult Function(BaseError? error) error,
+    required TResult Function(Object? error) error,
   }) {
     if (this.isSuccess) {
       return success((this as Success<T>).value);
@@ -108,7 +108,7 @@ final class Failure<T> extends Result<T> {
   const Failure(this.error);
 
   /// The exception of the [Result].
-  final BaseError? error;
+  final Object? error;
 
   @override
   bool operator ==(Object other) {
