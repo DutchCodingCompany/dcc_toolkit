@@ -91,7 +91,10 @@ final class Success<T> extends Result<T> {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is Success<T> && runtimeType == other.runtimeType && value == other.value;
+    return identical(this, other) ||
+        other is Success<T> &&
+            runtimeType == other.runtimeType &&
+            value == other.value;
   }
 
   @override
@@ -109,7 +112,10 @@ final class Failure<T> extends Result<T> {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is Failure<T> && runtimeType == other.runtimeType && other.error == error;
+    return identical(this, other) ||
+        other is Failure<T> &&
+            runtimeType == other.runtimeType &&
+            other.error == error;
   }
 
   @override

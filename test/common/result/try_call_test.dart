@@ -71,8 +71,16 @@ void main() {
   parameterizedTest('Different exceptions result in different errors', [
     [Exception('woepsie'), const UnknownError()],
     [const FormatException('woepsie'), const UnknownError()],
-    [c.ChopperHttpException(c.Response(http.Response('woepsie', 401), 'woepsie')), const AuthenticationFailedError()],
-    [c.ChopperHttpException(c.Response(http.Response('woepsie', 500), 'woepsie')), const ServerError()],
+    [
+      c.ChopperHttpException(
+          c.Response(http.Response('woepsie', 401), 'woepsie')),
+      const AuthenticationFailedError()
+    ],
+    [
+      c.ChopperHttpException(
+          c.Response(http.Response('woepsie', 500), 'woepsie')),
+      const ServerError()
+    ],
     [ClientException('woepsie'), const NoInternetError()],
     [CheckedFromJsonException({}, null, 'woepsie', null), const ServerError()],
   ], (Exception exception, BaseError expectedError) async {

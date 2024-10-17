@@ -11,7 +11,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 ///   child: SomeWidget(),
 /// )
 /// ```dart
-abstract class BlocfulWidget<BLOC extends BlocPresentationMixin<STATE, EVENT>, STATE, EVENT> extends StatelessWidget {
+abstract class BlocfulWidget<BLOC extends BlocPresentationMixin<STATE, EVENT>,
+    STATE, EVENT> extends StatelessWidget {
   /// Creates a [BlocfulWidget]
   const BlocfulWidget({this.onCreateBloc, super.key});
 
@@ -27,8 +28,10 @@ abstract class BlocfulWidget<BLOC extends BlocPresentationMixin<STATE, EVENT>, S
               listener: onPresentationEvent,
               child: BlocConsumer<BLOC, STATE>(
                 listenWhen: (previous, current) => previous != current,
-                listener: (context, state) => listener(context, context.read<BLOC>(), state),
-                builder: (context, state) => builder(context, context.read<BLOC>(), state),
+                listener: (context, state) =>
+                    listener(context, context.read<BLOC>(), state),
+                builder: (context, state) =>
+                    builder(context, context.read<BLOC>(), state),
               ),
             ),
           )
@@ -36,8 +39,10 @@ abstract class BlocfulWidget<BLOC extends BlocPresentationMixin<STATE, EVENT>, S
             listener: onPresentationEvent,
             child: BlocConsumer<BLOC, STATE>(
               listenWhen: (previous, current) => previous != current,
-              listener: (context, state) => listener(context, context.read<BLOC>(), state),
-              builder: (context, state) => builder(context, context.read<BLOC>(), state),
+              listener: (context, state) =>
+                  listener(context, context.read<BLOC>(), state),
+              builder: (context, state) =>
+                  builder(context, context.read<BLOC>(), state),
             ),
           );
   }
