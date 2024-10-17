@@ -42,13 +42,13 @@ sealed class Result<T> {
 
   /// Maps the value of the result and returns the error or success [TResult]
   TResult when<TResult extends Object?>({
+    required TResult Function(T response) success,
     required TResult Function(BaseError? error) error,
-    required TResult Function(T? response) success,
   }) {
     if (this.isSuccess) {
-      return success(getOrNull);
+      return success((this as Success<T>).value);
     } else {
-      return error(errorOrNull);
+      return error((this as Failure<T>).error);
     }
   }
 }

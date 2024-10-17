@@ -22,7 +22,7 @@ class UserCubit extends Cubit<UserState> with BlocPresentationMixin<UserState, U
         emitPresentation(const UserFetchFailed());
       },
       success: (success) {
-        emit(state.copyWith(user: success?.results.first));
+        emit(state.copyWith(user: success.results.first));
         emitPresentation(const UserLoaded());
       },
     );
@@ -35,7 +35,7 @@ class UserCubit extends Cubit<UserState> with BlocPresentationMixin<UserState, U
         emitPresentation(const UserFetchFailed());
       },
       success: (success) {
-        emit(state.copyWith(user: success?.results.first));
+        emit(state.copyWith(user: success.results.first));
         emitPresentation(const UserLoaded());
       },
     );
