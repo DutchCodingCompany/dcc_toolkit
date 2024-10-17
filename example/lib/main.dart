@@ -36,7 +36,10 @@ class MyHomePage extends StatelessWidget {
             ElevatedButton(
               onPressed: () => Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => UserPage(onCreateCubit: (context) => getIt<UserCubit>()..getRandomUser()),
+                  builder: (context) => UserPage(
+                    onCreateCubit: (context) =>
+                        getIt<UserCubit>()..getRandomUser(),
+                  ),
                 ),
               ),
               child: const Text('Get user succesfully'),
@@ -44,7 +47,10 @@ class MyHomePage extends StatelessWidget {
             ElevatedButton(
               onPressed: () => Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => UserPage(onCreateCubit: (context) => getIt<UserCubit>()..getRandomUserFails()),
+                  builder: (context) => UserPage(
+                    onCreateCubit: (context) =>
+                        getIt<UserCubit>()..getRandomUserFails(),
+                  ),
                 ),
               ),
               child: const Text('Get user fails'),

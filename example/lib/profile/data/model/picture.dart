@@ -11,5 +11,6 @@ class Picture with _$Picture {
     required String thumbnail,
   }) = _Picture;
 
-  factory Picture.fromJson(Map<String, dynamic> json) => _$PictureFromJson(json);
+  factory Picture.fromJson(Map<String, dynamic> json) =>
+      _$PictureFromJson(json);
 }

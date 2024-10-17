@@ -11,5 +11,6 @@ class ApiUserResponse with _$ApiUserResponse {
     required List<User> results,
   }) = _ApiUserResponse;
 
-  factory ApiUserResponse.fromJson(Map<String, dynamic> json) => _$ApiUserResponseFromJson(json);
+  factory ApiUserResponse.fromJson(Map<String, dynamic> json) =>
+      _$ApiUserResponseFromJson(json);
 }

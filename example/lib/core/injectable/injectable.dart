@@ -6,4 +6,5 @@ import 'package:injectable/injectable.dart';
 final getIt = GetIt.instance;
 
 @InjectableInit()
-Future<void> configureDependencies() async => getIt.init(environment: kDebugMode ? dev.name : prod.name);
+Future<void> configureDependencies() async =>
+    getIt.init(environment: kDebugMode ? dev.name : prod.name);
