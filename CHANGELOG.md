@@ -1,5 +1,11 @@
 ## 0.0.6
 
+* :sparkles: Added new version of Result for mapping API responses
+* :sparkles: Added BlocfulWidget for listening to presentation changes and state changes
+* :sparkles: Added example project
+
+## 0.0.6
+
 * :arrow_up: Updated dependencies
 
 ## 0.0.5

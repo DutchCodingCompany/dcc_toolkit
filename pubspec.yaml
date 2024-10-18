@@ -1,6 +1,6 @@
 name: dcc_toolkit
 description: "Internal toolkit package used by the DCC team."
-version: 0.0.6
+version: 0.0.7
 homepage: https://dutchcodingcompany.com
 repository: https://github.com/DutchCodingCompany/dcc_toolkit
 
