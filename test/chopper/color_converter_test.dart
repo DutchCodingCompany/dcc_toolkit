@@ -12,7 +12,7 @@ void main() {
     [const Color(0xFFFFFFFF), '#ffffffff'],
     [const Color(0xF1F1F1F1), '#f1f1f1f1'],
   ], (Color color, String expected) {
-    final result = ColorConverter().toJson(color);
+    final result = const ColorConverter().toJson(color);
 
     expect(result, expected);
   });
@@ -25,7 +25,7 @@ void main() {
     [const Color(0xF1F1F1F1), '#f1f1f1f1'],
     [const Color(0xFFFFFFFF), '#ffffff'],
   ], (Color expected, String json) {
-    final result = ColorConverter().fromJson(json);
+    final result = const ColorConverter().fromJson(json);
 
     expect(result, expected);
   });

@@ -4,6 +4,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 /// A class that implements JsonConverter to convert Color objects to and from JSON.
 class ColorConverter implements JsonConverter<Color, String> {
+  /// A class that implements JsonConverter to convert Color objects to and from JSON.
+  const ColorConverter();
+
   /// Converts a hexadecimal color string from JSON to a Color object.
   ///
   /// The input string [json] is expected to be a hexadecimal color string.
