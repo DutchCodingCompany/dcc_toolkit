@@ -9,7 +9,8 @@ extension ZapExtension on Object {
     String? tag,
     Level level = Level.INFO,
   }) {
-    //ignore: no_runtimeType_toString
+    // We actually want to know to runtimeType of the object
+    // ignore: no_runtimeType_toString
     BoltLogger.zap(message, tag: tag ?? runtimeType.toString(), level: level);
   }
 
@@ -19,6 +20,7 @@ extension ZapExtension on Object {
     String? tag,
     Level level = Level.SEVERE,
   }) {
+    // We actually want to know to runtimeType of the object
     //ignore: no_runtimeType_toString
     BoltLogger.shock(message, tag: tag ?? runtimeType.toString(), level: level);
   }

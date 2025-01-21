@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
-import 'package:collection/collection.dart';
 
 /// Method signature for a function that creates a dart object from a json map.
 typedef JsonFactory<T> = T Function(Map<String, dynamic> json);
@@ -44,7 +43,7 @@ class JsonSerializableConverter extends JsonConverter {
   }
 
   List<T> _decodeList<T>(Iterable<dynamic> values) =>
-      values.whereNotNull().map<T>((v) => _decode<T>(v) as T).toList();
+      values.nonNulls.map<T>((v) => _decode<T>(v) as T).toList();
 
   dynamic _decode<T>(dynamic entity) {
     if (entity is Iterable) return _decodeList<T>(entity as List);

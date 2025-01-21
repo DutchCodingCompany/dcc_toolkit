@@ -28,6 +28,8 @@ class ColorConverter implements JsonConverter<Color, String> {
   /// Each value is a two-digit hexadecimal number.
   @override
   String toJson(Color color) {
+    // Next flutter release (>3.27) will contain a new method `toARGB32` to replace `.value`.
+    // Ignore this for now.
     return '#${color.value.toRadixString(16).padLeft(8, '0')}';
   }
 }
