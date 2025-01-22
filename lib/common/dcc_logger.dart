@@ -66,7 +66,7 @@ class DCCLogger {
   /// ```dart
   /// DCCLogger.info('test bericht', tag: 'test');
   /// ```
-  /// prints: [[13:46]] [[INFO]] DCC: <test> test bericht
+  /// prints: [[13:46]] [[INFO]] DCC: &lt;test&gt; test bericht
   @Deprecated('Use BoltLogger.zap instead')
   static void info(
     String message, {
@@ -84,7 +84,7 @@ class DCCLogger {
   /// ```dart
   /// DCCLogger.severe('test bericht', tag: 'test');
   /// ```
-  /// prints: [[13:46]] [[SEVERE]] DCC: <test> test bericht
+  /// prints: [[13:46]] [[SEVERE]] DCC: &lt;test&gt; test bericht
   @Deprecated('Use BoltLogger.shock instead')
   static void severe(
     String message, {

@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// A widget that wraps your UI in a [BlocPresentationListener] and a [BlocConsumer] to be able to handle all events simultaniously
 ///
 /// Example:
-/// /// ```dart
+/// ```dart
 /// class SomePage extends BlocfulWidget<SomeCubit, SomeState, SomeEvent> {
 ///   const SomePage({super.key})
 ///       : super(onCreateBloc: SomeCubit());
@@ -20,7 +20,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 ///     return SomeWidget();
 ///   }
 /// }
-/// ```dart
+/// ```
 abstract class BlocfulWidget<BLOC extends BlocPresentationMixin<STATE, EVENT>,
     STATE, EVENT> extends StatelessWidget {
   /// Creates a [BlocfulWidget]
