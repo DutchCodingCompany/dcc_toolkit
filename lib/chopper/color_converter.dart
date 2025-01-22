@@ -30,6 +30,7 @@ class ColorConverter implements JsonConverter<Color, String> {
   String toJson(Color color) {
     // Next flutter release (>3.27) will contain a new method `toARGB32` to replace `.value`.
     // Ignore this for now.
+    // ignore: deprecated_member_use
     return '#${color.value.toRadixString(16).padLeft(8, '0')}';
   }
 }
