@@ -124,7 +124,7 @@ class TextStyleDecorator implements KleurplaatInterface<TextStyle> {
       );
 
   @override
-  SurfaceGroupInterface<TextStyle> get surface => TextStyleSurfceGroup(
+  SurfaceGroupInterface<TextStyle> get surface => TextStyleSurfaceGroup(
         color: _textStyle.copyWith(
           color: _kleurplaat.surface.color,
         ),

@@ -2,9 +2,9 @@ import 'package:dcc_toolkit/style/interface/surface_group_interface.dart';
 import 'package:flutter/material.dart';
 
 /// {@macro surface_group}
-class TextStyleSurfceGroup implements SurfaceGroupInterface<TextStyle> {
+class TextStyleSurfaceGroup implements SurfaceGroupInterface<TextStyle> {
   /// {@macro surface_group}
-  const TextStyleSurfceGroup({
+  const TextStyleSurfaceGroup({
     required this.color,
     required this.onColorContrastPlus,
     required this.onColorContrastMinus,
@@ -40,5 +40,5 @@ class TextStyleSurfceGroup implements SurfaceGroupInterface<TextStyle> {
   final TextStyle containerHighest;
 
   @override
-  TextStyleSurfceGroup lerp(TextStyleSurfceGroup? other, double t) => this;
+  TextStyleSurfaceGroup lerp(TextStyleSurfaceGroup? other, double t) => this;
 }
