@@ -28,7 +28,8 @@ class ColorGroup implements ColorGroupInterface<Color> {
 
     return ColorGroup(
       color: Color.lerp(color, other.color, t) ?? color,
-      onColorContrast: Color.lerp(onColorContrast, other.onColorContrast, t) ?? onColorContrast,
+      onColorContrast: Color.lerp(onColorContrast, other.onColorContrast, t) ??
+          onColorContrast,
       onColorSubtle: onColorSubtle == null || other.onColorSubtle == null
           ? null
           : Color.lerp(onColorSubtle, other.onColorSubtle, t),

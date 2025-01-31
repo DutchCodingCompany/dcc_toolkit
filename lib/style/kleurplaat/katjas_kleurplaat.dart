@@ -4,7 +4,8 @@ import 'package:dcc_toolkit/style/kleurplaat/surface_group.dart';
 import 'package:flutter/material.dart';
 
 /// {@macro kleurplaat}
-class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat> implements KleurplaatInterface<Color> {
+class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat>
+    implements KleurplaatInterface<Color> {
   /// {@macro kleurplaat}
   const KatjasKleurplaat({
     required this.primary,
@@ -94,7 +95,8 @@ class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat> implements Kleur
   }
 
   /// Converts the [KatjasKleurplaat] to a [ColorScheme].
-  ColorScheme toColorScheme({Brightness brightness = Brightness.light}) => ColorScheme(
+  ColorScheme toColorScheme({Brightness brightness = Brightness.light}) =>
+      ColorScheme(
         brightness: brightness,
         primary: primary.color,
         primaryContainer: primary.color,
