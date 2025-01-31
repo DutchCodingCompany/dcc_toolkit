@@ -24,8 +24,8 @@ class TextStyleDecorator implements KleurplaatInterface<TextStyle> {
         color: _textStyle.copyWith(
           color: _kleurplaat.content.color,
         ),
-        onColor: _textStyle.copyWith(
-          color: _kleurplaat.content.onColor,
+        onColorContrast: _textStyle.copyWith(
+          color: _kleurplaat.content.onColorContrast,
         ),
         onColorSubtle: _textStyle.copyWith(
           color: _kleurplaat.content.onColorSubtle,
@@ -37,8 +37,8 @@ class TextStyleDecorator implements KleurplaatInterface<TextStyle> {
         color: _textStyle.copyWith(
           color: _kleurplaat.contentFill.color,
         ),
-        onColor: _textStyle.copyWith(
-          color: _kleurplaat.contentFill.onColor,
+        onColorContrast: _textStyle.copyWith(
+          color: _kleurplaat.contentFill.onColorContrast,
         ),
         onColorSubtle: _textStyle.copyWith(
           color: _kleurplaat.contentFill.onColorSubtle,
@@ -50,8 +50,8 @@ class TextStyleDecorator implements KleurplaatInterface<TextStyle> {
         color: _textStyle.copyWith(
           color: _kleurplaat.error.color,
         ),
-        onColor: _textStyle.copyWith(
-          color: _kleurplaat.error.onColor,
+        onColorContrast: _textStyle.copyWith(
+          color: _kleurplaat.error.onColorContrast,
         ),
         onColorSubtle: _textStyle.copyWith(
           color: _kleurplaat.error.onColorSubtle,
@@ -63,8 +63,8 @@ class TextStyleDecorator implements KleurplaatInterface<TextStyle> {
         color: _textStyle.copyWith(
           color: _kleurplaat.errorFill.color,
         ),
-        onColor: _textStyle.copyWith(
-          color: _kleurplaat.errorFill.onColor,
+        onColorContrast: _textStyle.copyWith(
+          color: _kleurplaat.errorFill.onColorContrast,
         ),
         onColorSubtle: _textStyle.copyWith(
           color: _kleurplaat.errorFill.onColorSubtle,
@@ -76,8 +76,8 @@ class TextStyleDecorator implements KleurplaatInterface<TextStyle> {
         color: _textStyle.copyWith(
           color: _kleurplaat.primary.color,
         ),
-        onColor: _textStyle.copyWith(
-          color: _kleurplaat.primary.onColor,
+        onColorContrast: _textStyle.copyWith(
+          color: _kleurplaat.primary.onColorContrast,
         ),
         onColorSubtle: _textStyle.copyWith(
           color: _kleurplaat.primary.onColorSubtle,
@@ -89,8 +89,8 @@ class TextStyleDecorator implements KleurplaatInterface<TextStyle> {
         color: _textStyle.copyWith(
           color: _kleurplaat.primaryFill.color,
         ),
-        onColor: _textStyle.copyWith(
-          color: _kleurplaat.primaryFill.onColor,
+        onColorContrast: _textStyle.copyWith(
+          color: _kleurplaat.primaryFill.onColorContrast,
         ),
         onColorSubtle: _textStyle.copyWith(
           color: _kleurplaat.primaryFill.onColorSubtle,
@@ -102,8 +102,8 @@ class TextStyleDecorator implements KleurplaatInterface<TextStyle> {
         color: _textStyle.copyWith(
           color: _kleurplaat.success.color,
         ),
-        onColor: _textStyle.copyWith(
-          color: _kleurplaat.success.onColor,
+        onColorContrast: _textStyle.copyWith(
+          color: _kleurplaat.success.onColorContrast,
         ),
         onColorSubtle: _textStyle.copyWith(
           color: _kleurplaat.success.onColorSubtle,
@@ -115,8 +115,8 @@ class TextStyleDecorator implements KleurplaatInterface<TextStyle> {
         color: _textStyle.copyWith(
           color: _kleurplaat.successFill.color,
         ),
-        onColor: _textStyle.copyWith(
-          color: _kleurplaat.successFill.onColor,
+        onColorContrast: _textStyle.copyWith(
+          color: _kleurplaat.successFill.onColorContrast,
         ),
         onColorSubtle: _textStyle.copyWith(
           color: _kleurplaat.successFill.onColorSubtle,
@@ -128,17 +128,17 @@ class TextStyleDecorator implements KleurplaatInterface<TextStyle> {
         color: _textStyle.copyWith(
           color: _kleurplaat.surface.color,
         ),
-        onColorContrastPlus: _textStyle.copyWith(
-          color: _kleurplaat.surface.onColorContrastPlus,
+        onColorContrast: _textStyle.copyWith(
+          color: _kleurplaat.surface.onColorContrast,
         ),
-        onColorContrastMinus: _textStyle.copyWith(
-          color: _kleurplaat.surface.onColorContrastMinus,
+        onColorContrastDim: _textStyle.copyWith(
+          color: _kleurplaat.surface.onColorContrastDim,
         ),
-        onColorSubtlePlus: _textStyle.copyWith(
-          color: _kleurplaat.surface.onColorSubtlePlus,
+        onColorSubtle: _textStyle.copyWith(
+          color: _kleurplaat.surface.onColorSubtle,
         ),
-        onColorSubtleMinus: _textStyle.copyWith(
-          color: _kleurplaat.surface.onColorSubtleMinus,
+        onColorSubtleDim: _textStyle.copyWith(
+          color: _kleurplaat.surface.onColorSubtleDim,
         ),
         containerLowest: _textStyle.copyWith(
           color: _kleurplaat.surface.containerLowest,
@@ -155,5 +155,48 @@ class TextStyleDecorator implements KleurplaatInterface<TextStyle> {
         containerHighest: _textStyle.copyWith(
           color: _kleurplaat.surface.containerHighest,
         ),
+        link: _textStyle.copyWith(
+          color: _kleurplaat.surface.link,
+        ),
       );
+
+  @override
+  SurfaceGroupInterface<TextStyle>? get surfaceInverse {
+    if (_kleurplaat.surfaceInverse == null) return null;
+    return TextStyleSurfaceGroup(
+      color: _textStyle.copyWith(
+        color: _kleurplaat.surfaceInverse!.color,
+      ),
+      onColorContrast: _textStyle.copyWith(
+        color: _kleurplaat.surfaceInverse!.onColorContrast,
+      ),
+      onColorContrastDim: _textStyle.copyWith(
+        color: _kleurplaat.surfaceInverse!.onColorContrastDim,
+      ),
+      onColorSubtle: _textStyle.copyWith(
+        color: _kleurplaat.surfaceInverse!.onColorSubtle,
+      ),
+      onColorSubtleDim: _textStyle.copyWith(
+        color: _kleurplaat.surfaceInverse!.onColorSubtleDim,
+      ),
+      containerLowest: _textStyle.copyWith(
+        color: _kleurplaat.surfaceInverse!.containerLowest,
+      ),
+      containerLow: _textStyle.copyWith(
+        color: _kleurplaat.surfaceInverse!.containerLow,
+      ),
+      container: _textStyle.copyWith(
+        color: _kleurplaat.surfaceInverse!.container,
+      ),
+      containerHigh: _textStyle.copyWith(
+        color: _kleurplaat.surfaceInverse!.containerHigh,
+      ),
+      containerHighest: _textStyle.copyWith(
+        color: _kleurplaat.surfaceInverse!.containerHighest,
+      ),
+      link: _textStyle.copyWith(
+        color: _kleurplaat.surfaceInverse!.link,
+      ),
+    );
+  }
 }

@@ -12,22 +12,22 @@ abstract interface class SurfaceGroupInterface<T> {
   /// {@template onColorContrastPlus}
   /// The color on the surface with a higher contrast.
   /// {@endtemplate}
-  T get onColorContrastPlus;
+  T get onColorContrast;
 
   /// {@template onColorContrastMinus}
   /// The color on the surface with a lower contrast.
   /// {@endtemplate}
-  T get onColorContrastMinus;
+  T get onColorContrastDim;
 
   /// {@template onColorSubtlePlus}
   /// The color on the surface with a higher contrast, but more subtle.
   /// {@endtemplate}
-  T get onColorSubtlePlus;
+  T get onColorSubtle;
 
   /// {@template onColorSubtleMinus}
   /// The color on the surface with a lower contrast, but more subtle.
   /// {@endtemplate}
-  T get onColorSubtleMinus;
+  T get onColorSubtleDim;
 
   /// {@template containerLowest}
   /// The color of the lowest container.
@@ -53,6 +53,11 @@ abstract interface class SurfaceGroupInterface<T> {
   /// The color of the highest container.
   /// {@endtemplate}
   T get containerHighest;
+
+  /// {@template link}
+  /// The color of the link.
+  /// {@endtemplate}
+  T get link;
 
   /// Linearly interpolate with another object.
   SurfaceGroupInterface<T> lerp(

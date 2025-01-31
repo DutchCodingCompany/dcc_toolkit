@@ -12,7 +12,7 @@ abstract interface class ColorGroupInterface<T> {
   /// {@template on_color}
   /// The color on the foreground. Usually on top of the [color].
   /// {@endtemplate}
-  T get onColor;
+  T get onColorContrast;
 
   /// {@template on_color_subtle}
   /// The color on the foreground, but more subtle. Usually on top of the [color].

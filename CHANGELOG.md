@@ -1,3 +1,9 @@
+## 0.0.10
+Improved kleurplaat
+
+## 0.0.9
+Added kleurplaat
+
 ## 0.0.6
 
 * :sparkles: Added new version of Result for mapping API responses

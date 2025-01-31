@@ -17,6 +17,7 @@ class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat>
     required this.success,
     required this.successFill,
     required this.surface,
+    required this.surfaceInverse,
   });
 
   @override
@@ -47,6 +48,9 @@ class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat>
   final SurfaceGroup surface;
 
   @override
+  final SurfaceGroup? surfaceInverse;
+
+  @override
   ThemeExtension<KatjasKleurplaat> copyWith({
     ColorGroup? primary,
     ColorGroup? primaryFill,
@@ -57,6 +61,7 @@ class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat>
     ColorGroup? success,
     ColorGroup? successFill,
     SurfaceGroup? surface,
+    SurfaceGroup? surfaceInverse,
   }) =>
       KatjasKleurplaat(
         primary: primary ?? this.primary,
@@ -68,6 +73,7 @@ class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat>
         success: success ?? this.success,
         successFill: successFill ?? this.successFill,
         surface: surface ?? this.surface,
+        surfaceInverse: surfaceInverse ?? this.surfaceInverse,
       );
 
   @override
@@ -84,6 +90,7 @@ class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat>
       success: success.lerp(other.success, t),
       successFill: successFill.lerp(other.successFill, t),
       surface: surface.lerp(other.surface, t),
+      surfaceInverse: surfaceInverse?.lerp(other.surfaceInverse, t),
     );
   }
 
@@ -93,17 +100,17 @@ class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat>
         brightness: brightness,
         primary: primary.color,
         primaryContainer: primary.color,
-        onPrimary: primary.onColor,
-        onPrimaryContainer: primary.onColor,
+        onPrimary: primary.onColorContrast,
+        onPrimaryContainer: primary.onColorContrast,
         secondary: content.color,
         secondaryContainer: content.color,
-        onSecondary: content.onColor,
-        onSecondaryContainer: content.onColor,
+        onSecondary: content.onColorContrast,
+        onSecondaryContainer: content.onColorContrast,
         tertiary: error.color,
-        onTertiary: error.onColor,
+        onTertiary: error.onColorContrast,
         error: error.color,
-        onError: error.onColor,
+        onError: error.onColorContrast,
         surface: surface.color,
-        onSurface: surface.onColorContrastPlus,
+        onSurface: surface.onColorContrast,
       );
 }

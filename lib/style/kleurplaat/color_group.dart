@@ -7,7 +7,7 @@ class ColorGroup implements ColorGroupInterface<Color> {
   /// {@macro color_group}
   const ColorGroup({
     required this.color,
-    required this.onColor,
+    required this.onColorContrast,
     this.onColorSubtle,
   });
 
@@ -15,7 +15,7 @@ class ColorGroup implements ColorGroupInterface<Color> {
   final Color color;
 
   @override
-  final Color onColor;
+  final Color onColorContrast;
 
   @override
   final Color? onColorSubtle;
@@ -28,7 +28,8 @@ class ColorGroup implements ColorGroupInterface<Color> {
 
     return ColorGroup(
       color: Color.lerp(color, other.color, t) ?? color,
-      onColor: Color.lerp(onColor, other.onColor, t) ?? onColor,
+      onColorContrast: Color.lerp(onColorContrast, other.onColorContrast, t) ??
+          onColorContrast,
       onColorSubtle: onColorSubtle == null || other.onColorSubtle == null
           ? null
           : Color.lerp(onColorSubtle, other.onColorSubtle, t),
