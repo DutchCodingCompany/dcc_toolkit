@@ -6,27 +6,28 @@ class TextStyleSurfaceGroup implements SurfaceGroupInterface<TextStyle> {
   /// {@macro surface_group}
   const TextStyleSurfaceGroup({
     required this.color,
-    required this.onColorContrastPlus,
-    required this.onColorContrastMinus,
-    required this.onColorSubtlePlus,
-    required this.onColorSubtleMinus,
+    required this.onColorContrast,
+    required this.onColorContrastDim,
+    required this.onColorSubtle,
+    required this.onColorSubtleDim,
     required this.containerLowest,
     required this.containerLow,
     required this.container,
     required this.containerHigh,
     required this.containerHighest,
+    required this.link,
   });
 
   @override
   final TextStyle color;
   @override
-  final TextStyle onColorContrastPlus;
+  final TextStyle onColorContrast;
   @override
-  final TextStyle onColorContrastMinus;
+  final TextStyle onColorContrastDim;
   @override
-  final TextStyle onColorSubtlePlus;
+  final TextStyle onColorSubtle;
   @override
-  final TextStyle onColorSubtleMinus;
+  final TextStyle onColorSubtleDim;
 
   @override
   final TextStyle containerLowest;
@@ -38,6 +39,8 @@ class TextStyleSurfaceGroup implements SurfaceGroupInterface<TextStyle> {
   final TextStyle containerHigh;
   @override
   final TextStyle containerHighest;
+  @override
+  final TextStyle link;
 
   @override
   TextStyleSurfaceGroup lerp(TextStyleSurfaceGroup? other, double t) => this;

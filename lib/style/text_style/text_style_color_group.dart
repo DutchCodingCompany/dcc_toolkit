@@ -6,7 +6,7 @@ class TextStyleColorGroup implements ColorGroupInterface<TextStyle> {
   /// {@macro color_group}
   const TextStyleColorGroup({
     required this.color,
-    required this.onColor,
+    required this.onColorContrast,
     this.onColorSubtle,
   });
 
@@ -14,7 +14,7 @@ class TextStyleColorGroup implements ColorGroupInterface<TextStyle> {
   final TextStyle color;
 
   @override
-  final TextStyle onColor;
+  final TextStyle onColorContrast;
 
   @override
   final TextStyle? onColorSubtle;

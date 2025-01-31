@@ -50,4 +50,9 @@ abstract interface class KleurplaatInterface<T> {
   /// The surface group.
   /// {@endtemplate}
   SurfaceGroupInterface<T> get surface;
+
+  /// {@template surface}
+  /// The surface inverse group.
+  /// {@endtemplate}
+  SurfaceGroupInterface<T>? get surfaceInverse;
 }
