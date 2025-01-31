@@ -21,5 +21,7 @@ abstract interface class ColorGroupInterface<T> {
 
   /// Linearly interpolate with another object.
   ColorGroupInterface<T> lerp(
-      covariant ColorGroupInterface<T>? other, double t);
+    covariant ColorGroupInterface<T>? other,
+    double t,
+  );
 }

@@ -56,5 +56,7 @@ abstract interface class SurfaceGroupInterface<T> {
 
   /// Linearly interpolate with another object.
   SurfaceGroupInterface<T> lerp(
-      covariant SurfaceGroupInterface<T>? other, double t);
+    covariant SurfaceGroupInterface<T>? other,
+    double t,
+  );
 }
