@@ -18,6 +18,10 @@ class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat>
     required this.successFill,
     required this.surface,
     required this.surfaceInverse,
+    this.secondary,
+    this.secondaryFill,
+    this.tertiary,
+    this.tertiaryFill,
   });
 
   @override
@@ -25,6 +29,18 @@ class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat>
 
   @override
   final ColorGroup primaryFill;
+
+  @override
+  final ColorGroup? secondary;
+
+  @override
+  final ColorGroup? secondaryFill;
+
+  @override
+  final ColorGroup? tertiary;
+
+  @override
+  final ColorGroup? tertiaryFill;
 
   @override
   final ColorGroup content;
@@ -54,6 +70,10 @@ class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat>
   ThemeExtension<KatjasKleurplaat> copyWith({
     ColorGroup? primary,
     ColorGroup? primaryFill,
+    ColorGroup? secondary,
+    ColorGroup? secondaryFill,
+    ColorGroup? tertiary,
+    ColorGroup? tertiaryFill,
     ColorGroup? content,
     ColorGroup? contentFill,
     ColorGroup? error,
@@ -66,6 +86,10 @@ class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat>
       KatjasKleurplaat(
         primary: primary ?? this.primary,
         primaryFill: primaryFill ?? this.primaryFill,
+        secondary: secondary ?? this.secondary,
+        secondaryFill: secondaryFill ?? this.secondaryFill,
+        tertiary: tertiary ?? this.tertiary,
+        tertiaryFill: tertiaryFill ?? this.tertiaryFill,
         content: content ?? this.content,
         contentFill: contentFill ?? this.contentFill,
         error: error ?? this.error,
@@ -83,6 +107,10 @@ class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat>
     return KatjasKleurplaat(
       primary: primary.lerp(other.primary, t),
       primaryFill: primaryFill.lerp(other.primaryFill, t),
+      secondary: secondary?.lerp(other.secondary, t),
+      secondaryFill: secondaryFill?.lerp(other.secondaryFill, t),
+      tertiary: tertiary?.lerp(other.tertiary, t),
+      tertiaryFill: tertiaryFill?.lerp(other.tertiaryFill, t),
       content: content.lerp(other.content, t),
       contentFill: contentFill.lerp(other.contentFill, t),
       error: error.lerp(other.error, t),
@@ -104,6 +132,10 @@ class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat>
         onPrimaryContainer: primary.onColorContrast,
         secondary: content.color,
         secondaryContainer: content.color,
+        secondaryFixed: secondary?.color,
+        secondaryFixedDim: secondaryFill?.color,
+        tertiaryFixed: tertiary?.color,
+        tertiaryFixedDim: tertiaryFill?.color,
         onSecondary: content.onColorContrast,
         onSecondaryContainer: content.onColorContrast,
         tertiary: error.color,
