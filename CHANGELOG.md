@@ -1,3 +1,6 @@
+## 0.0.11
+Added optional secondary, secondaryFill, tertiary and tertiaryFill ColorGroups to the Kleurplaat
+
 ## 0.0.10
 Improved kleurplaat
 
