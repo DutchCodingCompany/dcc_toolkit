@@ -16,6 +16,26 @@ abstract interface class KleurplaatInterface<T> {
   /// {@endtemplate}
   ColorGroupInterface<T> get primaryFill;
 
+  /// {@template secondary}
+  /// The secondary color group.
+  /// {@endtemplate}
+  ColorGroupInterface<T>? get secondary;
+
+  /// {@template secondaryFill}
+  /// The secondary fill color group.
+  /// {@endtemplate}
+  ColorGroupInterface<T>? get secondaryFill;
+
+  /// {@template tertiary}
+  /// The tertiary color group.
+  /// {@endtemplate}
+  ColorGroupInterface<T>? get tertiary;
+
+  /// {@template tertiaryFill}
+  /// The tertiary fill color group.
+  /// {@endtemplate}
+  ColorGroupInterface<T>? get tertiaryFill;
+
   /// {@template content}
   /// The content color group.
   /// {@endtemplate}

@@ -98,6 +98,58 @@ class TextStyleDecorator implements KleurplaatInterface<TextStyle> {
       );
 
   @override
+  ColorGroupInterface<TextStyle> get secondary => TextStyleColorGroup(
+        color: _textStyle.copyWith(
+          color: _kleurplaat.secondary?.color,
+        ),
+        onColorContrast: _textStyle.copyWith(
+          color: _kleurplaat.secondary?.onColorContrast,
+        ),
+        onColorSubtle: _textStyle.copyWith(
+          color: _kleurplaat.secondary?.onColorSubtle,
+        ),
+      );
+
+  @override
+  ColorGroupInterface<TextStyle> get secondaryFill => TextStyleColorGroup(
+        color: _textStyle.copyWith(
+          color: _kleurplaat.secondaryFill?.color,
+        ),
+        onColorContrast: _textStyle.copyWith(
+          color: _kleurplaat.secondaryFill?.onColorContrast,
+        ),
+        onColorSubtle: _textStyle.copyWith(
+          color: _kleurplaat.secondaryFill?.onColorSubtle,
+        ),
+      );
+
+  @override
+  ColorGroupInterface<TextStyle> get tertiary => TextStyleColorGroup(
+        color: _textStyle.copyWith(
+          color: _kleurplaat.tertiary?.color,
+        ),
+        onColorContrast: _textStyle.copyWith(
+          color: _kleurplaat.tertiary?.onColorContrast,
+        ),
+        onColorSubtle: _textStyle.copyWith(
+          color: _kleurplaat.tertiary?.onColorSubtle,
+        ),
+      );
+
+  @override
+  ColorGroupInterface<TextStyle> get tertiaryFill => TextStyleColorGroup(
+        color: _textStyle.copyWith(
+          color: _kleurplaat.tertiaryFill?.color,
+        ),
+        onColorContrast: _textStyle.copyWith(
+          color: _kleurplaat.tertiaryFill?.onColorContrast,
+        ),
+        onColorSubtle: _textStyle.copyWith(
+          color: _kleurplaat.tertiaryFill?.onColorSubtle,
+        ),
+      );
+
+  @override
   ColorGroupInterface<TextStyle> get success => TextStyleColorGroup(
         color: _textStyle.copyWith(
           color: _kleurplaat.success.color,
