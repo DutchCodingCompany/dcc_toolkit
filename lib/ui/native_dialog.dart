@@ -60,7 +60,11 @@ void showNativeDialog(
 /// A dialog action which is used to show the actions of a native dialog.
 class DialogAction {
   /// Creates a [DialogAction].
-  const DialogAction({required this.text, required this.onTap, this.isDestructiveAction = false});
+  const DialogAction({
+    required this.text,
+    required this.onTap,
+    this.isDestructiveAction = false,
+  });
 
   /// The text of the action.
   final String text;
