@@ -10,3 +10,5 @@ export 'logger/bolt_logger.dart';
 export 'style/style.dart';
 export 'test_util/devices_sizes.dart';
 export 'test_util/presentation_event_catcher.dart';
+export 'ui/blocful_widget.dart';
+export 'ui/native_dialog.dart';
