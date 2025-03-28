@@ -1,3 +1,11 @@
+# Changelog
+
+## 0.0.12
+* Updated dependencies
+* Added test_util: catch presentation event helper, DeviceSizes
+* Added typedef for single bool methods.
+* Updated formatting
+
 ## 0.0.11
 Added optional secondary, secondaryFill, tertiary and tertiaryFill ColorGroups to the Kleurplaat
 
