@@ -1,6 +1,7 @@
 import 'dart:ui';
 
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:json_annotation/json_annotation.dart';
+
 
 /// A class that implements JsonConverter to convert Color objects to and from JSON.
 class ColorConverter implements JsonConverter<Color, String> {

@@ -4,7 +4,7 @@ part 'street.freezed.dart';
 part 'street.g.dart';
 
 @freezed
-class Street with _$Street {
+sealed class Street with _$Street {
   const factory Street({
     required int number,
     required String name,

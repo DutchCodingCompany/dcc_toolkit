@@ -4,7 +4,7 @@ part 'picture.freezed.dart';
 part 'picture.g.dart';
 
 @freezed
-class Picture with _$Picture {
+sealed class Picture with _$Picture {
   const factory Picture({
     required String large,
     required String medium,

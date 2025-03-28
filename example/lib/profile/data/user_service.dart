@@ -9,10 +9,10 @@ part 'user_service.chopper.dart';
 @ChopperApi(baseUrl: 'https://randomuser.me/api/')
 @singleton
 abstract class UserService extends ChopperService {
-  @Get()
+  @GET()
   Future<ApiUserResponse> getRandomUser();
 
-  @Get()
+  @GET()
   Future<ApiUserResponse> getRandomUserFails() {
     throw CheckedFromJsonException({}, null, '', '');
   }

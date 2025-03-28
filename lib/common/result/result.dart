@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:chopper/chopper.dart';
 import 'package:dcc_toolkit/chopper/base_error.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 /// Result class to handle success and failure states.
 @immutable
@@ -16,15 +17,15 @@ sealed class Result<T> {
 
   /// Returns the value if [Result] is [Success] or null otherwise.
   T? get getOrNull => switch (this) {
-        Success(value: final value) => value,
-        _ => null,
-      };
+    Success(value: final value) => value,
+    _ => null,
+  };
 
   /// Returns the exception if [Result] is [Failure] or null otherwise.
   Object? get errorOrNull => switch (this) {
-        Failure(error: final error) => error,
-        _ => null,
-      };
+    Failure(error: final error) => error,
+    _ => null,
+  };
 
   /// Returns true if [Result] is [Success].
   bool get isSuccess => this is Success<T>;
@@ -56,10 +57,7 @@ sealed class Result<T> {
 /// Executes the given API call [fn]. When the call succeeds, [Result.success] is returned with the response.
 /// When the call fails the optional [onError] is executed and the exceptions are handled.
 /// If there is no [onError] provided, an error of type [BaseError] is returned in [Result.failure].
-Future<Result<S>> tryCall<S>(
-  FutureOr<S> Function() fn, {
-  Future<Result<S>> Function(Exception error)? onError,
-}) async {
+Future<Result<S>> tryCall<S>(FutureOr<S> Function() fn, {Future<Result<S>> Function(Exception error)? onError}) async {
   try {
     return Result.success(await fn());
   } on Exception catch (e) {
@@ -67,12 +65,10 @@ Future<Result<S>> tryCall<S>(
       return onError(e);
     }
     return switch (e) {
-      ChopperHttpException() => Result.failure(
-          switch (e.response.statusCode) {
-            401 => const AuthenticationFailedError(),
-            _ => const ServerError(),
-          },
-        ),
+      ChopperHttpException() => Result.failure(switch (e.response.statusCode) {
+        401 => const AuthenticationFailedError(),
+        _ => const ServerError(),
+      },),
       ClientException() => Result.failure(const NoInternetError()),
       CheckedFromJsonException() => Result.failure(const ServerError()),
       _ => Result.failure(const UnknownError()),
@@ -91,10 +87,7 @@ final class Success<T> extends Result<T> {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is Success<T> &&
-            runtimeType == other.runtimeType &&
-            value == other.value;
+    return identical(this, other) || other is Success<T> && runtimeType == other.runtimeType && value == other.value;
   }
 
   @override
@@ -112,10 +105,7 @@ final class Failure<T> extends Result<T> {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is Failure<T> &&
-            runtimeType == other.runtimeType &&
-            other.error == error;
+    return identical(this, other) || other is Failure<T> && runtimeType == other.runtimeType && other.error == error;
   }
 
   @override

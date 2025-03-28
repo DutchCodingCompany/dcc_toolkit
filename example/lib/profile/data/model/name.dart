@@ -4,7 +4,7 @@ part 'name.freezed.dart';
 part 'name.g.dart';
 
 @freezed
-class Name with _$Name {
+sealed class Name with _$Name {
   const factory Name({
     required String title,
     required String first,

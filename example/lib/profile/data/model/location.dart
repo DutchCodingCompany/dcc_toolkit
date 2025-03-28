@@ -6,7 +6,7 @@ part 'location.freezed.dart';
 part 'location.g.dart';
 
 @freezed
-class Location with _$Location {
+sealed class Location with _$Location {
   const factory Location({
     required Street street,
     required String city,
