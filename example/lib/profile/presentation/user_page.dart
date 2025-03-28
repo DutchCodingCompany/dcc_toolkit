@@ -5,14 +5,15 @@ import 'package:flutter/material.dart';
 
 class UserPage extends BlocfulWidget<UserCubit, UserState, UserEvent> {
   const UserPage({required this.onCreateCubit, super.key})
-      : super(onCreateBloc: onCreateCubit);
+    : super(onCreateBloc: onCreateCubit);
 
   final UserCubit Function(BuildContext)? onCreateCubit;
 
   @override
   void onPresentationEvent(BuildContext context, UserEvent event) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(event.reason)));
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(event.reason)));
   }
 
   @override
@@ -20,13 +21,14 @@ class UserPage extends BlocfulWidget<UserCubit, UserState, UserEvent> {
     return Scaffold(
       body: SafeArea(
         child: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(state.user?.email ?? ''),
-            Text(state.user?.phone ?? ''),
-          ],
-        )),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(state.user?.email ?? ''),
+              Text(state.user?.phone ?? ''),
+            ],
+          ),
+        ),
       ),
     );
   }

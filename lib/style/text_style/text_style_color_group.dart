@@ -4,11 +4,7 @@ import 'package:flutter/material.dart';
 /// {@macro color_group}
 class TextStyleColorGroup implements ColorGroupInterface<TextStyle> {
   /// {@macro color_group}
-  const TextStyleColorGroup({
-    required this.color,
-    required this.onColorContrast,
-    this.onColorSubtle,
-  });
+  const TextStyleColorGroup({required this.color, required this.onColorContrast, this.onColorSubtle});
 
   @override
   final TextStyle color;

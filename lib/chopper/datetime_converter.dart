@@ -3,8 +3,8 @@ import 'package:json_annotation/json_annotation.dart';
 
 enum _DateFormats {
   yyyyMMdd,
-// Name contains the exact pattern for date formatting.
-//ignore: constant_identifier_names
+  // Name contains the exact pattern for date formatting.
+  //ignore: constant_identifier_names
   HHmm,
 }
 

@@ -68,7 +68,7 @@ Future<Result<S>> tryCall<S>(FutureOr<S> Function() fn, {Future<Result<S>> Funct
       ChopperHttpException() => Result.failure(switch (e.response.statusCode) {
         401 => const AuthenticationFailedError(),
         _ => const ServerError(),
-      },),
+      }),
       ClientException() => Result.failure(const NoInternetError()),
       CheckedFromJsonException() => Result.failure(const ServerError()),
       _ => Result.failure(const UnknownError()),

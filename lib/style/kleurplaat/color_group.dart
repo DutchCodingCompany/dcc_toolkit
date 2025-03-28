@@ -5,11 +5,7 @@ import 'package:dcc_toolkit/style/interface/color_group_interface.dart';
 /// {@macro color_group}
 class ColorGroup implements ColorGroupInterface<Color> {
   /// {@macro color_group}
-  const ColorGroup({
-    required this.color,
-    required this.onColorContrast,
-    this.onColorSubtle,
-  });
+  const ColorGroup({required this.color, required this.onColorContrast, this.onColorSubtle});
 
   @override
   final Color color;
@@ -28,11 +24,11 @@ class ColorGroup implements ColorGroupInterface<Color> {
 
     return ColorGroup(
       color: Color.lerp(color, other.color, t) ?? color,
-      onColorContrast: Color.lerp(onColorContrast, other.onColorContrast, t) ??
-          onColorContrast,
-      onColorSubtle: onColorSubtle == null || other.onColorSubtle == null
-          ? null
-          : Color.lerp(onColorSubtle, other.onColorSubtle, t),
+      onColorContrast: Color.lerp(onColorContrast, other.onColorContrast, t) ?? onColorContrast,
+      onColorSubtle:
+          onColorSubtle == null || other.onColorSubtle == null
+              ? null
+              : Color.lerp(onColorSubtle, other.onColorSubtle, t),
     );
   }
 }

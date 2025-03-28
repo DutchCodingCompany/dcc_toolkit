@@ -20,8 +20,5 @@ abstract interface class ColorGroupInterface<T> {
   T? get onColorSubtle;
 
   /// Linearly interpolate with another object.
-  ColorGroupInterface<T> lerp(
-    covariant ColorGroupInterface<T>? other,
-    double t,
-  );
+  ColorGroupInterface<T> lerp(covariant ColorGroupInterface<T>? other, double t);
 }

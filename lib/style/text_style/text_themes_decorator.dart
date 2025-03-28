@@ -9,131 +9,68 @@ import 'package:flutter/material.dart';
 /// {@endtemplate}
 class TextThemesDecorator {
   /// {@macro text_themes_decorator}
-  const TextThemesDecorator(
-    this._textTheme,
-    this._katjasKleurplaat,
-  );
+  const TextThemesDecorator(this._textTheme, this._katjasKleurplaat);
 
   final TextTheme _textTheme;
   final KatjasKleurplaat _katjasKleurplaat;
 
   /// See [TextTheme.displayLarge].
-  TextStyleDecorator? get displayLarge => _textTheme.displayLarge != null
-      ? TextStyleDecorator(
-          _textTheme.displayLarge!,
-          _katjasKleurplaat,
-        )
-      : null;
+  TextStyleDecorator? get displayLarge =>
+      _textTheme.displayLarge != null ? TextStyleDecorator(_textTheme.displayLarge!, _katjasKleurplaat) : null;
 
   /// See [TextTheme.displayMedium].
-  TextStyleDecorator? get displayMedium => _textTheme.displayMedium != null
-      ? TextStyleDecorator(
-          _textTheme.displayMedium!,
-          _katjasKleurplaat,
-        )
-      : null;
+  TextStyleDecorator? get displayMedium =>
+      _textTheme.displayMedium != null ? TextStyleDecorator(_textTheme.displayMedium!, _katjasKleurplaat) : null;
 
   /// See [TextTheme.displaySmall].
-  TextStyleDecorator? get displaySmall => _textTheme.displaySmall != null
-      ? TextStyleDecorator(
-          _textTheme.displaySmall!,
-          _katjasKleurplaat,
-        )
-      : null;
+  TextStyleDecorator? get displaySmall =>
+      _textTheme.displaySmall != null ? TextStyleDecorator(_textTheme.displaySmall!, _katjasKleurplaat) : null;
 
   /// See [TextTheme.headlineLarge].
-  TextStyleDecorator? get headlineLarge => _textTheme.headlineLarge != null
-      ? TextStyleDecorator(
-          _textTheme.headlineLarge!,
-          _katjasKleurplaat,
-        )
-      : null;
+  TextStyleDecorator? get headlineLarge =>
+      _textTheme.headlineLarge != null ? TextStyleDecorator(_textTheme.headlineLarge!, _katjasKleurplaat) : null;
 
   /// See [TextTheme.headlineMedium].
-  TextStyleDecorator? get headlineMedium => _textTheme.headlineMedium != null
-      ? TextStyleDecorator(
-          _textTheme.headlineMedium!,
-          _katjasKleurplaat,
-        )
-      : null;
+  TextStyleDecorator? get headlineMedium =>
+      _textTheme.headlineMedium != null ? TextStyleDecorator(_textTheme.headlineMedium!, _katjasKleurplaat) : null;
 
   /// See [TextTheme.headlineSmall].
-  TextStyleDecorator? get headlineSmall => _textTheme.headlineSmall != null
-      ? TextStyleDecorator(
-          _textTheme.headlineSmall!,
-          _katjasKleurplaat,
-        )
-      : null;
+  TextStyleDecorator? get headlineSmall =>
+      _textTheme.headlineSmall != null ? TextStyleDecorator(_textTheme.headlineSmall!, _katjasKleurplaat) : null;
 
   /// See [TextTheme.titleLarge].
-  TextStyleDecorator? get titleLarge => _textTheme.titleLarge != null
-      ? TextStyleDecorator(
-          _textTheme.titleLarge!,
-          _katjasKleurplaat,
-        )
-      : null;
+  TextStyleDecorator? get titleLarge =>
+      _textTheme.titleLarge != null ? TextStyleDecorator(_textTheme.titleLarge!, _katjasKleurplaat) : null;
 
   /// See [TextTheme.titleMedium].
-  TextStyleDecorator? get titleMedium => _textTheme.titleMedium != null
-      ? TextStyleDecorator(
-          _textTheme.titleMedium!,
-          _katjasKleurplaat,
-        )
-      : null;
+  TextStyleDecorator? get titleMedium =>
+      _textTheme.titleMedium != null ? TextStyleDecorator(_textTheme.titleMedium!, _katjasKleurplaat) : null;
 
   /// See [TextTheme.titleSmall].
-  TextStyleDecorator? get titleSmall => _textTheme.titleSmall != null
-      ? TextStyleDecorator(
-          _textTheme.titleSmall!,
-          _katjasKleurplaat,
-        )
-      : null;
+  TextStyleDecorator? get titleSmall =>
+      _textTheme.titleSmall != null ? TextStyleDecorator(_textTheme.titleSmall!, _katjasKleurplaat) : null;
 
   /// See [TextTheme.bodyLarge].
-  TextStyleDecorator? get bodyLarge => _textTheme.bodyLarge != null
-      ? TextStyleDecorator(
-          _textTheme.bodyLarge!,
-          _katjasKleurplaat,
-        )
-      : null;
+  TextStyleDecorator? get bodyLarge =>
+      _textTheme.bodyLarge != null ? TextStyleDecorator(_textTheme.bodyLarge!, _katjasKleurplaat) : null;
 
   /// See [TextTheme.bodyMedium].
-  TextStyleDecorator? get bodyMedium => _textTheme.bodyMedium != null
-      ? TextStyleDecorator(
-          _textTheme.bodyMedium!,
-          _katjasKleurplaat,
-        )
-      : null;
+  TextStyleDecorator? get bodyMedium =>
+      _textTheme.bodyMedium != null ? TextStyleDecorator(_textTheme.bodyMedium!, _katjasKleurplaat) : null;
 
   /// See [TextTheme.bodySmall].
-  TextStyleDecorator? get bodySmall => _textTheme.bodySmall != null
-      ? TextStyleDecorator(
-          _textTheme.bodySmall!,
-          _katjasKleurplaat,
-        )
-      : null;
+  TextStyleDecorator? get bodySmall =>
+      _textTheme.bodySmall != null ? TextStyleDecorator(_textTheme.bodySmall!, _katjasKleurplaat) : null;
 
   /// See [TextTheme.labelLarge].
-  TextStyleDecorator? get labelLarge => _textTheme.labelLarge != null
-      ? TextStyleDecorator(
-          _textTheme.labelLarge!,
-          _katjasKleurplaat,
-        )
-      : null;
+  TextStyleDecorator? get labelLarge =>
+      _textTheme.labelLarge != null ? TextStyleDecorator(_textTheme.labelLarge!, _katjasKleurplaat) : null;
 
   /// See [TextTheme.labelMedium].
-  TextStyleDecorator? get labelMedium => _textTheme.labelMedium != null
-      ? TextStyleDecorator(
-          _textTheme.labelMedium!,
-          _katjasKleurplaat,
-        )
-      : null;
+  TextStyleDecorator? get labelMedium =>
+      _textTheme.labelMedium != null ? TextStyleDecorator(_textTheme.labelMedium!, _katjasKleurplaat) : null;
 
   /// See [TextTheme.labelSmall].
-  TextStyleDecorator? get labelSmall => _textTheme.labelSmall != null
-      ? TextStyleDecorator(
-          _textTheme.labelSmall!,
-          _katjasKleurplaat,
-        )
-      : null;
+  TextStyleDecorator? get labelSmall =>
+      _textTheme.labelSmall != null ? TextStyleDecorator(_textTheme.labelSmall!, _katjasKleurplaat) : null;
 }

@@ -9,14 +9,12 @@ import 'package:injectable/injectable.dart';
 abstract class ChopperModule {
   @lazySingleton
   ChopperClient chopper() => ChopperClient(
-        converter: const JsonSerializableConverter(_factories),
-        interceptors: [
-          // We want to disable logging in release mode because it could leak sensitive information
-          if (kDebugMode) ...[
-            HttpLoggingInterceptor(),
-          ],
-        ],
-      );
+    converter: const JsonSerializableConverter(_factories),
+    interceptors: [
+      // We want to disable logging in release mode because it could leak sensitive information
+      if (kDebugMode) ...[HttpLoggingInterceptor()],
+    ],
+  );
 }
 
 const _factories = {

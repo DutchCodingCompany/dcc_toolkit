@@ -7,9 +7,8 @@ part 'api_user_response.g.dart';
 
 @freezed
 sealed class ApiUserResponse with _$ApiUserResponse {
-  const factory ApiUserResponse({
-    required List<User> results,
-  }) = _ApiUserResponse;
+  const factory ApiUserResponse({required List<User> results}) =
+      _ApiUserResponse;
 
   factory ApiUserResponse.fromJson(Map<String, dynamic> json) =>
       _$ApiUserResponseFromJson(json);

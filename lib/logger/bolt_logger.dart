@@ -85,11 +85,7 @@ class BoltLogger {
   /// ```
   ///
   /// {@endtemplate}
-  static void zap(
-    Object? message, {
-    String? tag,
-    Level level = Level.INFO,
-  }) {
+  static void zap(Object? message, {String? tag, Level level = Level.INFO}) {
     Object? msg;
     Object? error;
     StackTrace? stacktrace;
@@ -128,11 +124,7 @@ class BoltLogger {
   /// {@macro zap}
   ///
   /// {@endtemplate}
-  static void shock(
-    Object? message, {
-    String? tag,
-    Level level = Level.SEVERE,
-  }) {
+  static void shock(Object? message, {String? tag, Level level = Level.SEVERE}) {
     zap(message, tag: tag, level: level);
   }
 }
