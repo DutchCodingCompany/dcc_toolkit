@@ -5,5 +5,8 @@ export 'common/extensions/color.dart';
 export 'common/extensions/iterable.dart';
 export 'common/extensions/text_theme.dart';
 export 'common/result/result.dart';
+export 'common/type_defs.dart';
 export 'logger/bolt_logger.dart';
 export 'style/style.dart';
+export 'test_util/devices_sizes.dart';
+export 'test_util/presentation_event_catcher.dart';
