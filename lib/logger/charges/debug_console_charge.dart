@@ -22,14 +22,13 @@ class DebugConsoleCharge implements BoltCharge {
   }
 
   List<String> _paintLines(ZapEvent event) {
-    final shouldPaint = supportsAnsiEscapes &&
+    final shouldPaint =
+        supportsAnsiEscapes &&
         (event.origin.level.value >= Level.SEVERE.value ||
             event.origin.stackTrace != null ||
             event.origin.error != null);
 
-    return shouldPaint
-        ? event.lines.map((line) => '$_red$line$_reset').toList()
-        : event.lines;
+    return shouldPaint ? event.lines.map((line) => '$_red$line$_reset').toList() : event.lines;
   }
 
   @override

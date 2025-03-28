@@ -5,15 +5,19 @@ import 'package:parameterized_test/parameterized_test.dart';
 
 void main() {
   const testExceptionResult = Failure<int>(ServerError());
-  parameterizedTest('comparing 2 results should return true if equal', [
-    [const Success<int>(1), const Success<int>(1), true],
-    [const Success<int>(1), const Success<int>(2), false],
-    [const Success<int>(1), const Failure<int>(ServerError()), false],
-    [testExceptionResult, testExceptionResult, true],
-  ], (Result<int> result1, Result<int> result2, bool expected) {
-    final actual = result1 == result2;
-    expect(actual, expected);
-  });
+  parameterizedTest(
+    'comparing 2 results should return true if equal',
+    [
+      [const Success<int>(1), const Success<int>(1), true],
+      [const Success<int>(1), const Success<int>(2), false],
+      [const Success<int>(1), const Failure<int>(ServerError()), false],
+      [testExceptionResult, testExceptionResult, true],
+    ],
+    (Result<int> result1, Result<int> result2, bool expected) {
+      final actual = result1 == result2;
+      expect(actual, expected);
+    },
+  );
 
   test('getOrNull returns value for Success', () {
     final result = Result.success(1);

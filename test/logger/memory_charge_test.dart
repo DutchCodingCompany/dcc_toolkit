@@ -41,11 +41,5 @@ void main() {
 }
 
 ZapEvent _produceEvent(String input) {
-  return ZapEvent.fromRecord(
-    LogRecord(
-      Level.INFO,
-      input,
-      'test',
-    ),
-  );
+  return ZapEvent.fromRecord(LogRecord(Level.INFO, input, 'test'));
 }

@@ -14,10 +14,7 @@ extension ThemingExtensions on BuildContext {
   TextTheme get textThemes => theme.textTheme;
 
   /// Get [TextThemesDecorator] from [BuildContext].
-  TextThemesDecorator get textThemesDecorator => TextThemesDecorator(
-        textThemes,
-        katjasKleurPlaat,
-      );
+  TextThemesDecorator get textThemesDecorator => TextThemesDecorator(textThemes, katjasKleurPlaat);
 
   /// Get [KatjasKleurplaat] from [BuildContext].
   KatjasKleurplaat get katjasKleurPlaat => theme.extension<KatjasKleurplaat>()!;

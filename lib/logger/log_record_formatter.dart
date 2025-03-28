@@ -36,8 +36,7 @@ class LogRecordFormatter {
     return record.error.toString().split('\n').map((e) => e.trim()).toList();
   }
 
-  List<String> _formatStacktrace(LogRecord record) =>
-      record.stackTrace?.strike.split('\n') ?? [];
+  List<String> _formatStacktrace(LogRecord record) => record.stackTrace?.strike.split('\n') ?? [];
 
   String _prefix(LogRecord record) {
     final tag = record.loggerName;

@@ -59,17 +59,14 @@ class SurfaceGroup implements SurfaceGroupInterface<Color> {
     return SurfaceGroup(
       color: Color.lerp(color, other.color, t)!,
       onColorContrast: Color.lerp(onColorContrast, other.onColorContrast, t)!,
-      onColorContrastDim:
-          Color.lerp(onColorContrastDim, other.onColorContrastDim, t)!,
+      onColorContrastDim: Color.lerp(onColorContrastDim, other.onColorContrastDim, t)!,
       onColorSubtle: Color.lerp(onColorSubtle, other.onColorSubtle, t)!,
-      onColorSubtleDim:
-          Color.lerp(onColorSubtleDim, other.onColorSubtleDim, t)!,
+      onColorSubtleDim: Color.lerp(onColorSubtleDim, other.onColorSubtleDim, t)!,
       containerLowest: Color.lerp(containerLowest, other.containerLowest, t)!,
       containerLow: Color.lerp(containerLow, other.containerLow, t)!,
       container: Color.lerp(container, other.container, t)!,
       containerHigh: Color.lerp(containerHigh, other.containerHigh, t)!,
-      containerHighest:
-          Color.lerp(containerHighest, other.containerHighest, t)!,
+      containerHighest: Color.lerp(containerHighest, other.containerHighest, t)!,
       link: Color.lerp(link, other.link, t)!,
     );
   }

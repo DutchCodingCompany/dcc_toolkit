@@ -2,9 +2,9 @@ import 'package:chopper/chopper.dart' as c;
 import 'package:dcc_toolkit/chopper/base_error.dart';
 import 'package:dcc_toolkit/common/result/result.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:parameterized_test/parameterized_test.dart';
 
 void main() {
@@ -68,27 +68,21 @@ void main() {
     expect(await result6, Result<int>.failure(const UnknownError()));
   });
 
-  parameterizedTest('Different exceptions result in different errors', [
-    [Exception('woepsie'), const UnknownError()],
-    [const FormatException('woepsie'), const UnknownError()],
+  parameterizedTest(
+    'Different exceptions result in different errors',
     [
-      c.ChopperHttpException(
-        c.Response(http.Response('woepsie', 401), 'woepsie'),
-      ),
-      const AuthenticationFailedError(),
+      [Exception('woepsie'), const UnknownError()],
+      [const FormatException('woepsie'), const UnknownError()],
+      [c.ChopperHttpException(c.Response(http.Response('woepsie', 401), 'woepsie')), const AuthenticationFailedError()],
+      [c.ChopperHttpException(c.Response(http.Response('woepsie', 500), 'woepsie')), const ServerError()],
+      [ClientException('woepsie'), const NoInternetError()],
+      [CheckedFromJsonException({}, null, 'woepsie', null), const ServerError()],
     ],
-    [
-      c.ChopperHttpException(
-        c.Response(http.Response('woepsie', 500), 'woepsie'),
-      ),
-      const ServerError(),
-    ],
-    [ClientException('woepsie'), const NoInternetError()],
-    [CheckedFromJsonException({}, null, 'woepsie', null), const ServerError()],
-  ], (Exception exception, BaseError expectedError) async {
-    final result = await tryCall(() async => throw exception);
-    expect(result, Result<Never>.failure(expectedError));
-  });
+    (Exception exception, BaseError expectedError) async {
+      final result = await tryCall(() async => throw exception);
+      expect(result, Result<Never>.failure(expectedError));
+    },
+  );
 }
 
 int getResult5() {

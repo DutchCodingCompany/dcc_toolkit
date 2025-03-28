@@ -4,8 +4,7 @@ import 'package:dcc_toolkit/style/kleurplaat/surface_group.dart';
 import 'package:flutter/material.dart';
 
 /// {@macro kleurplaat}
-class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat>
-    implements KleurplaatInterface<Color> {
+class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat> implements KleurplaatInterface<Color> {
   /// {@macro kleurplaat}
   const KatjasKleurplaat({
     required this.primary,
@@ -82,23 +81,22 @@ class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat>
     ColorGroup? successFill,
     SurfaceGroup? surface,
     SurfaceGroup? surfaceInverse,
-  }) =>
-      KatjasKleurplaat(
-        primary: primary ?? this.primary,
-        primaryFill: primaryFill ?? this.primaryFill,
-        secondary: secondary ?? this.secondary,
-        secondaryFill: secondaryFill ?? this.secondaryFill,
-        tertiary: tertiary ?? this.tertiary,
-        tertiaryFill: tertiaryFill ?? this.tertiaryFill,
-        content: content ?? this.content,
-        contentFill: contentFill ?? this.contentFill,
-        error: error ?? this.error,
-        errorFill: errorFill ?? this.errorFill,
-        success: success ?? this.success,
-        successFill: successFill ?? this.successFill,
-        surface: surface ?? this.surface,
-        surfaceInverse: surfaceInverse ?? this.surfaceInverse,
-      );
+  }) => KatjasKleurplaat(
+    primary: primary ?? this.primary,
+    primaryFill: primaryFill ?? this.primaryFill,
+    secondary: secondary ?? this.secondary,
+    secondaryFill: secondaryFill ?? this.secondaryFill,
+    tertiary: tertiary ?? this.tertiary,
+    tertiaryFill: tertiaryFill ?? this.tertiaryFill,
+    content: content ?? this.content,
+    contentFill: contentFill ?? this.contentFill,
+    error: error ?? this.error,
+    errorFill: errorFill ?? this.errorFill,
+    success: success ?? this.success,
+    successFill: successFill ?? this.successFill,
+    surface: surface ?? this.surface,
+    surfaceInverse: surfaceInverse ?? this.surfaceInverse,
+  );
 
   @override
   KatjasKleurplaat lerp(KatjasKleurplaat? other, double t) {
@@ -123,26 +121,25 @@ class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat>
   }
 
   /// Converts the [KatjasKleurplaat] to a [ColorScheme].
-  ColorScheme toColorScheme({Brightness brightness = Brightness.light}) =>
-      ColorScheme(
-        brightness: brightness,
-        primary: primary.color,
-        primaryContainer: primary.color,
-        onPrimary: primary.onColorContrast,
-        onPrimaryContainer: primary.onColorContrast,
-        secondary: content.color,
-        secondaryContainer: content.color,
-        secondaryFixed: secondary?.color,
-        secondaryFixedDim: secondaryFill?.color,
-        tertiaryFixed: tertiary?.color,
-        tertiaryFixedDim: tertiaryFill?.color,
-        onSecondary: content.onColorContrast,
-        onSecondaryContainer: content.onColorContrast,
-        tertiary: error.color,
-        onTertiary: error.onColorContrast,
-        error: error.color,
-        onError: error.onColorContrast,
-        surface: surface.color,
-        onSurface: surface.onColorContrast,
-      );
+  ColorScheme toColorScheme({Brightness brightness = Brightness.light}) => ColorScheme(
+    brightness: brightness,
+    primary: primary.color,
+    primaryContainer: primary.color,
+    onPrimary: primary.onColorContrast,
+    onPrimaryContainer: primary.onColorContrast,
+    secondary: content.color,
+    secondaryContainer: content.color,
+    secondaryFixed: secondary?.color,
+    secondaryFixedDim: secondaryFill?.color,
+    tertiaryFixed: tertiary?.color,
+    tertiaryFixedDim: tertiaryFill?.color,
+    onSecondary: content.onColorContrast,
+    onSecondaryContainer: content.onColorContrast,
+    tertiary: error.color,
+    onTertiary: error.onColorContrast,
+    error: error.color,
+    onError: error.onColorContrast,
+    surface: surface.color,
+    onSurface: surface.onColorContrast,
+  );
 }

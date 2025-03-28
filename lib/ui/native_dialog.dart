@@ -24,35 +24,31 @@ void showNativeDialog(
   if (defaultTargetPlatform == TargetPlatform.iOS) {
     showCupertinoDialog<void>(
       context: context,
-      builder: (context) => CupertinoAlertDialog(
-        title: Text(title),
-        content: Text(content),
-        actions: actions
-            .map(
-              (action) => CupertinoDialogAction(
-                onPressed: action.onTap,
-                isDestructiveAction: action.isDestructiveAction,
-                child: Text(action.text),
-              ),
-            )
-            .toList(),
-      ),
+      builder:
+          (context) => CupertinoAlertDialog(
+            title: Text(title),
+            content: Text(content),
+            actions:
+                actions
+                    .map(
+                      (action) => CupertinoDialogAction(
+                        onPressed: action.onTap,
+                        isDestructiveAction: action.isDestructiveAction,
+                        child: Text(action.text),
+                      ),
+                    )
+                    .toList(),
+          ),
     );
   } else {
     showDialog<void>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(title),
-        content: Text(content),
-        actions: actions
-            .map(
-              (action) => TextButton(
-                onPressed: action.onTap,
-                child: Text(action.text),
-              ),
-            )
-            .toList(),
-      ),
+      builder:
+          (context) => AlertDialog(
+            title: Text(title),
+            content: Text(content),
+            actions: actions.map((action) => TextButton(onPressed: action.onTap, child: Text(action.text))).toList(),
+          ),
     );
   }
 }
@@ -60,11 +56,7 @@ void showNativeDialog(
 /// A dialog action which is used to show the actions of a native dialog.
 class DialogAction {
   /// Creates a [DialogAction].
-  const DialogAction({
-    required this.text,
-    required this.onTap,
-    this.isDestructiveAction = false,
-  });
+  const DialogAction({required this.text, required this.onTap, this.isDestructiveAction = false});
 
   /// The text of the action.
   final String text;

@@ -37,14 +37,7 @@ class _BoltLoggerViewState extends State<BoltLoggerView> {
           itemBuilder: (context, index) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: charge.items[index].lines
-                  .map(
-                    (e) => Text(
-                      e,
-                      style: const TextStyle(fontSize: 10),
-                    ),
-                  )
-                  .toList(),
+              children: charge.items[index].lines.map((e) => Text(e, style: const TextStyle(fontSize: 10))).toList(),
             );
           },
         );
