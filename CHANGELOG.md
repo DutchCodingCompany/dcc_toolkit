@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.0.13
+* added automatic closing of native dialog.
+
 ## 0.0.12
 * Updated dependencies
 * Added test_util: catch presentation event helper, DeviceSizes
