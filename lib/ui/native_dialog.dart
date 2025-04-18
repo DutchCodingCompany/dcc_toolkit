@@ -25,14 +25,17 @@ void showNativeDialog(
     showCupertinoDialog<void>(
       context: context,
       builder:
-          (context) => CupertinoAlertDialog(
+          (dialogContext) => CupertinoAlertDialog(
             title: Text(title),
             content: Text(content),
             actions:
                 actions
                     .map(
                       (action) => CupertinoDialogAction(
-                        onPressed: action.onTap,
+                        onPressed: () {
+                          action.onTap();
+                          Navigator.of(dialogContext).pop();
+                        },
                         isDestructiveAction: action.isDestructiveAction,
                         child: Text(action.text),
                       ),
@@ -44,16 +47,27 @@ void showNativeDialog(
     showDialog<void>(
       context: context,
       builder:
-          (context) => AlertDialog(
+          (dialogContext) => AlertDialog(
             title: Text(title),
             content: Text(content),
-            actions: actions.map((action) => TextButton(onPressed: action.onTap, child: Text(action.text))).toList(),
+            actions:
+                actions
+                    .map(
+                      (action) => TextButton(
+                        onPressed: () {
+                          action.onTap();
+                          Navigator.of(dialogContext).pop();
+                        },
+                        child: Text(action.text),
+                      ),
+                    )
+                    .toList(),
           ),
     );
   }
 }
 
-/// A dialog action which is used to show the actions of a native dialog.
+/// A dialog action which is used to show the actions of a native dialog. Tapping a action will also close the dialog.
 class DialogAction {
   /// Creates a [DialogAction].
   const DialogAction({required this.text, required this.onTap, this.isDestructiveAction = false});
