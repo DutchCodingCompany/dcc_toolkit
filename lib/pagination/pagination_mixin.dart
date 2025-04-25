@@ -20,7 +20,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 ///   Future<void> initializeState({String? searchQuery}) async {
 ///     // Initialize state logic
 ///   }
-/// 
+///
 ///   @override
 ///   Future<void> loadNextPage(void Function(PaginationState<T>) emitState) async {
 ///     // Load next page logic
