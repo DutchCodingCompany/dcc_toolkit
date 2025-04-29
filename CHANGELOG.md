@@ -1,7 +1,11 @@
 # Changelog
 
+## 0.0.14
+* Added Pagination 
+* Added RefreshStreamMixin
+
 ## 0.0.13
-* added automatic closing of native dialog.
+* Added automatic closing of native dialog.
 
 ## 0.0.12
 * Updated dependencies
