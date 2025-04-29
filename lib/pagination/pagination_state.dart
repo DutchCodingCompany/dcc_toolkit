@@ -1,7 +1,7 @@
 /// State for pagination.
 class PaginationState<T> {
   /// Creates a new [PaginationState] with the given values.
-  PaginationState({
+  const PaginationState({
     this.items = const [],
     this.currentPage = 1,
     this.lastPage = 1,

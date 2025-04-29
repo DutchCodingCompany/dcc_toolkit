@@ -33,7 +33,7 @@ void main() {
     });
 
     test('loadNextPage emits new state with next page items when current page is less than last page', () async {
-      final paginationState = PaginationState<int>(items: [1, 2, 3], currentPage: 1, lastPage: 3);
+      const paginationState = PaginationState<int>(items: [1, 2, 3], currentPage: 1, lastPage: 3);
       cubit.emit(_TestState(paginationState));
 
       final nextPaginationStates = <PaginationState<int>?>[];
@@ -47,7 +47,7 @@ void main() {
     });
 
     test('loadNextPage does not emit new state when current page is equal to last page', () async {
-      final paginationState = PaginationState<int>(items: [1, 2, 3], currentPage: 3, lastPage: 3);
+      const paginationState = PaginationState<int>(items: [1, 2, 3], currentPage: 3, lastPage: 3);
       cubit.emit(_TestState(paginationState));
 
       final nextPaginationStates = <PaginationState<int>?>[];
@@ -57,7 +57,7 @@ void main() {
     });
 
     test('loadNextPage does not emit new state when next page items are empty', () async {
-      final paginationState = PaginationState<int>(items: [1, 2, 3], currentPage: 1, lastPage: 3);
+      const paginationState = PaginationState<int>(items: [1, 2, 3], currentPage: 1, lastPage: 3);
       cubit
         ..emit(_TestState(paginationState))
         ..returnPages = [];
@@ -88,7 +88,7 @@ class _TestState implements PaginationInterface<int> {
 }
 
 class _TestCubit extends Cubit<_TestState> with PaginationMixin<int, _TestState> {
-  _TestCubit() : super(_TestState(PaginationState()));
+  _TestCubit() : super(_TestState(const PaginationState()));
 
   List<int> returnPages = [1, 2, 3];
 
