@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -15,14 +17,14 @@ import 'package:flutter/material.dart';
 ///   ],
 /// );
 /// ```
-void showNativeDialog(
+Future<T?> showNativeDialog<T>(
   BuildContext context, {
   required String title,
-  required List<DialogAction> actions,
+  required List<DialogAction<T>> actions,
   required String content,
 }) {
   if (defaultTargetPlatform == TargetPlatform.iOS) {
-    showCupertinoDialog<void>(
+    return showCupertinoDialog<T>(
       context: context,
       builder:
           (dialogContext) => CupertinoAlertDialog(
@@ -32,9 +34,9 @@ void showNativeDialog(
                 actions
                     .map(
                       (action) => CupertinoDialogAction(
-                        onPressed: () {
-                          action.onTap();
-                          Navigator.of(dialogContext).pop();
+                        onPressed: () async {
+                          final result = await action.onTap();
+                          if (dialogContext.mounted) Navigator.of(dialogContext).pop(result);
                         },
                         isDestructiveAction: action.isDestructiveAction,
                         child: Text(action.text),
@@ -44,7 +46,7 @@ void showNativeDialog(
           ),
     );
   } else {
-    showDialog<void>(
+    return showDialog<T?>(
       context: context,
       builder:
           (dialogContext) => AlertDialog(
@@ -54,9 +56,9 @@ void showNativeDialog(
                 actions
                     .map(
                       (action) => TextButton(
-                        onPressed: () {
-                          action.onTap();
-                          Navigator.of(dialogContext).pop();
+                        onPressed: () async {
+                          final result = await action.onTap();
+                          if (dialogContext.mounted) Navigator.of(dialogContext).pop(result);
                         },
                         child: Text(action.text),
                       ),
@@ -68,7 +70,7 @@ void showNativeDialog(
 }
 
 /// A dialog action which is used to show the actions of a native dialog. Tapping a action will also close the dialog.
-class DialogAction {
+class DialogAction<T> {
   /// Creates a [DialogAction].
   const DialogAction({required this.text, required this.onTap, this.isDestructiveAction = false});
 
@@ -76,7 +78,7 @@ class DialogAction {
   final String text;
 
   /// The callback that is called when the action is tapped.
-  final VoidCallback onTap;
+  final FutureOr<T?> Function() onTap;
 
   /// Whether the action is a destructive action. This is only used on iOS.
   final bool isDestructiveAction;
