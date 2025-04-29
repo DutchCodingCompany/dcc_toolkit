@@ -4,6 +4,7 @@ export 'common/extensions/build_context.dart';
 export 'common/extensions/color.dart';
 export 'common/extensions/iterable.dart';
 export 'common/extensions/text_theme.dart';
+export 'common/mixins/refresh_stream_mixin.dart';
 export 'common/result/result.dart';
 export 'common/type_defs.dart';
 export 'logger/bolt_logger.dart';
