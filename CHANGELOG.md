@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.0.15
+* Added `FutureOr<T?>` to `showNativeDialog` as return type;
+
 ## 0.0.14
 * Added Pagination 
 * Added RefreshStreamMixin
