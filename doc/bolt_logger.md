@@ -33,7 +33,7 @@ class MyAwesomeClass{
 }
 ```
 
-`BoltLogger` offer `zap` as a extension on `Object` meaning you can call `zap` on or in any object. 
+`BoltLogger` offers `zap` as a extension on `Object` meaning you can call `zap` on or in any object. 
 Because it's an extension we can automatically include the `runtimeType` of the object that called `zap` as tag for the log message.
 
 Just as Zeus when zapping your not only limited to only zap `String`s, you can zap any object. For example: Exceptions, Errors, StackTrace. BoltLogger will take care of the objects accordingly.
