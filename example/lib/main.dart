@@ -38,7 +38,7 @@ class MyHomePage extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               child: AnnotatedText(
                 text:
-                    '|Flutter(onFlutterTap)| example of using a Rich Text with annotations with multiple |tap(onTap)| actions.\nThis tap |action(action)| does nothing. And |action| without () does nothing as well',
+                    '[Flutter](onFlutterTap) example of using a Rich Text with annotations with multiple [tap](onTap) actions.\nThis tap [action](action) does nothing. And [action] without () does nothing as well',
                 defaultStyle: const TextStyle(color: Colors.black),
                 annotationStyle: const TextStyle(color: Colors.blue),
                 actions: {

@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 /// A widget that displays a text with inline actions.
-/// Supported formats: |text(action)| or |text|
+/// Supported formats: [text](action) or [text]
 /// This way translations can be done with inline actions.
 ///
 /// The text is displayed as a [RichText] widget.
@@ -10,6 +10,20 @@ import 'package:flutter/material.dart';
 /// The [actions] map is used to map the action name to the action to perform when the text is tapped.
 /// The [defaultStyle] is the style of the default text.
 /// The [annotationStyle] is the style of the annotated text.
+///
+/// [some text] only highlights the text, but does not trigger an action.
+/// [some text](action) highlights the text and triggers the action when tapped.
+/// [some text](action) without a defined action for the exact name 'action' will not trigger an action.
+///
+/// Example:
+/// ```dart
+/// AnnotatedText(
+///   text: 'Hello [world](onWorldTapped)',
+///   actions: {'onWorldTapped': () => print('world')},
+///   defaultStyle: TextStyle(color: Colors.black),
+///   annotationStyle: TextStyle(color: Colors.blue),
+/// )
+/// ```
 class AnnotatedText extends StatelessWidget {
   /// Creates a widget that displays a text with annotations.
   const AnnotatedText({
@@ -35,12 +49,7 @@ class AnnotatedText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RichText(
-      text: _buildTextSpan(
-        text: text,
-        defaultStyle: defaultStyle,
-        annotationStyle: annotationStyle,
-        actions: actions,
-      ),
+      text: _buildTextSpan(text: text, defaultStyle: defaultStyle, annotationStyle: annotationStyle, actions: actions),
     );
   }
 }
@@ -51,8 +60,8 @@ TextSpan _buildTextSpan({
   required TextStyle annotationStyle,
   Map<String, VoidCallback>? actions,
 }) {
-  /// matches |text(function)| with an action, or |text| without an action
-  final regex = RegExp(r'\|(.+?)(?:\((.*?)\))?\|');
+  /// matches [text](action) with an action, or [text] without an action
+  final regex = RegExp(r'\[([^\]]+?)\](?:\((.*?)\))?');
   final spans = <TextSpan>[];
   var currentIndex = 0;
 
