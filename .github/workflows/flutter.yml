@@ -26,7 +26,7 @@ jobs:
         run: dart format . -o none --set-exit-if-changed
 
       - name: Run code generation
-        run: cd example && flutter pub get && flutter pub run build_runner build && cd ..
+        run: cd example && flutter pub get && cd ..
 
       - name: Analyze project source
         run: flutter analyze --fatal-infos
