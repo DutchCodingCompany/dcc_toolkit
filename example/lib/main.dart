@@ -1,4 +1,5 @@
 import 'package:dcc_toolkit/ui/annotated_text/annotated_text.dart';
+import 'package:dcc_toolkit/ui/native_dialog.dart';
 import 'package:example/core/injectable/injectable.dart';
 import 'package:example/profile/presentation/cubit/user_cubit.dart';
 import 'package:example/profile/presentation/user_page.dart';
@@ -86,6 +87,27 @@ class MyHomePage extends StatelessWidget {
                     ),
                   ),
               child: const Text('Get user fails'),
+            ),
+            ElevatedButton(
+              onPressed:
+                  () => showNativeDialog(
+                    context,
+                    title: 'Title',
+                    content: 'Content',
+                    actions: [
+                      DialogAction(
+                        text: 'Action',
+                        onTap: () {},
+                        textStyle: const TextStyle(color: Colors.green),
+                      ),
+                      DialogAction(
+                        text: 'Action',
+                        onTap: () {},
+                        textStyle: const TextStyle(color: Colors.red),
+                      ),
+                    ],
+                  ),
+              child: const Text('Show native dialog'),
             ),
           ],
         ),
