@@ -1,4 +1,7 @@
+import 'package:flutter/foundation.dart';
+
 /// State for pagination.
+@immutable
 class PaginationState<T> {
   /// Creates a new [PaginationState] with the given values.
   const PaginationState({
@@ -60,5 +63,34 @@ class PaginationState<T> {
       total: total ?? this.total,
       searchQuery: searchQuery ?? this.searchQuery,
     );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is PaginationState<T> &&
+        listEquals(other.items, items) &&
+        other.currentPage == currentPage &&
+        other.lastPage == lastPage &&
+        other.isLoading == isLoading &&
+        other.loadingInitialPage == loadingInitialPage &&
+        other.hasError == hasError &&
+        other.total == total &&
+        other.searchQuery == searchQuery;
+  }
+
+  @override
+  int get hashCode {
+    return Object.hashAll([
+      Object.hashAll(items),
+      currentPage,
+      lastPage,
+      isLoading,
+      loadingInitialPage,
+      hasError,
+      total,
+      searchQuery,
+    ]);
   }
 }
