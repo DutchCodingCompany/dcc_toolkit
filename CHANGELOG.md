@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.16
+* Added PaginationStateView
+* Added HighlightedText
+* Added native dialog button text styling
+* Added PaginationState equality operator and hashCode
+
 ## 0.0.15
 * Added `FutureOr<T?>` to `showNativeDialog` as return type;
 
