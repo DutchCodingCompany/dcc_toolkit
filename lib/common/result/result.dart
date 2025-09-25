@@ -46,7 +46,7 @@ sealed class Result<T> {
     required TResult Function(T response) success,
     required TResult Function(Object? error) error,
   }) {
-    if (this.isSuccess) {
+    if (isSuccess) {
       return success((this as Success<T>).value);
     } else {
       return error((this as Failure<T>).error);

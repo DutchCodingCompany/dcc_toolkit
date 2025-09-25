@@ -39,7 +39,7 @@ Future<T?> showNativeDialog<T>(
                           if (dialogContext.mounted) Navigator.of(dialogContext).pop(result);
                         },
                         isDestructiveAction: action.isDestructiveAction,
-                        child: Text(action.text),
+                        child: Text(action.text, style: action.textStyle),
                       ),
                     )
                     .toList(),
@@ -60,7 +60,7 @@ Future<T?> showNativeDialog<T>(
                           final result = await action.onTap();
                           if (dialogContext.mounted) Navigator.of(dialogContext).pop(result);
                         },
-                        child: Text(action.text),
+                        child: Text(action.text, style: action.textStyle),
                       ),
                     )
                     .toList(),
@@ -72,7 +72,7 @@ Future<T?> showNativeDialog<T>(
 /// A dialog action which is used to show the actions of a native dialog. Tapping a action will also close the dialog.
 class DialogAction<T> {
   /// Creates a [DialogAction].
-  const DialogAction({required this.text, required this.onTap, this.isDestructiveAction = false});
+  const DialogAction({required this.text, required this.onTap, this.isDestructiveAction = false, this.textStyle});
 
   /// The text of the action.
   final String text;
@@ -82,4 +82,7 @@ class DialogAction<T> {
 
   /// Whether the action is a destructive action. This is only used on iOS.
   final bool isDestructiveAction;
+
+  /// The style of the action text.
+  final TextStyle? textStyle;
 }
