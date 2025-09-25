@@ -20,8 +20,10 @@ void main() {
         [-1, 1, true],
         [1, 2, true],
       ],
-      (int currentPage, int lastPage, bool expected) =>
-          expect(PaginationState<int>(items: [], currentPage: currentPage, lastPage: lastPage).hasNextPage, expected),
+      (int currentPage, int lastPage, bool expected) => expect(
+        PaginationState<int>(items: const [], currentPage: currentPage, lastPage: lastPage).hasNextPage,
+        expected,
+      ),
     );
   });
 
