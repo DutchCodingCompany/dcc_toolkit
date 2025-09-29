@@ -65,7 +65,7 @@ class PaginatedScrollView<T> extends StatelessWidget {
           ),
           if (state.hasNextPage)
             const SliverToBoxAdapter(
-              child: Padding(padding: EdgeInsets.all(Sizes.m), child: Center(child: CircularProgressIndicator())),
+              child: Padding(padding: EdgeInsets.all(Sizes.px16), child: Center(child: CircularProgressIndicator())),
             ),
           if (bottomWidget != null) SliverToBoxAdapter(child: bottomWidget),
           //Bottom insets to be able to scroll the entire content above the FloatingActionButton
