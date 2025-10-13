@@ -1,8 +1,13 @@
 # Changelog
 
+## 0.0.17
+* Added debouncer
+* Added all sizes, paddings, radiusses and dimensions
+* Made textAlign available for AnnotatedText widget
+
 ## 0.0.16
 * Added PaginationStateView
-* Added HighlightedText
+* Added AnnotatedText
 * Added native dialog button text styling
 * Added PaginationState equality operator and hashCode
 
