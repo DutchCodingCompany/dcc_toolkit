@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 /// The [actions] map is used to map the action name to the action to perform when the text is tapped.
 /// The [defaultStyle] is the style of the default text.
 /// The [annotationStyle] is the style of the annotated text.
+/// The [textAlign] is the alignment of the text.
 ///
 /// [some text] only highlights the text, but does not trigger an action.
 /// [some text](action) highlights the text and triggers the action when tapped.
@@ -31,6 +32,7 @@ class AnnotatedText extends StatelessWidget {
     required this.actions,
     required this.defaultStyle,
     required this.annotationStyle,
+    this.textAlign = TextAlign.start,
     super.key,
   });
 
@@ -46,9 +48,13 @@ class AnnotatedText extends StatelessWidget {
   /// The style of the annotated text.
   final TextStyle annotationStyle;
 
+  /// The alignment of the text.
+  final TextAlign textAlign;
+
   @override
   Widget build(BuildContext context) {
     return RichText(
+      textAlign: textAlign,
       text: _buildTextSpan(text: text, defaultStyle: defaultStyle, annotationStyle: annotationStyle, actions: actions),
     );
   }
