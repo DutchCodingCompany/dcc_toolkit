@@ -53,9 +53,9 @@ class AnnotatedText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
+    return Text.rich(
+      _buildTextSpan(text: text, defaultStyle: defaultStyle, annotationStyle: annotationStyle, actions: actions),
       textAlign: textAlign,
-      text: _buildTextSpan(text: text, defaultStyle: defaultStyle, annotationStyle: annotationStyle, actions: actions),
     );
   }
 }
