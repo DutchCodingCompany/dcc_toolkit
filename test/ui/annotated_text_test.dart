@@ -16,9 +16,9 @@ void main() {
       ),
     );
 
-    // Get the only RichText widget in the tree
-    final richTextWidget = tester.widget<RichText>(find.byType(RichText));
-    final rootSpan = richTextWidget.text as TextSpan;
+    // Get the Text widget that uses Text.rich
+    final textWidget = tester.widget<Text>(find.byType(Text));
+    final rootSpan = textWidget.textSpan! as TextSpan;
 
     // Combine all spans into a single string
     final fullText = rootSpan.children!.map((span) => (span as TextSpan).text).join();
@@ -42,8 +42,8 @@ void main() {
       ),
     );
 
-    final richText = tester.widget<RichText>(find.byType(RichText));
-    final rootSpan = richText.text as TextSpan;
+    final textWidget = tester.widget<Text>(find.byType(Text));
+    final rootSpan = textWidget.textSpan! as TextSpan;
 
     final annotatedSpan = rootSpan.children![1]; // "world"
     expect((annotatedSpan as TextSpan).style!.color, equals(annotationStyle.color));
@@ -61,9 +61,9 @@ void main() {
       ),
     );
 
-    // Get the RichText widget
-    final richTextWidget = tester.widget<RichText>(find.byType(RichText));
-    final rootSpan = richTextWidget.text as TextSpan;
+    // Get the Text widget that uses Text.rich
+    final textWidget = tester.widget<Text>(find.byType(Text));
+    final rootSpan = textWidget.textSpan! as TextSpan;
 
     // Locate the annotated span (second span in the children list)
     final annotatedSpan = rootSpan.children![1] as TextSpan;
