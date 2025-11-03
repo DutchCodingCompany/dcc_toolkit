@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.0.18
+* Made `AnnotatedText` accessible
+
 ## 0.0.17
 * Added debouncer
 * Added all sizes, paddings, radiusses and dimensions
