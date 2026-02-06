@@ -2,106 +2,106 @@ import 'package:dcc_toolkit/style/interface/color_group_interface.dart';
 import 'package:dcc_toolkit/style/interface/kleurplaat_interface.dart';
 import 'package:dcc_toolkit/style/interface/surface_group_interface.dart';
 import 'package:dcc_toolkit/style/kleurplaat/katjas_kleurplaat.dart';
-import 'package:dcc_toolkit/style/text_style/text_style_color_group.dart';
-import 'package:dcc_toolkit/style/text_style/text_style_surface_group.dart';
-import 'package:flutter/material.dart';
+import 'package:dcc_toolkit/style/text_style/handschrift.dart';
+import 'package:dcc_toolkit/style/text_style/handschrift_color_group.dart';
+import 'package:dcc_toolkit/style/text_style/handschrift_surface_group.dart';
 
 /// {@template text_style_decorator}
-/// Decorates a [TextStyle] with [KatjasKleurplaat] colors.
+/// Decorates a [Handschrift] with [KatjasKleurplaat] colors.
 /// {@endtemplate}
-class TextStyleDecorator implements KleurplaatInterface<TextStyle> {
+class HandschriftDecorator implements KleurplaatInterface<Handschrift> {
   /// {@macro text_style_decorator}
-  const TextStyleDecorator(this._textStyle, this._kleurplaat);
+  const HandschriftDecorator(this._textStyle, this._kleurplaat);
 
-  final TextStyle _textStyle;
+  final Handschrift _textStyle;
   final KatjasKleurplaat _kleurplaat;
 
   @override
-  ColorGroupInterface<TextStyle> get content => TextStyleColorGroup(
+  ColorGroupInterface<Handschrift> get content => HandschriftColorGroup(
     color: _textStyle.copyWith(color: _kleurplaat.content.color),
     onColorContrast: _textStyle.copyWith(color: _kleurplaat.content.onColorContrast),
     onColorSubtle: _textStyle.copyWith(color: _kleurplaat.content.onColorSubtle),
   );
 
   @override
-  ColorGroupInterface<TextStyle> get contentFill => TextStyleColorGroup(
+  ColorGroupInterface<Handschrift> get contentFill => HandschriftColorGroup(
     color: _textStyle.copyWith(color: _kleurplaat.contentFill.color),
     onColorContrast: _textStyle.copyWith(color: _kleurplaat.contentFill.onColorContrast),
     onColorSubtle: _textStyle.copyWith(color: _kleurplaat.contentFill.onColorSubtle),
   );
 
   @override
-  ColorGroupInterface<TextStyle> get error => TextStyleColorGroup(
+  ColorGroupInterface<Handschrift> get error => HandschriftColorGroup(
     color: _textStyle.copyWith(color: _kleurplaat.error.color),
     onColorContrast: _textStyle.copyWith(color: _kleurplaat.error.onColorContrast),
     onColorSubtle: _textStyle.copyWith(color: _kleurplaat.error.onColorSubtle),
   );
 
   @override
-  ColorGroupInterface<TextStyle> get errorFill => TextStyleColorGroup(
+  ColorGroupInterface<Handschrift> get errorFill => HandschriftColorGroup(
     color: _textStyle.copyWith(color: _kleurplaat.errorFill.color),
     onColorContrast: _textStyle.copyWith(color: _kleurplaat.errorFill.onColorContrast),
     onColorSubtle: _textStyle.copyWith(color: _kleurplaat.errorFill.onColorSubtle),
   );
 
   @override
-  ColorGroupInterface<TextStyle> get primary => TextStyleColorGroup(
+  ColorGroupInterface<Handschrift> get primary => HandschriftColorGroup(
     color: _textStyle.copyWith(color: _kleurplaat.primary.color),
     onColorContrast: _textStyle.copyWith(color: _kleurplaat.primary.onColorContrast),
     onColorSubtle: _textStyle.copyWith(color: _kleurplaat.primary.onColorSubtle),
   );
 
   @override
-  ColorGroupInterface<TextStyle> get primaryFill => TextStyleColorGroup(
+  ColorGroupInterface<Handschrift> get primaryFill => HandschriftColorGroup(
     color: _textStyle.copyWith(color: _kleurplaat.primaryFill.color),
     onColorContrast: _textStyle.copyWith(color: _kleurplaat.primaryFill.onColorContrast),
     onColorSubtle: _textStyle.copyWith(color: _kleurplaat.primaryFill.onColorSubtle),
   );
 
   @override
-  ColorGroupInterface<TextStyle> get secondary => TextStyleColorGroup(
+  ColorGroupInterface<Handschrift> get secondary => HandschriftColorGroup(
     color: _textStyle.copyWith(color: _kleurplaat.secondary?.color),
     onColorContrast: _textStyle.copyWith(color: _kleurplaat.secondary?.onColorContrast),
     onColorSubtle: _textStyle.copyWith(color: _kleurplaat.secondary?.onColorSubtle),
   );
 
   @override
-  ColorGroupInterface<TextStyle> get secondaryFill => TextStyleColorGroup(
+  ColorGroupInterface<Handschrift> get secondaryFill => HandschriftColorGroup(
     color: _textStyle.copyWith(color: _kleurplaat.secondaryFill?.color),
     onColorContrast: _textStyle.copyWith(color: _kleurplaat.secondaryFill?.onColorContrast),
     onColorSubtle: _textStyle.copyWith(color: _kleurplaat.secondaryFill?.onColorSubtle),
   );
 
   @override
-  ColorGroupInterface<TextStyle> get tertiary => TextStyleColorGroup(
+  ColorGroupInterface<Handschrift> get tertiary => HandschriftColorGroup(
     color: _textStyle.copyWith(color: _kleurplaat.tertiary?.color),
     onColorContrast: _textStyle.copyWith(color: _kleurplaat.tertiary?.onColorContrast),
     onColorSubtle: _textStyle.copyWith(color: _kleurplaat.tertiary?.onColorSubtle),
   );
 
   @override
-  ColorGroupInterface<TextStyle> get tertiaryFill => TextStyleColorGroup(
+  ColorGroupInterface<Handschrift> get tertiaryFill => HandschriftColorGroup(
     color: _textStyle.copyWith(color: _kleurplaat.tertiaryFill?.color),
     onColorContrast: _textStyle.copyWith(color: _kleurplaat.tertiaryFill?.onColorContrast),
     onColorSubtle: _textStyle.copyWith(color: _kleurplaat.tertiaryFill?.onColorSubtle),
   );
 
   @override
-  ColorGroupInterface<TextStyle> get success => TextStyleColorGroup(
+  ColorGroupInterface<Handschrift> get success => HandschriftColorGroup(
     color: _textStyle.copyWith(color: _kleurplaat.success.color),
     onColorContrast: _textStyle.copyWith(color: _kleurplaat.success.onColorContrast),
     onColorSubtle: _textStyle.copyWith(color: _kleurplaat.success.onColorSubtle),
   );
 
   @override
-  ColorGroupInterface<TextStyle> get successFill => TextStyleColorGroup(
+  ColorGroupInterface<Handschrift> get successFill => HandschriftColorGroup(
     color: _textStyle.copyWith(color: _kleurplaat.successFill.color),
     onColorContrast: _textStyle.copyWith(color: _kleurplaat.successFill.onColorContrast),
     onColorSubtle: _textStyle.copyWith(color: _kleurplaat.successFill.onColorSubtle),
   );
 
   @override
-  SurfaceGroupInterface<TextStyle> get surface => TextStyleSurfaceGroup(
+  SurfaceGroupInterface<Handschrift> get surface => HandschriftSurfaceGroup(
     color: _textStyle.copyWith(color: _kleurplaat.surface.color),
     onColorContrast: _textStyle.copyWith(color: _kleurplaat.surface.onColorContrast),
     onColorContrastDim: _textStyle.copyWith(color: _kleurplaat.surface.onColorContrastDim),
@@ -116,9 +116,9 @@ class TextStyleDecorator implements KleurplaatInterface<TextStyle> {
   );
 
   @override
-  SurfaceGroupInterface<TextStyle>? get surfaceInverse {
+  SurfaceGroupInterface<Handschrift>? get surfaceInverse {
     if (_kleurplaat.surfaceInverse == null) return null;
-    return TextStyleSurfaceGroup(
+    return HandschriftSurfaceGroup(
       color: _textStyle.copyWith(color: _kleurplaat.surfaceInverse!.color),
       onColorContrast: _textStyle.copyWith(color: _kleurplaat.surfaceInverse!.onColorContrast),
       onColorContrastDim: _textStyle.copyWith(color: _kleurplaat.surfaceInverse!.onColorContrastDim),

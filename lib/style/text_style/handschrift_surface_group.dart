@@ -1,10 +1,10 @@
 import 'package:dcc_toolkit/style/interface/surface_group_interface.dart';
-import 'package:flutter/material.dart';
+import 'package:dcc_toolkit/style/text_style/handschrift.dart';
 
 /// {@macro surface_group}
-class TextStyleSurfaceGroup implements SurfaceGroupInterface<TextStyle> {
+class HandschriftSurfaceGroup implements SurfaceGroupInterface<Handschrift> {
   /// {@macro surface_group}
-  const TextStyleSurfaceGroup({
+  const HandschriftSurfaceGroup({
     required this.color,
     required this.onColorContrast,
     required this.onColorContrastDim,
@@ -19,29 +19,29 @@ class TextStyleSurfaceGroup implements SurfaceGroupInterface<TextStyle> {
   });
 
   @override
-  final TextStyle color;
+  final Handschrift color;
   @override
-  final TextStyle onColorContrast;
+  final Handschrift onColorContrast;
   @override
-  final TextStyle onColorContrastDim;
+  final Handschrift onColorContrastDim;
   @override
-  final TextStyle onColorSubtle;
+  final Handschrift onColorSubtle;
   @override
-  final TextStyle onColorSubtleDim;
+  final Handschrift onColorSubtleDim;
 
   @override
-  final TextStyle containerLowest;
+  final Handschrift containerLowest;
   @override
-  final TextStyle containerLow;
+  final Handschrift containerLow;
   @override
-  final TextStyle container;
+  final Handschrift container;
   @override
-  final TextStyle containerHigh;
+  final Handschrift containerHigh;
   @override
-  final TextStyle containerHighest;
+  final Handschrift containerHighest;
   @override
-  final TextStyle link;
+  final Handschrift link;
 
   @override
-  TextStyleSurfaceGroup lerp(TextStyleSurfaceGroup? other, double t) => this;
+  HandschriftSurfaceGroup lerp(HandschriftSurfaceGroup? other, double t) => this;
 }
