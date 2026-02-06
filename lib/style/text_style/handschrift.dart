@@ -1,7 +1,56 @@
 import 'package:flutter/material.dart';
 
+/// An extended [TextStyle] that supports additional style variants for bold and link text.
+///
+/// [Handschrift] (Dutch for "handwriting") extends Flutter's [TextStyle] to provide
+/// built-in support for common text style variations used in rich text rendering.
+/// This allows a single style definition to carry information about how bold and
+/// linked text should be rendered.
+///
+/// This class is particularly useful when you need consistent bold or link styling
+/// that can be easily accessed via the [bold] and [link] getters, which merge the
+/// respective variant styles with the base style.
+///
+/// ## Example
+///
+/// ```dart
+/// final style = Handschrift(
+///   fontSize: 16,
+///   color: Colors.black,
+///   boldStyle: TextStyle(fontWeight: FontWeight.bold),
+///   linkStyle: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
+/// );
+///
+/// // Use the bold variant
+/// Text('Bold text', style: style.bold);
+///
+/// // Use the link variant
+/// Text('Click here', style: style.link);
+/// ```
+///
+/// ## Creating from an existing TextStyle
+///
+/// Use [Handschrift.fromTextStyle] to convert an existing [TextStyle]:
+///
+/// ```dart
+/// final baseStyle = TextStyle(fontSize: 14);
+/// final handschrift = Handschrift.fromTextStyle(
+///   baseStyle,
+///   boldStyle: TextStyle(fontWeight: FontWeight.w700),
+/// );
+/// ```
+///
+/// ## Animation Support
+///
+/// [Handschrift] supports smooth interpolation via the [lerp] method,
+/// which interpolates all properties including the bold and link variants.
 class Handschrift extends TextStyle {
-  Handschrift({
+  /// Creates a [Handschrift] with the given properties.
+  ///
+  /// All parameters from [TextStyle] are supported, plus:
+  /// - [boldStyle]: Optional style to merge when accessing [bold]
+  /// - [linkStyle]: Optional style to merge when accessing [link]
+  const Handschrift({
     super.inherit,
     super.color,
     super.backgroundColor,
@@ -33,6 +82,14 @@ class Handschrift extends TextStyle {
   }) : _boldStyle = boldStyle,
        _linkStyle = linkStyle;
 
+  /// Creates a [Handschrift] from an existing [TextStyle].
+  ///
+  /// This factory constructor copies all properties from [style] and adds
+  /// the optional [boldStyle] and [linkStyle] variants.
+  ///
+  // ignore: comment_references
+  /// Note: The [package] property from the original style is not preserved
+  /// as it cannot be accessed from an existing [TextStyle].
   factory Handschrift.fromTextStyle(TextStyle style, {TextStyle? boldStyle, TextStyle? linkStyle}) => Handschrift(
     inherit: style.inherit,
     color: style.color,
@@ -63,13 +120,32 @@ class Handschrift extends TextStyle {
     linkStyle: linkStyle,
   );
 
+  /// The style to merge when [bold] is accessed.
   final TextStyle? _boldStyle;
+
+  /// The style to merge when [link] is accessed.
   final TextStyle? _linkStyle;
 
+  /// Returns this style merged with [_boldStyle].
+  ///
+  /// Use this getter to apply bold styling to text while preserving
+  /// all other properties of this [Handschrift].
   TextStyle get bold => merge(_boldStyle);
 
+  /// Returns this style merged with [_linkStyle].
+  ///
+  /// Use this getter to apply link styling (typically color and underline)
+  /// to text while preserving all other properties of this [Handschrift].
   TextStyle get link => merge(_linkStyle);
 
+  /// Linearly interpolates between this [Handschrift] and [other].
+  ///
+  /// The [t] parameter represents the position on the timeline, where 0.0
+  /// means this style, 1.0 means [other], and values in between represent
+  /// a blend of both styles.
+  ///
+  /// This method interpolates all [TextStyle] properties as well as the
+  /// [_boldStyle] and [_linkStyle] variants.
   Handschrift lerp(Handschrift? other, double t) {
     if (identical(this, other)) return this;
 
@@ -84,6 +160,10 @@ class Handschrift extends TextStyle {
     }
   }
 
+  /// Creates a copy of this [Handschrift] with the given fields replaced.
+  ///
+  /// This override extends [TextStyle.copyWith] to also support copying
+  /// the [boldStyle] and [linkStyle] variants.
   @override
   Handschrift copyWith({
     bool? inherit,
