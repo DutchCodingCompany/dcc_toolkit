@@ -3,6 +3,7 @@ export 'common/dimensions.dart';
 export 'common/extensions/build_context.dart';
 export 'common/extensions/color.dart';
 export 'common/extensions/iterable.dart';
+export 'common/extensions/text_style.dart';
 export 'common/extensions/text_theme.dart';
 export 'common/mixins/refresh_stream_mixin.dart';
 export 'common/result/result.dart';
