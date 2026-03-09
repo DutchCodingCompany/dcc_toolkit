@@ -45,7 +45,7 @@ class HandschriftSurfaceGroup implements SurfaceGroupInterface<Handschrift> {
   final Handschrift containerHighest;
   @override
   final Handschrift link;
-  
+
   @override
   final Handschrift? onColorError;
   @override
