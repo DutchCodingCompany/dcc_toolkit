@@ -87,6 +87,20 @@ class HandschriftDecorator implements KleurplaatInterface<Handschrift> {
   );
 
   @override
+  ColorGroupInterface<Handschrift> get accent => HandschriftColorGroup(
+    color: _textStyle.copyWith(color: _kleurplaat.accent?.color),
+    onColorContrast: _textStyle.copyWith(color: _kleurplaat.accent?.onColorContrast),
+    onColorSubtle: _textStyle.copyWith(color: _kleurplaat.accent?.onColorSubtle),
+  );
+
+  @override
+  ColorGroupInterface<Handschrift> get accentFill => HandschriftColorGroup(
+    color: _textStyle.copyWith(color: _kleurplaat.accentFill?.color),
+    onColorContrast: _textStyle.copyWith(color: _kleurplaat.accentFill?.onColorContrast),
+    onColorSubtle: _textStyle.copyWith(color: _kleurplaat.accentFill?.onColorSubtle),
+  );
+
+  @override
   ColorGroupInterface<Handschrift> get success => HandschriftColorGroup(
     color: _textStyle.copyWith(color: _kleurplaat.success.color),
     onColorContrast: _textStyle.copyWith(color: _kleurplaat.success.onColorContrast),
@@ -113,6 +127,10 @@ class HandschriftDecorator implements KleurplaatInterface<Handschrift> {
     containerHigh: _textStyle.copyWith(color: _kleurplaat.surface.containerHigh),
     containerHighest: _textStyle.copyWith(color: _kleurplaat.surface.containerHighest),
     link: _textStyle.copyWith(color: _kleurplaat.surface.link),
+    onColorError: _textStyle.copyWith(color: _kleurplaat.surface.onColorError),
+    onColorSuccess: _textStyle.copyWith(color: _kleurplaat.surface.onColorSuccess),
+    onColorPrimary: _textStyle.copyWith(color: _kleurplaat.surface.onColorPrimary),
+    onColorPrimaryVariant: _textStyle.copyWith(color: _kleurplaat.surface.onColorPrimaryVariant),
   );
 
   @override
@@ -130,6 +148,10 @@ class HandschriftDecorator implements KleurplaatInterface<Handschrift> {
       containerHigh: _textStyle.copyWith(color: _kleurplaat.surfaceInverse!.containerHigh),
       containerHighest: _textStyle.copyWith(color: _kleurplaat.surfaceInverse!.containerHighest),
       link: _textStyle.copyWith(color: _kleurplaat.surfaceInverse!.link),
+      onColorError: _textStyle.copyWith(color: _kleurplaat.surfaceInverse!.onColorError),
+      onColorSuccess: _textStyle.copyWith(color: _kleurplaat.surfaceInverse!.onColorSuccess),
+      onColorPrimary: _textStyle.copyWith(color: _kleurplaat.surfaceInverse!.onColorPrimary),
+      onColorPrimaryVariant: _textStyle.copyWith(color: _kleurplaat.surfaceInverse!.onColorPrimaryVariant),
     );
   }
 }

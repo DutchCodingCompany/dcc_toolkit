@@ -17,6 +17,10 @@ class SurfaceGroup implements SurfaceGroupInterface<Color> {
     required this.containerHigh,
     required this.containerHighest,
     required this.link,
+    this.onColorError,
+    this.onColorSuccess,
+    this.onColorPrimary,
+    this.onColorPrimaryVariant,
   });
 
   @override
@@ -53,6 +57,18 @@ class SurfaceGroup implements SurfaceGroupInterface<Color> {
   final Color link;
 
   @override
+  final Color? onColorError;
+
+  @override
+  final Color? onColorSuccess;
+
+  @override
+  final Color? onColorPrimary;
+
+  @override
+  final Color? onColorPrimaryVariant;
+
+  @override
   SurfaceGroup lerp(SurfaceGroup? other, double t) {
     if (other == null) return this;
 
@@ -68,6 +84,10 @@ class SurfaceGroup implements SurfaceGroupInterface<Color> {
       containerHigh: Color.lerp(containerHigh, other.containerHigh, t)!,
       containerHighest: Color.lerp(containerHighest, other.containerHighest, t)!,
       link: Color.lerp(link, other.link, t)!,
+      onColorError: Color.lerp(onColorError, other.onColorError, t),
+      onColorSuccess: Color.lerp(onColorSuccess, other.onColorSuccess, t),
+      onColorPrimary: Color.lerp(onColorPrimary, other.onColorPrimary, t),
+      onColorPrimaryVariant: Color.lerp(onColorPrimaryVariant, other.onColorPrimaryVariant, t),
     );
   }
 }

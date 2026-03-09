@@ -21,6 +21,8 @@ class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat> implements Kleur
     this.secondaryFill,
     this.tertiary,
     this.tertiaryFill,
+    this.accent,
+    this.accentFill,
   });
 
   @override
@@ -40,6 +42,12 @@ class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat> implements Kleur
 
   @override
   final ColorGroup? tertiaryFill;
+
+  @override
+  final ColorGroup? accent;
+
+  @override
+  final ColorGroup? accentFill;
 
   @override
   final ColorGroup content;
@@ -73,6 +81,8 @@ class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat> implements Kleur
     ColorGroup? secondaryFill,
     ColorGroup? tertiary,
     ColorGroup? tertiaryFill,
+    ColorGroup? accent,
+    ColorGroup? accentFill,
     ColorGroup? content,
     ColorGroup? contentFill,
     ColorGroup? error,
@@ -88,6 +98,8 @@ class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat> implements Kleur
     secondaryFill: secondaryFill ?? this.secondaryFill,
     tertiary: tertiary ?? this.tertiary,
     tertiaryFill: tertiaryFill ?? this.tertiaryFill,
+    accent: accent ?? this.accent,
+    accentFill: accentFill ?? this.accentFill,
     content: content ?? this.content,
     contentFill: contentFill ?? this.contentFill,
     error: error ?? this.error,
@@ -109,6 +121,8 @@ class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat> implements Kleur
       secondaryFill: secondaryFill?.lerp(other.secondaryFill, t),
       tertiary: tertiary?.lerp(other.tertiary, t),
       tertiaryFill: tertiaryFill?.lerp(other.tertiaryFill, t),
+      accent: accent?.lerp(other.accent, t),
+      accentFill: accentFill?.lerp(other.accentFill, t),
       content: content.lerp(other.content, t),
       contentFill: contentFill.lerp(other.contentFill, t),
       error: error.lerp(other.error, t),
@@ -133,6 +147,8 @@ class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat> implements Kleur
     secondaryFixedDim: secondaryFill?.color,
     tertiaryFixed: tertiary?.color,
     tertiaryFixedDim: tertiaryFill?.color,
+    onTertiaryFixed: accent?.color,
+    onTertiaryFixedVariant: accentFill?.color,
     onSecondary: content.onColorContrast,
     onSecondaryContainer: content.onColorContrast,
     tertiary: error.color,
