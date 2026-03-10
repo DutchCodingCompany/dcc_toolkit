@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.0.19
+* Added extra surface group colors, added extra accent and accentFill color groups
+
 ## 0.0.18
 * Made `AnnotatedText` accessible
 
