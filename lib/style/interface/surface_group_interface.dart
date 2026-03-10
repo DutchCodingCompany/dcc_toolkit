@@ -59,6 +59,26 @@ abstract interface class SurfaceGroupInterface<T> {
   /// {@endtemplate}
   T get link;
 
+  /// {@template onColorError}
+  /// The color on the surface for error.
+  /// {@endtemplate}
+  T? get onColorError;
+
+  /// {@template onColorSuccess}
+  /// The color on the surface for success.
+  /// {@endtemplate}
+  T? get onColorSuccess;
+
+  /// {@template onColorPrimary}
+  /// The color on the surface for primary.
+  /// {@endtemplate}
+  T? get onColorPrimary;
+
+  /// {@template onColorPrimaryVariant}
+  /// The color on the surface for primary variant.
+  /// {@endtemplate}
+  T? get onColorPrimaryVariant;
+
   /// Linearly interpolate with another object.
   SurfaceGroupInterface<T> lerp(covariant SurfaceGroupInterface<T>? other, double t);
 }

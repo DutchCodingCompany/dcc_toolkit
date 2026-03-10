@@ -16,6 +16,10 @@ class HandschriftSurfaceGroup implements SurfaceGroupInterface<Handschrift> {
     required this.containerHigh,
     required this.containerHighest,
     required this.link,
+    this.onColorError,
+    this.onColorSuccess,
+    this.onColorPrimary,
+    this.onColorPrimaryVariant,
   });
 
   @override
@@ -41,6 +45,15 @@ class HandschriftSurfaceGroup implements SurfaceGroupInterface<Handschrift> {
   final Handschrift containerHighest;
   @override
   final Handschrift link;
+
+  @override
+  final Handschrift? onColorError;
+  @override
+  final Handschrift? onColorSuccess;
+  @override
+  final Handschrift? onColorPrimary;
+  @override
+  final Handschrift? onColorPrimaryVariant;
 
   @override
   HandschriftSurfaceGroup lerp(HandschriftSurfaceGroup? other, double t) => this;
