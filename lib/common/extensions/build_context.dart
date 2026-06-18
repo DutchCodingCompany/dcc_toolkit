@@ -14,7 +14,11 @@ extension ThemingExtensions on BuildContext {
   KatjasBoekwerk get katjasBoekwerk => theme.extension<KatjasBoekwerk>()!;
 
   /// Get [BoekwerkDecorator] from [BuildContext].
+  @Deprecated('Use katjasBoekwerkDecorator instead')
   BoekwerkDecorator get textThemesDecorator => BoekwerkDecorator(katjasBoekwerk, katjasKleurPlaat);
+
+  /// Get [BoekwerkDecorator] from [BuildContext].
+  BoekwerkDecorator get katjasBoekwerkDecorator => BoekwerkDecorator(katjasBoekwerk, katjasKleurPlaat);
 
   /// Get [KatjasKleurplaat] from [BuildContext].
   KatjasKleurplaat get katjasKleurPlaat => theme.extension<KatjasKleurplaat>()!;
