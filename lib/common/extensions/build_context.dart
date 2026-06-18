@@ -16,6 +16,7 @@ extension ThemingExtensions on BuildContext {
   /// Get [BoekwerkDecorator] from [BuildContext].
   @Deprecated('Use katjasBoekwerkDecorator instead')
   BoekwerkDecorator get textThemesDecorator => BoekwerkDecorator(katjasBoekwerk, katjasKleurPlaat);
+
   /// Get [BoekwerkDecorator] from [BuildContext].
   BoekwerkDecorator get katjasBoekwerkDecorator => BoekwerkDecorator(katjasBoekwerk, katjasKleurPlaat);
 
