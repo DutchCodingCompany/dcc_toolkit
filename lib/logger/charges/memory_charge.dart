@@ -15,14 +15,17 @@ class MemoryCharge implements BoltCharge {
   /// {@macro memory_charge}
   MemoryCharge({this.maxItems = 1000});
 
+  /// The name used to register and look up this charge.
+  static const chargeName = 'MemoryCharge';
+
   @override
-  String get name => 'MemoryCharge';
+  String get name => chargeName;
 
   /// The maximum amount of logs to store in memory.
   final int maxItems;
   final List<ZapEvent> _items = [];
 
-  final StreamController<ZapEvent> _controller = StreamController.broadcast();
+  StreamController<ZapEvent> _controller = StreamController.broadcast();
 
   /// The stream of [ZapEvent]s.
   Stream<ZapEvent> get stream => _controller.stream;
@@ -32,6 +35,10 @@ class MemoryCharge implements BoltCharge {
 
   @override
   void logOutput(ZapEvent event) {
+    if (_controller.isClosed) {
+      // The charge was discharged and is being reused; start a fresh stream.
+      _controller = StreamController.broadcast();
+    }
     if (_items.length >= maxItems) {
       _items.removeAt(0);
     }
@@ -41,7 +48,7 @@ class MemoryCharge implements BoltCharge {
 
   @override
   void discharge() {
-    _controller.close();
+    unawaited(_controller.close());
     _items.clear();
   }
 }

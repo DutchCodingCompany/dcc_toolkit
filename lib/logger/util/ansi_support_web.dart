@@ -1,2 +1,4 @@
 /// This file contains the implementation of the [supportsAnsiEscapes] getter for Web systems.
-bool get supportsAnsiEscapes => true;
+///
+/// Browser consoles do not interpret ANSI escape sequences, so they are disabled.
+bool get supportsAnsiEscapes => false;

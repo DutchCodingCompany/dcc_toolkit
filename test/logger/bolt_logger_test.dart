@@ -222,6 +222,18 @@ void main() {
         expect(memoryCharge.items[1].origin.stackTrace, stackTrace);
       });
 
+      test('zap/shock asserts when a List contains more than one Exception', () {
+        final exception = Exception('exception');
+        final exception2 = Exception('exception2');
+        if (useBoltLogger) {
+          expect(() => BoltLogger.zap(['zap', exception, exception2]), throwsAssertionError);
+          expect(() => BoltLogger.shock(['shock', exception, exception2]), throwsAssertionError);
+        } else {
+          expect(() => TestReferenceClass().zapExtension(['zap', exception, exception2]), throwsAssertionError);
+          expect(() => TestReferenceClass().shockExtension(['shock', exception, exception2]), throwsAssertionError);
+        }
+      });
+
       test('zap/shock sends a List with more than 3 elements via a ZapEvent to a Charge', () {
         final exception = Exception('exception');
         final stackTrace = StackTrace.current;

@@ -91,7 +91,7 @@ class BoltLogger {
     StackTrace? stacktrace;
 
     void zapMap(Object? value) {
-      if (value is Exception || value is Error && error == null) {
+      if ((value is Exception || value is Error) && error == null) {
         error = value;
       } else if (value is StackTrace && stacktrace == null) {
         stacktrace = value;
