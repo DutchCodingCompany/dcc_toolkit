@@ -15,10 +15,7 @@ import 'package:intl/intl.dart';
 class FileCharge implements BoltCharge {
   /// {@macro file_charge}
   FileCharge(this.path, {this.bufferSize = 1000, this.writeDelay = const Duration(seconds: 5)}) {
-    final fileName = '${DateFormat('yyyy-MM-dd').format(DateTime.now())}.log';
-    _file = File('$path/$fileName');
-
-    Timer.periodic(writeDelay, (_) => _flush());
+    _timer = Timer.periodic(writeDelay, (_) => _flush());
   }
   @override
   String get name => 'FileCharge';
@@ -31,9 +28,9 @@ class FileCharge implements BoltCharge {
 
   /// The delay between writing to the file.
   final Duration writeDelay;
-  File? _file;
   final List<ZapEvent> _buffer = [];
   IOSink? _sink;
+  String? _sinkFileName;
   Timer? _timer;
 
   @override
@@ -48,13 +45,40 @@ class FileCharge implements BoltCharge {
   void _flush() {
     if (_buffer.isEmpty) return;
 
-    _sink ??= _file?.openWrite(mode: FileMode.append);
+    final sink = _openSink();
+    if (sink == null) {
+      _buffer.clear();
+      return;
+    }
 
     for (final event in _buffer) {
-      _sink?.writeAll(event.lines, '\n');
-      _sink?.writeln();
+      sink
+        ..writeAll(event.lines, '\n')
+        ..writeln();
     }
     _buffer.clear();
+  }
+
+  /// Opens (or reopens) the sink for today's log file. Returns `null` when the
+  /// file cannot be opened, so that logging never crashes the app.
+  IOSink? _openSink() {
+    final fileName = '${DateFormat('yyyy-MM-dd').format(DateTime.now())}.log';
+
+    if (_sink != null && _sinkFileName == fileName) return _sink;
+
+    unawaited(_sink?.close().catchError((_) {}));
+    _sink = null;
+    _sinkFileName = null;
+
+    try {
+      Directory(path).createSync(recursive: true);
+      _sink = File('$path/$fileName').openWrite(mode: FileMode.append);
+      _sinkFileName = fileName;
+    } on FileSystemException {
+      return null;
+    }
+
+    return _sink;
   }
 
   @override
@@ -62,7 +86,8 @@ class FileCharge implements BoltCharge {
     _timer?.cancel();
     _timer = null;
     _flush();
-    _sink?.close();
+    unawaited(_sink?.close().catchError((_) {}));
     _sink = null;
+    _sinkFileName = null;
   }
 }

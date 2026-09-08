@@ -1,7 +1,7 @@
 import 'package:dcc_toolkit/logger/charges/bolt_charge.dart';
 import 'package:dcc_toolkit/logger/util/ansi_support.dart'
     if (dart.library.io) 'package:dcc_toolkit/logger/util/ansi_support_io.dart'
-    if (dart.library.html) 'package:dcc_toolkit/logger/util/ansi_support_web.dart';
+    if (dart.library.js_interop) 'package:dcc_toolkit/logger/util/ansi_support_web.dart';
 import 'package:dcc_toolkit/logger/zap_event.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';

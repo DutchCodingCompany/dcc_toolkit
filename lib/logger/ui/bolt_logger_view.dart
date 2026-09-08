@@ -18,9 +18,9 @@ class _BoltLoggerViewState extends State<BoltLoggerView> {
   @override
   void initState() {
     super.initState();
-    final hasCharge = BoltLogger.getCharge('MemoryCharge');
-    if (hasCharge != null) {
-      charge = hasCharge as MemoryCharge;
+    final existing = BoltLogger.getCharge(MemoryCharge.chargeName);
+    if (existing is MemoryCharge) {
+      charge = existing;
     } else {
       charge = MemoryCharge();
       BoltLogger.charge([charge]);
