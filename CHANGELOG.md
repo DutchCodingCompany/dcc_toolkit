@@ -1,6 +1,10 @@
 # Changelog
 
-## 0.0.19
+## 0.0.20
+* Fixed bug in handschrift copyWith
+* Fixed minor bugs in BoltLogger
+
+## 0.0.19 
 * Added extra surface group colors, added extra accent and accentFill color groups
 
 ## 0.0.18
