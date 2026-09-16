@@ -16,6 +16,4 @@ abstract class ChopperModule {
   );
 }
 
-const _factories = {
-  ApiUserResponse: ApiUserResponse.fromJson,
-};
+const _factories = {ApiUserResponse: ApiUserResponse.fromJson};
