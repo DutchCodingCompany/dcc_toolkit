@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
+import 'package:dcc_toolkit/chopper/json_converter_exception.dart';
 
 /// Method signature for a function that creates a dart object from a json map.
 typedef JsonFactory<T> = T Function(Map<String, dynamic> json);
@@ -25,10 +25,10 @@ class JsonSerializableConverter extends JsonConverter {
   T _decodeMap<T>(Map<String, dynamic> values) {
     final jsonFactory = factories[T];
     if (jsonFactory == null) {
-      throw JsonUnsupportedObjectError(T, cause: 'No fromJson was registered for JsonSerializableConverter for $T');
+      throw JsonConverterException(T, message: 'No fromJson was registered for JsonSerializableConverter for $T');
     }
     if (jsonFactory is! JsonFactory<T>) {
-      throw JsonUnsupportedObjectError(T, cause: 'fromJson type does not match $T');
+      throw JsonConverterException(T, message: 'fromJson type does not match $T');
     }
 
     return jsonFactory(values);

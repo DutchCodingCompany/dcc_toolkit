@@ -1,5 +1,6 @@
 import 'package:chopper/chopper.dart' as c;
 import 'package:dcc_toolkit/chopper/base_error.dart';
+import 'package:dcc_toolkit/chopper/json_converter_exception.dart';
 import 'package:dcc_toolkit/common/result/result.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
@@ -77,6 +78,7 @@ void main() {
       [c.ChopperHttpException(c.Response(http.Response('woepsie', 500), 'woepsie')), const ServerError()],
       [ClientException('woepsie'), const NoInternetError()],
       [CheckedFromJsonException({}, null, 'woepsie', null), const ServerError()],
+      [const JsonConverterException(int, message: 'woepsie'), const ServerError()],
     ],
     (Exception exception, BaseError expectedError) async {
       final result = await tryCall(() async => throw exception);
