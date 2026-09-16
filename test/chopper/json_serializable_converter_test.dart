@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
 import 'package:dcc_toolkit/chopper/json_serializable_converter.dart';
+import 'package:dcc_toolkit/chopper/no_content.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 
@@ -43,6 +44,26 @@ void main() {
 
     expect(result.body?[0].name, 'John');
     expect(result.body?[1].name, 'John2');
+  });
+
+  test('Handles an empty body for NoContent without a registered factory', () async {
+    final response = Response(baseResponse, '');
+
+    const converter = JsonSerializableConverter({});
+
+    final result = await converter.convertResponse<NoContent, NoContent>(response);
+
+    expect(result.body, '');
+  });
+
+  test('Returns the raw body for NoContent when the response is not empty', () async {
+    final response = Response(baseResponse, '{"name":"John"}');
+
+    const converter = JsonSerializableConverter({});
+
+    final result = await converter.convertResponse<NoContent, NoContent>(response);
+
+    expect(result.body, {'name': 'John'});
   });
 }
 

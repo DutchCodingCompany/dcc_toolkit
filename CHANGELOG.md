@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+* Changed `NoContent` to a typedef for `dynamic` to fix chopper integration with empty response bodies
+
 ## 0.0.20
 * Fixed bug in handschrift copyWith
 * Fixed minor bugs in BoltLogger

@@ -18,7 +18,6 @@ class JsonSerializableConverter extends JsonConverter {
   /// ```dart
   /// final jsonConverter = JsonSerializableConverter({
   ///  User: User.fromJson,
-  ///  NoContent: NoContent.fromJson,
   ///  });
   ///  ```
   final Map<Type, JsonFactory<dynamic>> factories;
@@ -38,6 +37,8 @@ class JsonSerializableConverter extends JsonConverter {
   List<T> _decodeList<T>(Iterable<dynamic> values) => values.nonNulls.map<T>((v) => _decode<T>(v) as T).toList();
 
   dynamic _decode<T>(dynamic entity) {
+    if (T == dynamic) return entity;
+
     if (entity is Iterable) return _decodeList<T>(entity as List);
 
     if (entity is Map) return _decodeMap<T>(entity as Map<String, dynamic>);
