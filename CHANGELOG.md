@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.0.21
 * Changed `NoContent` to a typedef for `dynamic` to fix chopper integration with empty response bodies
 * `JsonSerializableConverter` now throws a `JsonConverterException` instead of a `JsonUnsupportedObjectError`, so it can be caught by `tryCall`
 * Exported `base_error.dart` so `BaseError` and its subtypes are reachable from the package barrel
