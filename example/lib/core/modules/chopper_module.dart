@@ -1,6 +1,5 @@
 import 'package:chopper/chopper.dart';
 import 'package:dcc_toolkit/chopper/json_serializable_converter.dart';
-import 'package:dcc_toolkit/chopper/no_content.dart';
 import 'package:example/profile/data/model/api_user_response.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
@@ -17,7 +16,4 @@ abstract class ChopperModule {
   );
 }
 
-const _factories = {
-  NoContent: NoContent.fromJson,
-  ApiUserResponse: ApiUserResponse.fromJson,
-};
+const _factories = {ApiUserResponse: ApiUserResponse.fromJson};

@@ -1,7 +1,10 @@
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:chopper/chopper.dart';
+import 'package:chopper/chopper.dart' hide Level;
+import 'package:dcc_toolkit/chopper/json_converter_exception.dart';
+import 'package:dcc_toolkit/logger/bolt_logger.dart';
+import 'package:json_annotation/json_annotation.dart' show CheckedFromJsonException;
+import 'package:logging/logging.dart';
 
 /// Method signature for a function that creates a dart object from a json map.
 typedef JsonFactory<T> = T Function(Map<String, dynamic> json);
@@ -18,26 +21,39 @@ class JsonSerializableConverter extends JsonConverter {
   /// ```dart
   /// final jsonConverter = JsonSerializableConverter({
   ///  User: User.fromJson,
-  ///  NoContent: NoContent.fromJson,
   ///  });
   ///  ```
   final Map<Type, JsonFactory<dynamic>> factories;
 
+  Never _logAndThrow<T>(String message) {
+    final exception = JsonConverterException(T, message: message);
+    BoltLogger.zap(exception, tag: '$T', level: Level.WARNING);
+
+    throw exception;
+  }
+
   T _decodeMap<T>(Map<String, dynamic> values) {
     final jsonFactory = factories[T];
     if (jsonFactory == null) {
-      throw JsonUnsupportedObjectError(T, cause: 'No fromJson was registered for JsonSerializableConverter for $T');
+      _logAndThrow<T>('No fromJson was registered for JsonSerializableConverter for $T');
     }
     if (jsonFactory is! JsonFactory<T>) {
-      throw JsonUnsupportedObjectError(T, cause: 'fromJson type does not match $T');
+      _logAndThrow<T>('fromJson type does not match $T');
     }
 
-    return jsonFactory(values);
+    try {
+      return jsonFactory(values);
+    } on CheckedFromJsonException catch (e, stackTrace) {
+      BoltLogger.shock([e, stackTrace], tag: '$T');
+      rethrow;
+    }
   }
 
   List<T> _decodeList<T>(Iterable<dynamic> values) => values.nonNulls.map<T>((v) => _decode<T>(v) as T).toList();
 
   dynamic _decode<T>(dynamic entity) {
+    if (T == dynamic) return entity;
+
     if (entity is Iterable) return _decodeList<T>(entity as List);
 
     if (entity is Map) return _decodeMap<T>(entity as Map<String, dynamic>);

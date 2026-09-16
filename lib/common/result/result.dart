@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:chopper/chopper.dart';
 import 'package:dcc_toolkit/chopper/base_error.dart';
+import 'package:dcc_toolkit/chopper/json_converter_exception.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -71,6 +72,7 @@ Future<Result<S>> tryCall<S>(FutureOr<S> Function() fn, {Future<Result<S>> Funct
       }),
       ClientException() => Result.failure(const NoInternetError()),
       CheckedFromJsonException() => Result.failure(const ServerError()),
+      JsonConverterException() => Result.failure(const ServerError()),
       _ => Result.failure(const UnknownError()),
     };
   }
