@@ -22,13 +22,22 @@ class DebugConsoleCharge implements BoltCharge {
   }
 
   List<String> _paintLines(ZapEvent event) {
-    final shouldPaint =
-        supportsAnsiEscapes &&
-        (event.origin.level.value >= Level.SEVERE.value ||
-            event.origin.stackTrace != null ||
-            event.origin.error != null);
+    if (!supportsAnsiEscapes) return event.lines;
 
-    return shouldPaint ? event.lines.map((line) => '$_red$line$_reset').toList() : event.lines;
+    final color = _colorFor(event);
+    if (color == null) return event.lines;
+
+    return event.lines.map((line) => '$color$line$_reset').toList();
+  }
+
+  String? _colorFor(ZapEvent event) {
+    if (event.origin.level.value >= Level.SEVERE.value ||
+        event.origin.stackTrace != null ||
+        event.origin.error != null) {
+      return _red;
+    }
+    if (event.origin.level.value >= Level.WARNING.value) return _yellow;
+    return null;
   }
 
   @override
@@ -38,3 +47,4 @@ class DebugConsoleCharge implements BoltCharge {
 const _esc = '\x1B[';
 const _reset = '${_esc}0m';
 const _red = '${_esc}38;5;1m';
+const _yellow = '${_esc}38;5;3m';

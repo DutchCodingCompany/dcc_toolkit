@@ -117,16 +117,44 @@ void main() {
           if (useBoltLogger) {
             BoltLogger.zap('zap', level: level);
             BoltLogger.zap('shock', level: level);
+            BoltLogger.surge('surge', level: level);
           } else {
             TestReferenceClass().zapExtension('zap', level: level);
             TestReferenceClass().shockExtension('shock', level: level);
+            TestReferenceClass().surgeExtension('surge', level: level);
           }
 
-          expect(memoryCharge.items.length, 2);
+          expect(memoryCharge.items.length, 3);
           expect(memoryCharge.items[0].origin.level, level);
           expect(memoryCharge.items[1].origin.level, level);
+          expect(memoryCharge.items[2].origin.level, level);
         },
       );
+
+      test('surge sends a message at Level.WARNING via a ZapEvent to a charge', () {
+        if (useBoltLogger) {
+          BoltLogger.surge('surge');
+        } else {
+          TestReferenceClass().surgeExtension('surge');
+        }
+
+        expect(memoryCharge.items.length, 1);
+        expect(memoryCharge.items[0].origin.message, 'surge');
+        expect(memoryCharge.items[0].origin.level, Level.WARNING);
+        expect(memoryCharge.items[0].origin.loggerName, useBoltLogger ? 'BoltLogger' : 'TestReferenceClass');
+      });
+
+      test('surge sends a tag via a ZapEvent to a charge', () {
+        if (useBoltLogger) {
+          BoltLogger.surge('surge', tag: 'tag1');
+        } else {
+          TestReferenceClass().surgeExtension('surge', tag: 'tag1');
+        }
+
+        expect(memoryCharge.items.length, 1);
+        expect(memoryCharge.items[0].origin.loggerName, 'tag1');
+        expect(memoryCharge.items[0].origin.level, Level.WARNING);
+      });
 
       test('zap/shock sends Exception via a ZapEvent to a Charge', () {
         final exception = Exception('exception');
@@ -258,4 +286,7 @@ class TestReferenceClass {
 
   void shockExtension(Object? message, {String? tag, Level level = Level.SEVERE}) =>
       shock(message, tag: tag, level: level);
+
+  void surgeExtension(Object? message, {String? tag, Level level = Level.WARNING}) =>
+      surge(message, tag: tag, level: level);
 }
