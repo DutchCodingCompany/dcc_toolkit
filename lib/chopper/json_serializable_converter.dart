@@ -1,10 +1,9 @@
 import 'dart:async';
 
-import 'package:chopper/chopper.dart' hide Level;
+import 'package:chopper/chopper.dart';
 import 'package:dcc_toolkit/chopper/json_converter_exception.dart';
 import 'package:dcc_toolkit/logger/bolt_logger.dart';
 import 'package:json_annotation/json_annotation.dart' show CheckedFromJsonException;
-import 'package:logging/logging.dart';
 
 /// Method signature for a function that creates a dart object from a json map.
 typedef JsonFactory<T> = T Function(Map<String, dynamic> json);
@@ -27,7 +26,7 @@ class JsonSerializableConverter extends JsonConverter {
 
   Never _logAndThrow<T>(String message) {
     final exception = JsonConverterException(T, message: message);
-    BoltLogger.zap(exception, tag: '$T', level: Level.WARNING);
+    BoltLogger.surge(exception, tag: '$T');
 
     throw exception;
   }

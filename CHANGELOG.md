@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+* Added `BoltLogger.surge` and the `surge` extension method for logging at `Level.WARNING`, completing the `zap` (info) / `surge` (warning) / `shock` (severe) trio
+* `DebugConsoleCharge` now prints warning level logs in yellow; severe logs and logs carrying an error or stack trace remain red
+* `JsonSerializableConverter` now uses `BoltLogger.surge` for `JsonConverterException` logging
+
 ## 0.0.21
 * Changed `NoContent` to a typedef for `dynamic` to fix chopper integration with empty response bodies
 * `JsonSerializableConverter` now throws a `JsonConverterException` instead of a `JsonUnsupportedObjectError`, so it can be caught by `tryCall`

@@ -40,9 +40,19 @@ Just as Zeus when zapping your not only limited to only zap `String`s, you can z
 
 Beside zapping messages you can also provide a custom `tag` and `level` to the `zap` method.
 
-`BoltLogger` also offers a `shock` to zap logs with at a `Level.SERVERE` level.
+Next to `zap` there are two intensities available:
+ - `surge`: zaps a log at `Level.WARNING`, for things that are off but not fatal.
+ - `shock`: a zap intensified, zaps a log at `Level.SEVERE`.
 
-If the extension methods are not available you can call `BoltLogger.zap` directly.
+Both take the same arguments as `zap`, so you can pass a message, an `Exception`/`Error`, a `StackTrace` or a `List` combining them.
+
+If the extension methods are not available you can call `BoltLogger.zap`, `BoltLogger.surge` or `BoltLogger.shock` directly.
+
+## 🎨 Colors in the console
+The `DebugConsoleCharge` colors its output when the terminal supports ANSI escapes:
+ - 🔴 Red: `Level.SEVERE` and up, or any log that carries an error or stack trace.
+ - 🟡 Yellow: `Level.WARNING` logs without an error or stack trace (a `surge`).
+ - ⚪️ Default: everything else.
 
 ## 📦 Example
 ```dart
@@ -51,7 +61,11 @@ class MyAwesomeClass{
   void doSomething() {
     zap('This is a message');
   }
-  
+
+  void doSomethingRisky() {
+    surge('This is not looking good...');
+  }
+
   void doSomethingElse() {
     shock(Exception('Shocking!'));
   }
@@ -62,6 +76,7 @@ void main() {
   
   final myAwesomeClass = MyAwesomeClass();
   myAwesomeClass.doSomething();
+  myAwesomeClass.doSomethingRisky();
   myAwesomeClass.doSomethingElse();
 }
 ```

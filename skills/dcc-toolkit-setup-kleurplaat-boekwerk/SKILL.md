@@ -1,8 +1,8 @@
 ---
-name: dcc-setup-kleurplaat-boekwerk
+name: dcc-toolkit-setup-kleurplaat-boekwerk
 description: Create and configure a custom design system using KatjasKleurplaat (colors) and KatjasBoekwerk (typography) theme extensions. Use when setting up theming, adding a color palette, configuring typography, or integrating the DCC design system into a Flutter app.
 metadata:
-  last_modified: 2025-06-18
+  last_modified: "2025-06-18"
 ---
 
 # Set Up Kleurplaat & Boekwerk Design System

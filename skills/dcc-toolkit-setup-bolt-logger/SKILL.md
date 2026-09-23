@@ -1,8 +1,8 @@
 ---
-name: dcc-setup-bolt-logger
+name: dcc-toolkit-setup-bolt-logger
 description: Set up and configure BoltLogger for structured logging with charges (DebugConsole, File, Memory). Use when adding logging, setting up error tracking, adding an in-app log viewer, or bootstrapping a Flutter app with error handling.
 metadata:
-  last_modified: 2025-06-18
+  last_modified: "2025-06-18"
 ---
 
 # Set Up BoltLogger
@@ -21,10 +21,10 @@ metadata:
 
 BoltLogger is the DCC toolkit's structured logging system built on top of the `logging` package. It uses a "charge" architecture where output backends (charges) can be plugged in independently. The system supports:
 
-- **DebugConsoleCharge** -- prints to the debug console with ANSI color for errors (only in debug mode)
+- **DebugConsoleCharge** -- prints to the debug console with ANSI color for warnings and errors (only in debug mode)
 - **FileCharge** -- writes logs to a file with buffering and periodic flushing
 - **MemoryCharge** -- stores logs in memory for display via `BoltLoggerView`
-- **ZapExtension** -- adds `zap()` and `shock()` methods to any object
+- **ZapExtension** -- adds `zap()`, `surge()` and `shock()` methods to any object
 - **runAppBootstrap()** -- wraps your app in error handling zones that auto-log with BoltLogger
 
 ## Prerequisites
@@ -45,13 +45,13 @@ import 'package:dcc_toolkit/common/run_app_bootstrap.dart';
 
 | Class | Role |
 |-------|------|
-| `BoltLogger` | Singleton logger. Static methods: `charge()`, `zap()`, `shock()`, `discharge()`, `getCharge()` |
+| `BoltLogger` | Singleton logger. Static methods: `charge()`, `zap()`, `surge()`, `shock()`, `discharge()`, `getCharge()` |
 | `BoltCharge` | Interface for log output backends. Requires `name`, `logOutput(ZapEvent)`, `discharge()` |
-| `DebugConsoleCharge` | Prints logs via `debugPrint`. ANSI red for errors. Only active in `kDebugMode` |
+| `DebugConsoleCharge` | Prints logs via `debugPrint`. ANSI red for errors, yellow for warnings. Only active in `kDebugMode` |
 | `FileCharge` | Writes to `{path}/{yyyy-MM-dd}.log`. Buffers up to `bufferSize` lines, flushes every `writeDelay` |
 | `MemoryCharge` | Stores up to `maxItems` events in memory. Exposes `stream` and `items` for UI display |
 | `ZapEvent` | Wraps a `LogRecord` with pre-formatted `lines` (List<String>) |
-| `ZapExtension` | Extension on `Object` adding `zap()` and `shock()` using `runtimeType` as tag |
+| `ZapExtension` | Extension on `Object` adding `zap()`, `surge()` and `shock()` using `runtimeType` as tag |
 | `ZapStackTraceExtension` | Extension on `StackTrace` with `strike` getter for cleaned formatting |
 | `BoltLoggerView` | Widget that renders in-app logs from a `MemoryCharge` via `StreamBuilder` + `ListView` |
 | `runAppBootstrap()` | Runs app inside `runZonedGuarded` with `FlutterError.onError`, defaults to `BoltLogger.shock()` |
@@ -59,6 +59,7 @@ import 'package:dcc_toolkit/common/run_app_bootstrap.dart';
 ### Log Levels
 
 - `BoltLogger.zap(message)` -- logs at `Level.INFO` (general information)
+- `BoltLogger.surge(message)` -- logs at `Level.WARNING` (unexpected but recoverable situations)
 - `BoltLogger.shock(message)` -- logs at `Level.SEVERE` (errors, exceptions)
 
 ### Message Types
@@ -74,7 +75,7 @@ The `message` parameter accepts:
 **Task Progress:**
 - [ ] 1. Set up `runAppBootstrap()` in `main.dart`
 - [ ] 2. Configure charges based on environment
-- [ ] 3. Add logging calls (`zap`/`shock`) to business logic
+- [ ] 3. Add logging calls (`zap`/`surge`/`shock`) to business logic
 - [ ] 4. (Optional) Add `BoltLoggerView` for in-app log viewing
 - [ ] 5. Verify logs appear in console/file/viewer
 
@@ -161,6 +162,7 @@ BoltLogger.charge([
 **Using static methods (anywhere):**
 ```dart
 BoltLogger.zap('User logged in', tag: 'AuthService');
+BoltLogger.surge('Token expires in 60s', tag: 'AuthService');
 BoltLogger.shock(['Payment failed', exception, stackTrace], tag: 'PaymentService');
 ```
 
@@ -171,6 +173,7 @@ class UserRepository {
     zap('Fetching user...'); // tag = 'UserRepository' (from runtimeType)
     try {
       // ...
+      surge('Cache miss, falling back to network'); // tag = 'UserRepository'
     } catch (e, s) {
       shock([e, s]); // tag = 'UserRepository'
     }
@@ -314,4 +317,4 @@ After implementing:
 2. Run the app in debug mode -- confirm logs appear in the debug console with the `⚡[HH:mm] I/Tag: message` format.
 3. If using `FileCharge` -- verify the log file is created at the expected path.
 4. If using `BoltLoggerView` -- navigate to the debug page and confirm logs are streaming.
-5. Trigger an error -- confirm `shock()` messages appear in red (ANSI terminals) and include error + stack trace.
+5. Trigger an error -- confirm `shock()` messages appear in red (ANSI terminals) and include error + stack trace. A plain `surge()` appears in yellow.

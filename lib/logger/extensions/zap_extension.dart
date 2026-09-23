@@ -10,6 +10,13 @@ extension ZapExtension on Object {
     BoltLogger.zap(message, tag: tag ?? runtimeType.toString(), level: level);
   }
 
+  /// {@macro surge}
+  void surge(Object? message, {String? tag, Level level = Level.WARNING}) {
+    // We actually want to know to runtimeType of the object
+    //ignore: no_runtimeType_toString
+    BoltLogger.surge(message, tag: tag ?? runtimeType.toString(), level: level);
+  }
+
   /// {@macro shock}
   void shock(Object? message, {String? tag, Level level = Level.SEVERE}) {
     // We actually want to know to runtimeType of the object

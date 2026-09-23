@@ -118,6 +118,16 @@ class BoltLogger {
     Logger(tag ?? 'BoltLogger').log(level, msg, error, stacktrace);
   }
 
+  /// {@template surge}
+  /// Surge is a zap with a warning! It zaps a log message with a default [level] of [Level.WARNING].
+  ///
+  /// {@macro zap}
+  ///
+  /// {@endtemplate}
+  static void surge(Object? message, {String? tag, Level level = Level.WARNING}) {
+    zap(message, tag: tag, level: level);
+  }
+
   /// {@template shock}
   /// Shock is a zap intensified! It zaps a log message default [level] of [Level.SEVERE].
   ///
