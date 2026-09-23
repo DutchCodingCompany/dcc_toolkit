@@ -1,8 +1,8 @@
 ---
-name: dcc-create-paginated-cubit
+name: dcc-toolkit-create-paginated-cubit
 description: Scaffold a paginated Cubit using PaginationMixin and PaginationState with PaginatedScrollView and PaginationStateView widgets. Use when adding pagination, implementing infinite scroll, loading more items on scroll, or creating a paginated list.
 metadata:
-  last_modified: 2025-06-18
+  last_modified: "2025-06-18"
 ---
 
 # Create a Paginated Cubit
