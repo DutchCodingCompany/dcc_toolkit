@@ -1,8 +1,8 @@
 ---
-name: dcc-create-blocful-page
+name: dcc-toolkit-create-blocful-page
 description: Create a full page using BlocfulWidget with BlocPresentationMixin for one-shot events, Cubit state management, and native dialogs. Use when creating a new screen with BLoC, adding presentation events, wiring up a Cubit to a page, or showing platform-adaptive dialogs.
 metadata:
-  last_modified: 2025-06-18
+  last_modified: "2025-06-18"
 ---
 
 # Create a BlocfulWidget Page

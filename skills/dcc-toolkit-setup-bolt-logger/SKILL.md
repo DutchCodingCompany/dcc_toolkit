@@ -1,8 +1,8 @@
 ---
-name: dcc-setup-bolt-logger
+name: dcc-toolkit-setup-bolt-logger
 description: Set up and configure BoltLogger for structured logging with charges (DebugConsole, File, Memory). Use when adding logging, setting up error tracking, adding an in-app log viewer, or bootstrapping a Flutter app with error handling.
 metadata:
-  last_modified: 2025-06-18
+  last_modified: "2025-06-18"
 ---
 
 # Set Up BoltLogger
