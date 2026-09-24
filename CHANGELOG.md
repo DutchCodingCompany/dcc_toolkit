@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.0.22
 * Added `BoltLogger.surge` and the `surge` extension method for logging at `Level.WARNING`, completing the `zap` (info) / `surge` (warning) / `shock` (severe) trio
 * `DebugConsoleCharge` now prints warning level logs in yellow; severe logs and logs carrying an error or stack trace remain red
 * `JsonSerializableConverter` now uses `BoltLogger.surge` for `JsonConverterException` logging
