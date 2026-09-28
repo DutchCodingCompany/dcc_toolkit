@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.0
+* **Breaking:** Requires Flutter `>=3.47.0` and Dart `^3.13.0`
+* **Breaking:** Migrated from `package:flutter/material.dart` / `package:flutter/cupertino.dart` to the `material_ui` and `cupertino_ui` packages. Apps must migrate as well, see [doc/migrate_to_material_ui.md](doc/migrate_to_material_ui.md)
+* Migrated classes to primary constructors; the public API is unchanged
+
 ## 0.0.22
 * Added `BoltLogger.surge` and the `surge` extension method for logging at `Level.WARNING`, completing the `zap` (info) / `surge` (warning) / `shock` (severe) trio
 * `DebugConsoleCharge` now prints warning level logs in yellow; severe logs and logs carrying an error or stack trace remain red

@@ -27,15 +27,15 @@ const _debounceTime = Duration(milliseconds: 400);
 ///   }
 // }
 /// ```
-class Debouncer {
+class Debouncer({Duration? delay}) {
   /// Creates a new [Debouncer] with the given delay.
   /// If no delay is provided, the default delay of 400 milliseconds is used.
-  Debouncer({Duration? delay}) : delay = delay ?? _debounceTime;
+  this;
 
   Timer? _timer;
 
   /// The delay for the debouncer.
-  final Duration delay;
+  final Duration delay = delay ?? _debounceTime;
 
   /// Runs the given action after the delay.
   void run(VoidCallback action) {

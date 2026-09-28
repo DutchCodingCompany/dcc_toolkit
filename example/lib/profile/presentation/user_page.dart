@@ -1,19 +1,18 @@
 import 'package:dcc_toolkit/ui/blocful_widget.dart';
 import 'package:example/profile/presentation/cubit/user_cubit.dart';
 import 'package:example/profile/presentation/cubit/user_event.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
-class UserPage extends BlocfulWidget<UserCubit, UserState, UserEvent> {
-  const UserPage({required this.onCreateCubit, super.key})
-    : super(onCreateBloc: onCreateCubit);
-
-  final UserCubit Function(BuildContext)? onCreateCubit;
+class const UserPage({
+  required final UserCubit Function(BuildContext)? onCreateCubit,
+  super.key,
+}) extends BlocfulWidget<UserCubit, UserState, UserEvent> {
+  this : super(onCreateBloc: onCreateCubit);
 
   @override
   void onPresentationEvent(BuildContext context, UserEvent event) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(event.reason)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(event.reason)));
   }
 
   @override

@@ -10,11 +10,10 @@ part 'user_cubit.freezed.dart';
 part 'user_state.dart';
 
 @injectable
-class UserCubit extends Cubit<UserState>
+class UserCubit(final UserRepository _userRepo)
+    extends Cubit<UserState>
     with BlocPresentationMixin<UserState, UserEvent> {
-  UserCubit(this._userRepo) : super(const UserState(user: null));
-
-  final UserRepository _userRepo;
+  this : super(const UserState(user: null));
 
   Future<void> getRandomUser() async {
     final result = await _userRepo.getRandomUser();

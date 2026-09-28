@@ -1,5 +1,5 @@
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A widget that displays a text with inline actions.
 /// Supported formats: [text](action) or [text]
@@ -25,31 +25,25 @@ import 'package:flutter/material.dart';
 ///   annotationStyle: TextStyle(color: Colors.blue),
 /// )
 /// ```
-class AnnotatedText extends StatelessWidget {
-  /// Creates a widget that displays a text with annotations.
-  const AnnotatedText({
-    required this.text,
-    required this.actions,
-    required this.defaultStyle,
-    required this.annotationStyle,
-    this.textAlign = TextAlign.start,
-    super.key,
-  });
-
+class const AnnotatedText({
   /// The complete text to display.
-  final String text;
+  required final String text,
 
   /// A map {actionName: action} of actions to perform when the text is tapped.
-  final Map<String, VoidCallback>? actions;
+  required final Map<String, VoidCallback>? actions,
 
   /// The style of the default text.
-  final TextStyle defaultStyle;
+  required final TextStyle defaultStyle,
 
   /// The style of the annotated text.
-  final TextStyle annotationStyle;
+  required final TextStyle annotationStyle,
 
   /// The alignment of the text.
-  final TextAlign textAlign;
+  final TextAlign textAlign = TextAlign.start,
+  super.key,
+}) extends StatelessWidget {
+  /// Creates a widget that displays a text with annotations.
+  this;
 
   @override
   Widget build(BuildContext context) {

@@ -15,79 +15,69 @@ import 'package:dcc_toolkit/style/text_style/katjas_boekwerk.dart';
 /// [Handschrift] from the underlying [KatjasBoekwerk], or `null` if the
 /// source style is not defined.
 /// {@endtemplate}
-class BoekwerkDecorator implements BoekwerkInterface<HandschriftDecorator> {
-  /// {@macro boekwerk_decorator}
-  const BoekwerkDecorator(this._katjasBoekwerk, this._katjasKleurplaat);
-
+class const BoekwerkDecorator(
   /// The underlying typography scale to decorate.
-  final KatjasBoekwerk _katjasBoekwerk;
+  final KatjasBoekwerk _katjasBoekwerk,
 
   /// The color palette to apply to the typography.
-  final KatjasKleurplaat _katjasKleurplaat;
+  final KatjasKleurplaat _katjasKleurplaat,
+) implements BoekwerkInterface<HandschriftDecorator> {
+  /// {@macro boekwerk_decorator}
+  this;
 
   @override
-  HandschriftDecorator? get displayLarge =>
-      _katjasBoekwerk.displayLarge != null
-          ? HandschriftDecorator(_katjasBoekwerk.displayLarge!, _katjasKleurplaat)
-          : null;
+  HandschriftDecorator? get displayLarge => _katjasBoekwerk.displayLarge != null
+      ? HandschriftDecorator(_katjasBoekwerk.displayLarge!, _katjasKleurplaat)
+      : null;
 
   @override
-  HandschriftDecorator? get displayMedium =>
-      _katjasBoekwerk.displayMedium != null
-          ? HandschriftDecorator(_katjasBoekwerk.displayMedium!, _katjasKleurplaat)
-          : null;
+  HandschriftDecorator? get displayMedium => _katjasBoekwerk.displayMedium != null
+      ? HandschriftDecorator(_katjasBoekwerk.displayMedium!, _katjasKleurplaat)
+      : null;
 
   @override
-  HandschriftDecorator? get displaySmall =>
-      _katjasBoekwerk.displaySmall != null
-          ? HandschriftDecorator(_katjasBoekwerk.displaySmall!, _katjasKleurplaat)
-          : null;
+  HandschriftDecorator? get displaySmall => _katjasBoekwerk.displaySmall != null
+      ? HandschriftDecorator(_katjasBoekwerk.displaySmall!, _katjasKleurplaat)
+      : null;
 
   @override
-  HandschriftDecorator? get subtitleLarge =>
-      _katjasBoekwerk.subtitleLarge != null
-          ? HandschriftDecorator(_katjasBoekwerk.subtitleLarge!, _katjasKleurplaat)
-          : null;
+  HandschriftDecorator? get subtitleLarge => _katjasBoekwerk.subtitleLarge != null
+      ? HandschriftDecorator(_katjasBoekwerk.subtitleLarge!, _katjasKleurplaat)
+      : null;
 
   @override
-  HandschriftDecorator? get subtitleMedium =>
-      _katjasBoekwerk.subtitleMedium != null
-          ? HandschriftDecorator(_katjasBoekwerk.subtitleMedium!, _katjasKleurplaat)
-          : null;
+  HandschriftDecorator? get subtitleMedium => _katjasBoekwerk.subtitleMedium != null
+      ? HandschriftDecorator(_katjasBoekwerk.subtitleMedium!, _katjasKleurplaat)
+      : null;
 
   @override
-  HandschriftDecorator? get subtitleSmall =>
-      _katjasBoekwerk.subtitleSmall != null
-          ? HandschriftDecorator(_katjasBoekwerk.subtitleSmall!, _katjasKleurplaat)
-          : null;
+  HandschriftDecorator? get subtitleSmall => _katjasBoekwerk.subtitleSmall != null
+      ? HandschriftDecorator(_katjasBoekwerk.subtitleSmall!, _katjasKleurplaat)
+      : null;
 
   @override
-  HandschriftDecorator? get headlineLarge =>
-      _katjasBoekwerk.headlineLarge != null
-          ? HandschriftDecorator(_katjasBoekwerk.headlineLarge!, _katjasKleurplaat)
-          : null;
+  HandschriftDecorator? get headlineLarge => _katjasBoekwerk.headlineLarge != null
+      ? HandschriftDecorator(_katjasBoekwerk.headlineLarge!, _katjasKleurplaat)
+      : null;
 
   @override
-  HandschriftDecorator? get headlineMedium =>
-      _katjasBoekwerk.headlineMedium != null
-          ? HandschriftDecorator(_katjasBoekwerk.headlineMedium!, _katjasKleurplaat)
-          : null;
+  HandschriftDecorator? get headlineMedium => _katjasBoekwerk.headlineMedium != null
+      ? HandschriftDecorator(_katjasBoekwerk.headlineMedium!, _katjasKleurplaat)
+      : null;
 
   @override
-  HandschriftDecorator? get headlineSmall =>
-      _katjasBoekwerk.headlineSmall != null
-          ? HandschriftDecorator(_katjasBoekwerk.headlineSmall!, _katjasKleurplaat)
-          : null;
+  HandschriftDecorator? get headlineSmall => _katjasBoekwerk.headlineSmall != null
+      ? HandschriftDecorator(_katjasBoekwerk.headlineSmall!, _katjasKleurplaat)
+      : null;
 
   @override
   HandschriftDecorator? get titleLarge =>
       _katjasBoekwerk.titleLarge != null ? HandschriftDecorator(_katjasBoekwerk.titleLarge!, _katjasKleurplaat) : null;
 
   @override
-  HandschriftDecorator? get titleMedium =>
-      _katjasBoekwerk.titleMedium != null
-          ? HandschriftDecorator(_katjasBoekwerk.titleMedium!, _katjasKleurplaat)
-          : null;
+  HandschriftDecorator? get titleMedium => _katjasBoekwerk.titleMedium != null
+      ? HandschriftDecorator(_katjasBoekwerk.titleMedium!, _katjasKleurplaat)
+      : null;
 
   @override
   HandschriftDecorator? get titleSmall =>
@@ -110,10 +100,9 @@ class BoekwerkDecorator implements BoekwerkInterface<HandschriftDecorator> {
       _katjasBoekwerk.labelLarge != null ? HandschriftDecorator(_katjasBoekwerk.labelLarge!, _katjasKleurplaat) : null;
 
   @override
-  HandschriftDecorator? get labelMedium =>
-      _katjasBoekwerk.labelMedium != null
-          ? HandschriftDecorator(_katjasBoekwerk.labelMedium!, _katjasKleurplaat)
-          : null;
+  HandschriftDecorator? get labelMedium => _katjasBoekwerk.labelMedium != null
+      ? HandschriftDecorator(_katjasBoekwerk.labelMedium!, _katjasKleurplaat)
+      : null;
 
   @override
   HandschriftDecorator? get labelSmall =>

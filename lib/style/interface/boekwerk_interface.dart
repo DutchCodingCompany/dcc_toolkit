@@ -1,5 +1,5 @@
 import 'package:dcc_toolkit/style/text_style/handschrift.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// An abstract interface that defines a typography scale contract.
 ///

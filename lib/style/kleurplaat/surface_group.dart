@@ -3,70 +3,25 @@ import 'dart:ui';
 import 'package:dcc_toolkit/style/interface/surface_group_interface.dart';
 
 /// {@macro surface_group}
-class SurfaceGroup implements SurfaceGroupInterface<Color> {
+class const SurfaceGroup({
+  @override required final Color color,
+  @override required final Color onColorContrast,
+  @override required final Color onColorContrastDim,
+  @override required final Color onColorSubtle,
+  @override required final Color onColorSubtleDim,
+  @override required final Color containerLowest,
+  @override required final Color containerLow,
+  @override required final Color container,
+  @override required final Color containerHigh,
+  @override required final Color containerHighest,
+  @override required final Color link,
+  @override final Color? onColorError,
+  @override final Color? onColorSuccess,
+  @override final Color? onColorPrimary,
+  @override final Color? onColorPrimaryVariant,
+}) implements SurfaceGroupInterface<Color> {
   /// {@macro surface_group}
-  const SurfaceGroup({
-    required this.color,
-    required this.onColorContrast,
-    required this.onColorContrastDim,
-    required this.onColorSubtle,
-    required this.onColorSubtleDim,
-    required this.containerLowest,
-    required this.containerLow,
-    required this.container,
-    required this.containerHigh,
-    required this.containerHighest,
-    required this.link,
-    this.onColorError,
-    this.onColorSuccess,
-    this.onColorPrimary,
-    this.onColorPrimaryVariant,
-  });
-
-  @override
-  final Color color;
-
-  @override
-  final Color onColorContrast;
-
-  @override
-  final Color onColorContrastDim;
-
-  @override
-  final Color onColorSubtle;
-
-  @override
-  final Color onColorSubtleDim;
-
-  @override
-  final Color containerLowest;
-
-  @override
-  final Color containerLow;
-
-  @override
-  final Color container;
-
-  @override
-  final Color containerHigh;
-
-  @override
-  final Color containerHighest;
-
-  @override
-  final Color link;
-
-  @override
-  final Color? onColorError;
-
-  @override
-  final Color? onColorSuccess;
-
-  @override
-  final Color? onColorPrimary;
-
-  @override
-  final Color? onColorPrimaryVariant;
+  this;
 
   @override
   SurfaceGroup lerp(SurfaceGroup? other, double t) {

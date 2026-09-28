@@ -1,13 +1,13 @@
 /// Thrown when a json response cannot be converted to the expected type.
-class JsonConverterException implements Exception {
-  /// Creates a new [JsonConverterException].
-  const JsonConverterException(this.type, {required this.message});
-
+class const JsonConverterException(
   /// The type that could not be converted.
-  final Type type;
+  final Type type, {
 
   /// A description of what went wrong.
-  final String message;
+  required final String message,
+}) implements Exception {
+  /// Creates a new [JsonConverterException].
+  this;
 
   @override
   String toString() => 'JsonConverterException: $message';

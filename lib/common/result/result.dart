@@ -80,12 +80,12 @@ Future<Result<S>> tryCall<S>(FutureOr<S> Function() fn, {Future<Result<S>> Funct
 
 /// Class representing a successful result.
 @immutable
-final class Success<T> extends Result<T> {
-  /// Creates a [Success] with the given [value].
-  const Success(this.value);
-
+final class const Success<T>(
   /// The value of the [Result].
-  final T value;
+  final T value,
+) extends Result<T> {
+  /// Creates a [Success] with the given [value].
+  this;
 
   @override
   bool operator ==(Object other) {
@@ -98,12 +98,12 @@ final class Success<T> extends Result<T> {
 
 /// Class representing a failed result.
 @immutable
-final class Failure<T> extends Result<T> {
-  /// Creates a [Failure] with the given [error].
-  const Failure(this.error);
-
+final class const Failure<T>(
   /// The exception of the [Result].
-  final Object? error;
+  final Object? error,
+) extends Result<T> {
+  /// Creates a [Failure] with the given [error].
+  this;
 
   @override
   bool operator ==(Object other) {

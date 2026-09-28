@@ -9,12 +9,10 @@ import 'package:dcc_toolkit/style/text_style/handschrift_surface_group.dart';
 /// {@template text_style_decorator}
 /// Decorates a [Handschrift] with [KatjasKleurplaat] colors.
 /// {@endtemplate}
-class HandschriftDecorator implements KleurplaatInterface<Handschrift> {
+class const HandschriftDecorator(final Handschrift _textStyle, final KatjasKleurplaat _kleurplaat)
+    implements KleurplaatInterface<Handschrift> {
   /// {@macro text_style_decorator}
-  const HandschriftDecorator(this._textStyle, this._kleurplaat);
-
-  final Handschrift _textStyle;
-  final KatjasKleurplaat _kleurplaat;
+  this;
 
   @override
   ColorGroupInterface<Handschrift> get content => HandschriftColorGroup(

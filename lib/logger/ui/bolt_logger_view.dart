@@ -1,5 +1,5 @@
 import 'package:dcc_toolkit/logger/bolt_logger.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template bolt_logger_view}
 /// A widget that displays the logs stored in the [MemoryCharge].
