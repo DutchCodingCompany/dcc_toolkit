@@ -1,6 +1,6 @@
 import 'package:dcc_toolkit/style/interface/boekwerk_interface.dart';
 import 'package:dcc_toolkit/style/text_style/handschrift.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template katjas_boekwerk}
 /// A [ThemeExtension] that provides a complete typography scale using [Handschrift] styles.
@@ -26,68 +26,29 @@ import 'package:flutter/material.dart';
 /// final boekwerk = Theme.of(context).extension<KatjasBoekwerk>();
 /// ```
 /// {@endtemplate}
-class KatjasBoekwerk extends ThemeExtension<KatjasBoekwerk> implements BoekwerkInterface<Handschrift> {
+class KatjasBoekwerk({
+  @override final Handschrift? displayLarge,
+  @override final Handschrift? displayMedium,
+  @override final Handschrift? displaySmall,
+  @override final Handschrift? subtitleLarge,
+  @override final Handschrift? subtitleMedium,
+  @override final Handschrift? subtitleSmall,
+  @override final Handschrift? headlineLarge,
+  @override final Handschrift? headlineMedium,
+  @override final Handschrift? headlineSmall,
+  @override final Handschrift? titleLarge,
+  @override final Handschrift? titleMedium,
+  @override final Handschrift? titleSmall,
+  @override final Handschrift? bodyLarge,
+  @override final Handschrift? bodyMedium,
+  @override final Handschrift? bodySmall,
+  @override final Handschrift? labelLarge,
+  @override final Handschrift? labelMedium,
+  @override final Handschrift? labelSmall,
+  @override final Handschrift? navbar,
+}) extends ThemeExtension<KatjasBoekwerk> implements BoekwerkInterface<Handschrift> {
   /// {@macro katjas_boekwerk}
-  KatjasBoekwerk({
-    this.displayLarge,
-    this.displayMedium,
-    this.displaySmall,
-    this.subtitleLarge,
-    this.subtitleMedium,
-    this.subtitleSmall,
-    this.headlineLarge,
-    this.headlineMedium,
-    this.headlineSmall,
-    this.titleLarge,
-    this.titleMedium,
-    this.titleSmall,
-    this.bodyLarge,
-    this.bodyMedium,
-    this.bodySmall,
-    this.labelLarge,
-    this.labelMedium,
-    this.labelSmall,
-    this.navbar,
-  });
-
-  @override
-  final Handschrift? displayLarge;
-  @override
-  final Handschrift? displayMedium;
-  @override
-  final Handschrift? displaySmall;
-  @override
-  final Handschrift? subtitleLarge;
-  @override
-  final Handschrift? subtitleMedium;
-  @override
-  final Handschrift? subtitleSmall;
-  @override
-  final Handschrift? headlineLarge;
-  @override
-  final Handschrift? headlineMedium;
-  @override
-  final Handschrift? headlineSmall;
-  @override
-  final Handschrift? titleLarge;
-  @override
-  final Handschrift? titleMedium;
-  @override
-  final Handschrift? titleSmall;
-  @override
-  final Handschrift? bodyLarge;
-  @override
-  final Handschrift? bodyMedium;
-  @override
-  final Handschrift? bodySmall;
-  @override
-  final Handschrift? labelLarge;
-  @override
-  final Handschrift? labelMedium;
-  @override
-  final Handschrift? labelSmall;
-  @override
-  final Handschrift? navbar;
+  this;
 
   /// Converts this typography scale to a Flutter [TextTheme].
   ///

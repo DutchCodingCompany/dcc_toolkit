@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'name.dart';
 import 'location.dart';
+import 'name.dart';
 import 'picture.dart';
 
 part 'user.freezed.dart';

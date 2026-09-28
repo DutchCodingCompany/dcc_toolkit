@@ -5,11 +5,7 @@ import 'model/api_user_response.dart';
 import 'user_service.dart';
 
 @lazySingleton
-class UserRepository {
-  const UserRepository(this._userService);
-
-  final UserService _userService;
-
+class const UserRepository(final UserService _userService) {
   Future<Result<ApiUserResponse>> getRandomUser() async {
     return tryCall(() => _userService.getRandomUser());
   }

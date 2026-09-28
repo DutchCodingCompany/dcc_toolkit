@@ -11,9 +11,12 @@ import 'package:dcc_toolkit/logger/zap_event.dart';
 /// By default, the [maxItems] is set to 1000. This is the amount of logs that will be stored in memory.
 ///
 /// {@endtemplate}
-class MemoryCharge implements BoltCharge {
+class MemoryCharge({
+  /// The maximum amount of logs to store in memory.
+  final int maxItems = 1000,
+}) implements BoltCharge {
   /// {@macro memory_charge}
-  MemoryCharge({this.maxItems = 1000});
+  this;
 
   /// The name used to register and look up this charge.
   static const chargeName = 'MemoryCharge';
@@ -21,8 +24,6 @@ class MemoryCharge implements BoltCharge {
   @override
   String get name => chargeName;
 
-  /// The maximum amount of logs to store in memory.
-  final int maxItems;
   final List<ZapEvent> _items = [];
 
   StreamController<ZapEvent> _controller = StreamController.broadcast();

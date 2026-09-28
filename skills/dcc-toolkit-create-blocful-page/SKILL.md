@@ -2,7 +2,7 @@
 name: dcc-toolkit-create-blocful-page
 description: Create a full page using BlocfulWidget with BlocPresentationMixin for one-shot events, Cubit state management, and native dialogs. Use when creating a new screen with BLoC, adding presentation events, wiring up a Cubit to a page, or showing platform-adaptive dialogs.
 metadata:
-  last_modified: "2025-06-18"
+  last_modified: "2026-09-28"
 ---
 
 # Create a BlocfulWidget Page
@@ -35,7 +35,12 @@ Additionally, the toolkit provides `showNativeDialog()` for platform-adaptive di
 import 'package:dcc_toolkit/dcc_toolkit.dart'; // BlocfulWidget, showNativeDialog, DialogAction
 ```
 
+Requirements:
+- Flutter >=3.47.0
+- Dart ^3.13.0
+
 Dependencies required in the consuming project:
+- `material_ui: ^1.4.0` (Material widgets moved out of the Flutter SDK)
 - `flutter_bloc` (for `Cubit`, `BlocPresentationMixin`)
 - `bloc_presentation` (for `BlocPresentationMixin`, `emitPresentation()`)
 - `dcc_toolkit`
@@ -103,20 +108,12 @@ class UserLoaded implements UserEvent {
   String get message => 'User loaded successfully';
 }
 
-class UserSaveFailed implements UserEvent {
-  const UserSaveFailed(this.reason);
-
-  final String reason;
-
+class const UserSaveFailed(final String reason) implements UserEvent {
   @override
   String get message => 'Save failed: $reason';
 }
 
-class NavigateToProfile implements UserEvent {
-  const NavigateToProfile(this.userId);
-
-  final String userId;
-
+class const NavigateToProfile(final String userId) implements UserEvent {
   @override
   String get message => '';
 }
@@ -146,13 +143,11 @@ Or manually:
 import 'package:flutter/foundation.dart';
 
 @immutable
-class UserState {
-  const UserState({this.user, this.isLoading = false, this.hasError = false});
-
-  final User? user;
-  final bool isLoading;
-  final bool hasError;
-
+class const UserState({
+  final User? user,
+  final bool isLoading = false,
+  final bool hasError = false,
+}) {
   UserState copyWith({User? user, bool? isLoading, bool? hasError}) => UserState(
     user: user ?? this.user,
     isLoading: isLoading ?? this.isLoading,
@@ -183,11 +178,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'user_cubit.freezed.dart';
 part 'user_state.dart';
 
-class UserCubit extends Cubit<UserState>
+class UserCubit(final UserRepository _repository) extends Cubit<UserState>
     with BlocPresentationMixin<UserState, UserEvent> {
-  UserCubit(this._repository) : super(const UserState());
-
-  final UserRepository _repository;
+  this : super(const UserState());
 
   Future<void> loadUser(String id) async {
     emit(state.copyWith(isLoading: true));
@@ -220,13 +213,13 @@ class UserCubit extends Cubit<UserState>
 ```dart
 // user_page.dart
 import 'package:dcc_toolkit/ui/blocful_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
-class UserPage extends BlocfulWidget<UserCubit, UserState, UserEvent> {
-  const UserPage({required this.onCreateCubit, super.key})
-    : super(onCreateBloc: onCreateCubit);
-
-  final UserCubit Function(BuildContext)? onCreateCubit;
+class const UserPage({
+  required final UserCubit Function(BuildContext)? onCreateCubit,
+  super.key,
+}) extends BlocfulWidget<UserCubit, UserState, UserEvent> {
+  this : super(onCreateBloc: onCreateCubit);
 
   @override
   void onPresentationEvent(BuildContext context, UserEvent event) {
@@ -313,8 +306,9 @@ Or if the Cubit is already provided higher in the tree:
 
 ```dart
 // No onCreateBloc needed -- Cubit already exists in widget tree
-class UserDetailPage extends BlocfulWidget<UserCubit, UserState, UserEvent> {
-  const UserDetailPage({super.key}) : super(onCreateBloc: null);
+class const UserDetailPage({super.key})
+    extends BlocfulWidget<UserCubit, UserState, UserEvent> {
+  this : super(onCreateBloc: null);
 
   @override
   Widget builder(BuildContext context, UserCubit bloc, UserState state) {
@@ -345,9 +339,7 @@ class ProfileUpdateSuccess implements ProfileEvent {
   String get message => 'Profile updated successfully';
 }
 
-class ProfileError implements ProfileEvent {
-  const ProfileError(this.error);
-  final String error;
+class const ProfileError(final String error) implements ProfileEvent {
   @override
   String get message => error;
 }
@@ -362,11 +354,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'profile_cubit.freezed.dart';
 part 'profile_state.dart';
 
-class ProfileCubit extends Cubit<ProfileState>
+class ProfileCubit(final ProfileRepository _repository)
+    extends Cubit<ProfileState>
     with BlocPresentationMixin<ProfileState, ProfileEvent> {
-  ProfileCubit(this._repository) : super(const ProfileState());
-
-  final ProfileRepository _repository;
+  this : super(const ProfileState());
 
   Future<void> loadProfile() async {
     emit(state.copyWith(isLoading: true));
@@ -414,12 +405,12 @@ sealed class ProfileState with _$ProfileState {
 import 'package:dcc_toolkit/dcc_toolkit.dart';
 import 'package:dcc_toolkit/ui/blocful_widget.dart';
 import 'package:dcc_toolkit/ui/native_dialog.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
-class ProfilePage extends BlocfulWidget<ProfileCubit, ProfileState, ProfileEvent> {
-  const ProfilePage({super.key})
-    : super(onCreateBloc: _createCubit);
+class const ProfilePage({super.key})
+    extends BlocfulWidget<ProfileCubit, ProfileState, ProfileEvent> {
+  this : super(onCreateBloc: _createCubit);
 
   static ProfileCubit _createCubit(BuildContext context) =>
       context.read<ProfileCubit>()..loadProfile();
@@ -555,8 +546,9 @@ class OrderPage extends StatelessWidget {
   }
 }
 
-class _OrderContent extends BlocfulWidget<OrderCubit, OrderState, OrderEvent> {
-  const _OrderContent() : super(onCreateBloc: _create);
+class const _OrderContent()
+    extends BlocfulWidget<OrderCubit, OrderState, OrderEvent> {
+  this : super(onCreateBloc: _create);
 
   static OrderCubit _create(BuildContext context) => getIt<OrderCubit>()..load();
 

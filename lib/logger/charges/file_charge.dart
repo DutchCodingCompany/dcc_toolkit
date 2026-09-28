@@ -12,22 +12,24 @@ import 'package:intl/intl.dart';
 /// Logs are written to the file in batches, this is done when it reaches the [bufferSize] or every [writeDelay].
 ///
 /// {@endtemplate}
-class FileCharge implements BoltCharge {
+class FileCharge(
+  /// The path to the directory where the log files will be written.
+  final String path, {
+
+  /// The size of the buffer (in lines) before writing to the file.
+  final int bufferSize = 1000,
+
+  /// The delay between writing to the file.
+  final Duration writeDelay = const Duration(seconds: 5),
+}) implements BoltCharge {
   /// {@macro file_charge}
-  FileCharge(this.path, {this.bufferSize = 1000, this.writeDelay = const Duration(seconds: 5)}) {
+  this {
     _timer = Timer.periodic(writeDelay, (_) => _flush());
   }
+
   @override
   String get name => 'FileCharge';
 
-  /// The size of the buffer (in lines) before writing to the file.
-  final int bufferSize;
-
-  /// The path to the directory where the log files will be written.
-  final String path;
-
-  /// The delay between writing to the file.
-  final Duration writeDelay;
   final List<ZapEvent> _buffer = [];
   IOSink? _sink;
   String? _sinkFileName;

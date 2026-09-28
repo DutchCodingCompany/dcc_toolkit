@@ -11,10 +11,7 @@ typedef JsonFactory<T> = T Function(Map<String, dynamic> json);
 /// JsonSeriablizableConverter
 /// Converter for chopper to convert json response to a dart object using json_serializable.
 /// Based of: https://hadrien-lejard.gitbook.io/chopper/faq#write-a-custom-jsonconverter
-class JsonSerializableConverter extends JsonConverter {
-  /// Creates a new JsonSerializableConverter
-  const JsonSerializableConverter(this.factories);
-
+class const JsonSerializableConverter(
   /// The factories to use for decoding the json responses.
   /// For example:
   /// ```dart
@@ -22,7 +19,10 @@ class JsonSerializableConverter extends JsonConverter {
   ///  User: User.fromJson,
   ///  });
   ///  ```
-  final Map<Type, JsonFactory<dynamic>> factories;
+  final Map<Type, JsonFactory<dynamic>> factories,
+) extends JsonConverter {
+  /// Creates a new JsonSerializableConverter
+  this;
 
   Never _logAndThrow<T>(String message) {
     final exception = JsonConverterException(T, message: message);

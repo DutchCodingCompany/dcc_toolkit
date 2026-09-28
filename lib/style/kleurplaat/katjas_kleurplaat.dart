@@ -1,77 +1,29 @@
 import 'package:dcc_toolkit/style/interface/kleurplaat_interface.dart';
 import 'package:dcc_toolkit/style/kleurplaat/color_group.dart';
 import 'package:dcc_toolkit/style/kleurplaat/surface_group.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@macro kleurplaat}
-class KatjasKleurplaat extends ThemeExtension<KatjasKleurplaat> implements KleurplaatInterface<Color> {
+class const KatjasKleurplaat({
+  @override required final ColorGroup primary,
+  @override required final ColorGroup primaryFill,
+  @override required final ColorGroup content,
+  @override required final ColorGroup contentFill,
+  @override required final ColorGroup error,
+  @override required final ColorGroup errorFill,
+  @override required final ColorGroup success,
+  @override required final ColorGroup successFill,
+  @override required final SurfaceGroup surface,
+  @override required final SurfaceGroup? surfaceInverse,
+  @override final ColorGroup? secondary,
+  @override final ColorGroup? secondaryFill,
+  @override final ColorGroup? tertiary,
+  @override final ColorGroup? tertiaryFill,
+  @override final ColorGroup? accent,
+  @override final ColorGroup? accentFill,
+}) extends ThemeExtension<KatjasKleurplaat> implements KleurplaatInterface<Color> {
   /// {@macro kleurplaat}
-  const KatjasKleurplaat({
-    required this.primary,
-    required this.primaryFill,
-    required this.content,
-    required this.contentFill,
-    required this.error,
-    required this.errorFill,
-    required this.success,
-    required this.successFill,
-    required this.surface,
-    required this.surfaceInverse,
-    this.secondary,
-    this.secondaryFill,
-    this.tertiary,
-    this.tertiaryFill,
-    this.accent,
-    this.accentFill,
-  });
-
-  @override
-  final ColorGroup primary;
-
-  @override
-  final ColorGroup primaryFill;
-
-  @override
-  final ColorGroup? secondary;
-
-  @override
-  final ColorGroup? secondaryFill;
-
-  @override
-  final ColorGroup? tertiary;
-
-  @override
-  final ColorGroup? tertiaryFill;
-
-  @override
-  final ColorGroup? accent;
-
-  @override
-  final ColorGroup? accentFill;
-
-  @override
-  final ColorGroup content;
-
-  @override
-  final ColorGroup contentFill;
-
-  @override
-  final ColorGroup error;
-
-  @override
-  final ColorGroup errorFill;
-
-  @override
-  final ColorGroup success;
-
-  @override
-  final ColorGroup successFill;
-
-  @override
-  final SurfaceGroup surface;
-
-  @override
-  final SurfaceGroup? surfaceInverse;
+  this;
 
   @override
   ThemeExtension<KatjasKleurplaat> copyWith({

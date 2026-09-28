@@ -1,36 +1,30 @@
 import 'package:dcc_toolkit/dcc_toolkit.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A widget that displays a list of items with pagination.
 ///
 /// This widget is a [CustomScrollView] that displays a paginated list of items.
 /// It uses a [PaginationState] to manage the behavior of the widget.
 /// It also uses a [NotificationListener] to listen for scroll events and load more items when the user scrolls to the bottom of the list.
-class PaginatedScrollView<T> extends StatelessWidget {
-  /// Creates a new [PaginatedScrollView].
-  const PaginatedScrollView({
-    required this.state,
-    required this.itemBuilder,
-    this.onLoadMore,
-    this.topWidget,
-    this.bottomWidget,
-    super.key,
-  });
-
+class const PaginatedScrollView<T>({
   /// The state of the pagination.
-  final PaginationState<T> state;
+  required final PaginationState<T> state,
 
   /// The builder for the items.
-  final Widget Function(BuildContext, T) itemBuilder;
+  required final Widget Function(BuildContext, T) itemBuilder,
 
   /// The function to call when the user scrolls to the bottom of the list, to load more items.
-  final void Function()? onLoadMore;
+  final void Function()? onLoadMore,
 
   /// Optional widget to display at the top of the list.
-  final Widget? topWidget;
+  final Widget? topWidget,
 
   /// Optional widget to display at the bottom of the list.
-  final Widget? bottomWidget;
+  final Widget? bottomWidget,
+  super.key,
+}) extends StatelessWidget {
+  /// Creates a new [PaginatedScrollView].
+  this;
 
   int get _itemCount => state.items.length;
 
@@ -41,20 +35,19 @@ class PaginatedScrollView<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NotificationListener<ScrollNotification>(
-      onNotification:
-          onLoadMore != null
-              ? (notification) {
-                final metrics = notification.metrics;
-                if (metrics.extentAfter == metrics.minScrollExtent) {
-                  // We don't trigger loading if no next page is available or while we are already fetching more
-                  if (state.hasNextPage && !state.isLoading) {
-                    onLoadMore?.call();
-                    return true;
-                  }
+      onNotification: onLoadMore != null
+          ? (notification) {
+              final metrics = notification.metrics;
+              if (metrics.extentAfter == metrics.minScrollExtent) {
+                // We don't trigger loading if no next page is available or while we are already fetching more
+                if (state.hasNextPage && !state.isLoading) {
+                  onLoadMore?.call();
+                  return true;
                 }
-                return false;
               }
-              : null,
+              return false;
+            }
+          : null,
       child: CustomScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         slivers: [
@@ -65,7 +58,10 @@ class PaginatedScrollView<T> extends StatelessWidget {
           ),
           if (state.hasNextPage)
             const SliverToBoxAdapter(
-              child: Padding(padding: EdgeInsets.all(Sizes.px16), child: Center(child: CircularProgressIndicator())),
+              child: Padding(
+                padding: EdgeInsets.all(Sizes.px16),
+                child: Center(child: CircularProgressIndicator()),
+              ),
             ),
           if (bottomWidget != null) SliverToBoxAdapter(child: bottomWidget),
           //Bottom insets to be able to scroll the entire content above the FloatingActionButton

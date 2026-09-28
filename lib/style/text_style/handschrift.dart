@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// An extended [TextStyle] that supports additional style variants for bold and link text.
 ///
@@ -44,43 +44,46 @@ import 'package:flutter/material.dart';
 ///
 /// [Handschrift] supports smooth interpolation via the [lerp] method,
 /// which interpolates all properties including the bold and link variants.
-class Handschrift extends TextStyle {
+class const Handschrift({
+  super.inherit,
+  super.color,
+  super.backgroundColor,
+  super.fontSize,
+  super.fontWeight,
+  super.fontStyle,
+  super.letterSpacing,
+  super.wordSpacing,
+  super.textBaseline,
+  super.height,
+  super.leadingDistribution,
+  super.locale,
+  super.foreground,
+  super.background,
+  super.shadows,
+  super.fontFeatures,
+  super.fontVariations,
+  super.decoration,
+  super.decorationColor,
+  super.decorationStyle,
+  super.decorationThickness,
+  super.debugLabel,
+  super.fontFamily,
+  super.fontFamilyFallback,
+  super.package,
+  super.overflow,
+
+  /// The style to merge when [bold] is accessed.
+  final TextStyle? _boldStyle,
+
+  /// The style to merge when [link] is accessed.
+  final TextStyle? _linkStyle,
+}) extends TextStyle {
   /// Creates a [Handschrift] with the given properties.
   ///
   /// All parameters from [TextStyle] are supported, plus:
-  /// - [boldStyle]: Optional style to merge when accessing [bold]
-  /// - [linkStyle]: Optional style to merge when accessing [link]
-  const Handschrift({
-    super.inherit,
-    super.color,
-    super.backgroundColor,
-    super.fontSize,
-    super.fontWeight,
-    super.fontStyle,
-    super.letterSpacing,
-    super.wordSpacing,
-    super.textBaseline,
-    super.height,
-    super.leadingDistribution,
-    super.locale,
-    super.foreground,
-    super.background,
-    super.shadows,
-    super.fontFeatures,
-    super.fontVariations,
-    super.decoration,
-    super.decorationColor,
-    super.decorationStyle,
-    super.decorationThickness,
-    super.debugLabel,
-    super.fontFamily,
-    super.fontFamilyFallback,
-    super.package,
-    super.overflow,
-    TextStyle? boldStyle,
-    TextStyle? linkStyle,
-  }) : _boldStyle = boldStyle,
-       _linkStyle = linkStyle;
+  /// - `boldStyle`: Optional style to merge when accessing [bold]
+  /// - `linkStyle`: Optional style to merge when accessing [link]
+  this;
 
   /// Creates a [Handschrift] from an existing [TextStyle].
   ///
@@ -119,12 +122,6 @@ class Handschrift extends TextStyle {
     boldStyle: boldStyle,
     linkStyle: linkStyle,
   );
-
-  /// The style to merge when [bold] is accessed.
-  final TextStyle? _boldStyle;
-
-  /// The style to merge when [link] is accessed.
-  final TextStyle? _linkStyle;
 
   /// Returns this style merged with [_boldStyle].
   ///

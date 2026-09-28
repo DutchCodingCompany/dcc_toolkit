@@ -2,7 +2,7 @@
 name: dcc-toolkit-setup-kleurplaat-boekwerk
 description: Create and configure a custom design system using KatjasKleurplaat (colors) and KatjasBoekwerk (typography) theme extensions. Use when setting up theming, adding a color palette, configuring typography, or integrating the DCC design system into a Flutter app.
 metadata:
-  last_modified: "2025-06-18"
+  last_modified: "2026-09-28"
 ---
 
 # Set Up Kleurplaat & Boekwerk Design System
@@ -29,6 +29,11 @@ Both are registered as Flutter `ThemeExtension`s and accessed via `BuildContext`
 
 ## Prerequisites
 
+Requirements:
+- Flutter >=3.47.0
+- Dart ^3.13.0
+- `material_ui: ^1.4.0` in the app's `pubspec.yaml` (Material widgets moved out of the Flutter SDK)
+
 ```dart
 import 'package:dcc_toolkit/dcc_toolkit.dart';
 ```
@@ -36,8 +41,8 @@ import 'package:dcc_toolkit/dcc_toolkit.dart';
 For `KatjasBoekwerk` and `Handschrift` (not in barrel file), import directly:
 
 ```dart
-import 'package:dcc_toolkit/style/text_style/katjas_boekwerk.dart';
 import 'package:dcc_toolkit/style/text_style/handschrift.dart';
+import 'package:dcc_toolkit/style/text_style/katjas_boekwerk.dart';
 ```
 
 ## Core Concepts
@@ -104,7 +109,7 @@ Create a file (e.g., `lib/core/theme/app_kleurplaat.dart`):
 
 ```dart
 import 'package:dcc_toolkit/dcc_toolkit.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 final appKleurplaatLight = KatjasKleurplaat(
   primary: const ColorGroup(
@@ -180,7 +185,7 @@ Create a file (e.g., `lib/core/theme/app_boekwerk.dart`):
 ```dart
 import 'package:dcc_toolkit/style/text_style/handschrift.dart';
 import 'package:dcc_toolkit/style/text_style/katjas_boekwerk.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 final appBoekwerk = KatjasBoekwerk(
   displayLarge: const Handschrift(
@@ -311,7 +316,7 @@ final appBoekwerk = KatjasBoekwerk(
 In your app's theme configuration:
 
 ```dart
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 ThemeData buildAppTheme() {
   final kleurplaat = appKleurplaatLight;
@@ -390,7 +395,7 @@ Widget build(BuildContext context) {
 import 'package:dcc_toolkit/dcc_toolkit.dart';
 import 'package:dcc_toolkit/style/text_style/handschrift.dart';
 import 'package:dcc_toolkit/style/text_style/katjas_boekwerk.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AppTheme {
   static ThemeData get light {
@@ -449,12 +454,11 @@ class AppTheme {
 
 ```dart
 // Usage in a widget
-class ProfileCard extends StatelessWidget {
-  const ProfileCard({required this.name, required this.email, super.key});
-
-  final String name;
-  final String email;
-
+class const ProfileCard({
+  required final String name,
+  required final String email,
+  super.key,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final kleurplaat = context.katjasKleurPlaat;

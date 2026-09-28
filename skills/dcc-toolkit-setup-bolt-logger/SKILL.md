@@ -2,7 +2,7 @@
 name: dcc-toolkit-setup-bolt-logger
 description: Set up and configure BoltLogger for structured logging with charges (DebugConsole, File, Memory). Use when adding logging, setting up error tracking, adding an in-app log viewer, or bootstrapping a Flutter app with error handling.
 metadata:
-  last_modified: "2025-06-18"
+  last_modified: "2026-09-28"
 ---
 
 # Set Up BoltLogger
@@ -28,6 +28,11 @@ BoltLogger is the DCC toolkit's structured logging system built on top of the `l
 - **runAppBootstrap()** -- wraps your app in error handling zones that auto-log with BoltLogger
 
 ## Prerequisites
+
+Requirements:
+- Flutter >=3.47.0
+- Dart ^3.13.0
+- `material_ui: ^1.4.0` in the app's `pubspec.yaml` (Material widgets moved out of the Flutter SDK)
 
 The project must depend on `dcc_toolkit`. BoltLogger is exported from the main barrel file:
 
@@ -86,7 +91,7 @@ Replace your `main()` function to use `runAppBootstrap()`. This wraps the app in
 ```dart
 import 'package:dcc_toolkit/common/run_app_bootstrap.dart';
 import 'package:dcc_toolkit/dcc_toolkit.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 Future<void> main() async {
   await runAppBootstrap(() async {
@@ -186,9 +191,7 @@ class UserRepository {
 Create a debug page that shows logs in-app:
 
 ```dart
-class DebugLogPage extends StatelessWidget {
-  const DebugLogPage({super.key});
-
+class const DebugLogPage({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -215,7 +218,7 @@ BoltLogger.discharge(); // Cancels subscription, flushes FileCharge, closes Memo
 // main.dart
 import 'package:dcc_toolkit/common/run_app_bootstrap.dart';
 import 'package:dcc_toolkit/dcc_toolkit.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:path_provider/path_provider.dart';
 
 Future<void> main() async {
@@ -240,10 +243,8 @@ Future<void> main() async {
 import 'package:dcc_toolkit/dcc_toolkit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SomeCubit extends Cubit<SomeState> {
-  SomeCubit(this._repository) : super(const SomeState.initial());
-
-  final SomeRepository _repository;
+class SomeCubit(final SomeRepository _repository) extends Cubit<SomeState> {
+  this : super(const SomeState.initial());
 
   Future<void> loadData() async {
     zap('Loading data...'); // Uses ZapExtension, tag = 'SomeCubit'

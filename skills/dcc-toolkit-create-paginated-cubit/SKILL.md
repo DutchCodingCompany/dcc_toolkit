@@ -2,7 +2,7 @@
 name: dcc-toolkit-create-paginated-cubit
 description: Scaffold a paginated Cubit using PaginationMixin and PaginationState with PaginatedScrollView and PaginationStateView widgets. Use when adding pagination, implementing infinite scroll, loading more items on scroll, or creating a paginated list.
 metadata:
-  last_modified: "2025-06-18"
+  last_modified: "2026-09-28"
 ---
 
 # Create a Paginated Cubit
@@ -39,7 +39,12 @@ import 'package:dcc_toolkit/dcc_toolkit.dart';
 import 'package:dcc_toolkit/pagination/pagination_state_view.dart';
 ```
 
+Requirements:
+- Flutter >=3.47.0
+- Dart ^3.13.0
+
 Dependencies required in the consuming project:
+- `material_ui: ^1.4.0` (Material widgets moved out of the Flutter SDK)
 - `flutter_bloc` (for `Cubit`)
 - `dcc_toolkit`
 
@@ -96,14 +101,9 @@ import 'package:dcc_toolkit/dcc_toolkit.dart';
 import 'package:flutter/foundation.dart';
 
 @immutable
-class ProductListState implements PaginationInterface<Product> {
-  const ProductListState({
-    this.paginationState = const PaginationState(),
-  });
-
-  @override
-  final PaginationState<Product> paginationState;
-
+class const ProductListState({
+  @override final PaginationState<Product> paginationState = const PaginationState(),
+}) implements PaginationInterface<Product> {
   ProductListState copyWith({
     PaginationState<Product>? paginationState,
   }) {
@@ -128,11 +128,10 @@ class ProductListState implements PaginationInterface<Product> {
 import 'package:dcc_toolkit/dcc_toolkit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ProductListCubit extends Cubit<ProductListState>
+class ProductListCubit(final ProductRepository _repository)
+    extends Cubit<ProductListState>
     with PaginationMixin<Product, ProductListState> {
-  ProductListCubit(this._repository) : super(const ProductListState());
-
-  final ProductRepository _repository;
+  this : super(const ProductListState());
 
   @override
   Future<List<Product>?> fetchPageItems({
@@ -194,12 +193,10 @@ class ProductListCubit extends Cubit<ProductListState>
 ```dart
 import 'package:dcc_toolkit/dcc_toolkit.dart';
 import 'package:dcc_toolkit/pagination/pagination_state_view.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
-class ProductListPage extends StatelessWidget {
-  const ProductListPage({super.key});
-
+class const ProductListPage({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -210,9 +207,7 @@ class ProductListPage extends StatelessWidget {
   }
 }
 
-class _ProductListView extends StatelessWidget {
-  const _ProductListView();
-
+class const _ProductListView() extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -262,14 +257,9 @@ import 'package:dcc_toolkit/dcc_toolkit.dart';
 import 'package:flutter/foundation.dart';
 
 @immutable
-class ProductListState implements PaginationInterface<Product> {
-  const ProductListState({
-    this.paginationState = const PaginationState(),
-  });
-
-  @override
-  final PaginationState<Product> paginationState;
-
+class const ProductListState({
+  @override final PaginationState<Product> paginationState = const PaginationState(),
+}) implements PaginationInterface<Product> {
   ProductListState copyWith({PaginationState<Product>? paginationState}) =>
       ProductListState(paginationState: paginationState ?? this.paginationState);
 
@@ -288,11 +278,10 @@ class ProductListState implements PaginationInterface<Product> {
 import 'package:dcc_toolkit/dcc_toolkit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ProductListCubit extends Cubit<ProductListState>
+class ProductListCubit(final ProductRepository _repository)
+    extends Cubit<ProductListState>
     with PaginationMixin<Product, ProductListState> {
-  ProductListCubit(this._repository) : super(const ProductListState());
-
-  final ProductRepository _repository;
+  this : super(const ProductListState());
 
   @override
   Future<List<Product>?> fetchPageItems({
@@ -339,12 +328,10 @@ class ProductListCubit extends Cubit<ProductListState>
 // product_list_page.dart
 import 'package:dcc_toolkit/dcc_toolkit.dart';
 import 'package:dcc_toolkit/pagination/pagination_state_view.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
-class ProductListPage extends StatelessWidget {
-  const ProductListPage({super.key});
-
+class const ProductListPage({super.key}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -395,11 +382,10 @@ Debounce search input using the toolkit's `Debouncer`:
 ```dart
 import 'package:dcc_toolkit/debouncer/debouncer.dart';
 
-class ProductListCubit extends Cubit<ProductListState>
+class ProductListCubit(final ProductRepository _repository)
+    extends Cubit<ProductListState>
     with PaginationMixin<Product, ProductListState> {
-  ProductListCubit(this._repository) : super(const ProductListState());
-
-  final ProductRepository _repository;
+  this : super(const ProductListState());
   final _debouncer = Debouncer(); // 400ms default
 
   void onSearchChanged(String query) {

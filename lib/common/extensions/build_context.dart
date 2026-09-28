@@ -1,6 +1,6 @@
 import 'package:dcc_toolkit/dcc_toolkit.dart';
 import 'package:dcc_toolkit/style/text_style/katjas_boekwerk.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Extension for [BuildContext] to get theme related data.
 extension ThemingExtensions on BuildContext {

@@ -2,42 +2,33 @@ import 'package:flutter/foundation.dart';
 
 /// State for pagination.
 @immutable
-class PaginationState<T> {
-  /// Creates a new [PaginationState] with the given values.
-  const PaginationState({
-    this.items = const [],
-    this.currentPage = 1,
-    this.lastPage = 1,
-    this.isLoading = false,
-    this.loadingInitialPage = true,
-    this.hasError = false,
-    this.total = 0,
-    this.searchQuery,
-  });
-
+class const PaginationState<T>({
   /// All items fetched so far for the loaded pages.
-  final List<T> items;
+  final List<T> items = const [],
 
   /// The current page in the pagination process.
-  final int currentPage;
+  final int currentPage = 1,
 
   /// The last page in the pagination process.
-  final int lastPage;
+  final int lastPage = 1,
 
   /// Whether the current page is being loaded.
-  final bool isLoading;
+  final bool isLoading = false,
 
   /// Whether the initial page is being loaded.
-  final bool loadingInitialPage;
+  final bool loadingInitialPage = true,
 
   /// Whether there is an error loading the current page.
-  final bool hasError;
+  final bool hasError = false,
 
   /// The total number of items.
-  final int total;
+  final int total = 0,
 
   /// The search query to filter the items.
-  final String? searchQuery;
+  final String? searchQuery,
+}) {
+  /// Creates a new [PaginationState] with the given values.
+  this;
 
   /// Checks if there is a next page to load for the current [PaginationState].
   bool get hasNextPage => currentPage < lastPage;
