@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1
+* Added the showcase kit, building blocks for a clickable web demo of an app made from its real screens. Import it with `package:dcc_toolkit/showcase.dart`, see [doc/showcase.md](doc/showcase.md)
+* Added the `dcc-toolkit-create-showcase` agent skill for setting up a showcase app
+
 ## 0.1.0
 * **Breaking:** Requires Flutter `>=3.47.0` and Dart `^3.13.0`
 * **Breaking:** Migrated from `package:flutter/material.dart` / `package:flutter/cupertino.dart` to the `material_ui` and `cupertino_ui` packages. Apps must migrate as well, see [doc/migrate_to_material_ui.md](doc/migrate_to_material_ui.md)
