@@ -3,8 +3,14 @@ import 'package:material_ui/material_ui.dart';
 /// Safe areas of an iPhone 16, for embedding in a website without a status bar of its own.
 const iosInsets = EdgeInsets.only(top: 59, bottom: 34);
 
-/// How the host page configures the demo, read from the url: `?highlights=off&insets=ios`.
-class const ShowcaseConfig({final bool highlightsEnabled = true, final EdgeInsets insets = EdgeInsets.zero}) {
+/// How the host page configures the demo, read from the url: `?highlights=off&insets=ios&splash=off`.
+class const ShowcaseConfig({
+  final bool highlightsEnabled = true,
+  final EdgeInsets insets = EdgeInsets.zero,
+
+  /// Whether the splash stays for its minimum duration. When off, it goes as soon as the app is drawn.
+  final bool splashEnabled = true,
+}) {
   /// Creates a [ShowcaseConfig].
   this;
 
@@ -15,6 +21,7 @@ class const ShowcaseConfig({final bool highlightsEnabled = true, final EdgeInset
     return ShowcaseConfig(
       highlightsEnabled: query['highlights'] != 'off',
       insets: query['insets'] == 'ios' ? iosInsets : EdgeInsets.zero,
+      splashEnabled: query['splash'] != 'off',
     );
   }
 }

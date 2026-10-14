@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.2
+* Added `removeShowcaseSplash` to show the splash of the app from `web/index.html` while the showcase loads, for at least a fixed duration, and the `?splash=off` url parameter
+
 ## 0.1.1
 * Added the showcase kit, building blocks for a clickable web demo of an app made from its real screens. Import it with `package:dcc_toolkit/showcase.dart`, see [doc/showcase.md](doc/showcase.md)
 * Added the `dcc-toolkit-create-showcase` agent skill for setting up a showcase app

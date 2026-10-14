@@ -71,18 +71,26 @@ void main() {
   });
 
   group(ShowcaseConfig, () {
-    test('shows highlights and has no insets by default', () {
+    test('shows highlights and the splash and has no insets by default', () {
       final config = ShowcaseConfig.fromUri(Uri.parse('https://example.com/'));
 
       expect(config.highlightsEnabled, isTrue);
+      expect(config.splashEnabled, isTrue);
       expect(config.insets.top, 0);
     });
 
-    test('reads highlights=off and insets=ios from the url', () {
-      final config = ShowcaseConfig.fromUri(Uri.parse('https://example.com/?highlights=off&insets=ios'));
+    test('reads highlights=off, insets=ios and splash=off from the url', () {
+      final config = ShowcaseConfig.fromUri(Uri.parse('https://example.com/?highlights=off&insets=ios&splash=off'));
 
       expect(config.highlightsEnabled, isFalse);
       expect(config.insets, iosInsets);
+      expect(config.splashEnabled, isFalse);
+    });
+  });
+
+  group('removeShowcaseSplash', () {
+    test('does nothing outside the browser', () async {
+      await expectLater(removeShowcaseSplash(), completes);
     });
   });
 }
