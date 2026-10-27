@@ -35,7 +35,7 @@ skeleton).
 
 ## Prerequisites
 
-- Flutter >=3.47.0, Dart ^3.13.0, `dcc_toolkit` >=0.1.1, the app migrated to `material_ui`
+- Flutter >=3.47.0, Dart ^3.13.0, `dcc_toolkit` >=0.1.2, the app migrated to `material_ui`
   (see `doc/migrate_to_material_ui.md`).
 - The app's screens are split into a **page** (cubit, DI, routing) and a **view** (plain widget with data and
   callbacks). The showcase only uses views. A screen without a separate view has to be split first.
@@ -54,7 +54,8 @@ skeleton).
 | `FinishPrompt` | Wrap home in it. Once the demo is finished it offers to start over |
 | `context.showOutOfScope([feature])` | Shows a "not in this demo" notice |
 | `ShowcaseShell` | For `MaterialApp.builder`: adds `insets` and shows notices above everything |
-| `ShowcaseConfig.fromUri` | Reads `?highlights=off` and `?insets=ios` from the url |
+| `ShowcaseConfig.fromUri` | Reads `?highlights=off`, `?insets=ios` and `?splash=off` from the url |
+| `removeShowcaseSplash` | Call after `runApp`: removes the `#splash` of `web/index.html` after the first frame and a `minimum` duration |
 | `ShowcaseStrings` | All texts of the kit, English by default |
 
 Behaviour worth knowing:
@@ -262,9 +263,14 @@ Future<void> main() async {
   GoogleFonts.config.allowRuntimeFetching = false; // fonts are bundled, the CSP blocks fetching
   await initializeDateFormatting();
 
-  runApp(ShowcaseApp(config: ShowcaseConfig.fromUri(kIsWeb ? Uri.base : Uri())));
+  final config = ShowcaseConfig.fromUri(kIsWeb ? Uri.base : Uri());
+  runApp(ShowcaseApp(config: config));
+  unawaited(removeShowcaseSplash(minimum: config.splashEnabled ? const Duration(seconds: 2) : Duration.zero));
 }
 ```
+
+`removeShowcaseSplash` removes the splash of `web/index.html` (step 7) once the app is drawn and at least `minimum`
+has passed since the page started loading.
 
 Dutch texts for the kit:
 
@@ -303,12 +309,24 @@ send data. Allow only the own origin:
   <meta charset="UTF-8">
   <link rel="icon" type="image/png" href="favicon.png"/>
   <title>App showcase</title>
+  <style>
+    #splash { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center;
+              background: #FFFFFF; transition: opacity 300ms; }
+    #splash img { width: 192px; }
+    #splash.splash--hidden { opacity: 0; pointer-events: none; }
+  </style>
 </head>
 <body>
+  <div id="splash"><img src="splash/logo.png" alt=""></div>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
 ```
+
+The `#splash` element is the splash of the app, shown while Flutter loads. Take the color and logo from the
+`flutter_native_splash` config of the app (copy the logo to `web/splash/`), so it looks like the app on a phone. Keep
+the `id` and the `splash--hidden` class; `removeShowcaseSplash` uses them. Keep the transition under a second. The CSP
+blocks inline scripts, so do not add any JavaScript for it.
 
 Dummy images go in `web/` (loaded same-origin) or `assets/`.
 
@@ -326,7 +344,7 @@ the highlights depend on the tab.
 ### Embedding on a website
 
 Embed the build in an iframe inside a phone frame. Use `?insets=ios` when the frame has no status bar of its own,
-`?highlights=off` for a silent version. Build with `SHOWCASE_BASE_HREF=/showcase/ just build_showcase` when it is not
+`?highlights=off` for a silent version, `?splash=off` when the website shows its own loader. Build with `SHOWCASE_BASE_HREF=/showcase/ just build_showcase` when it is not
 served from the root.
 
 ### Easter eggs and extra apps
