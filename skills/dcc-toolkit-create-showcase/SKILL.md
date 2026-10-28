@@ -1,6 +1,6 @@
 ---
 name: dcc-toolkit-create-showcase
-description: Set up a clickable web demo (showcase) of a Flutter app with the dcc_toolkit showcase kit, built from the app's real views with dummy data, highlights that explain screens, out-of-scope notices and a story that can start over. Use when creating a showcase or demo app, adding screens or explanations to an existing showcase, or embedding an app demo on a website.
+description: Set up a clickable web demo (showcase) of a Flutter app with the dcc_toolkit showcase kit, built from the app's real views with dummy data, highlights that explain screens and out-of-scope notices. Use when creating a showcase or demo app, adding screens or explanations to an existing showcase, or embedding an app demo on a website.
 metadata:
   last_modified: "2026-10-09"
 ---
@@ -46,25 +46,27 @@ skeleton).
 
 | API | Role |
 |-----|------|
-| `ShowcaseState` | Abstract `ChangeNotifier` with what every demo remembers. Extend it with the data of the app. Implement `resetData()`. Call `begin()` when a flow starts and `finish()` at the end of the story |
-| `ShowcaseScope` | `InheritedNotifier` above `MaterialApp`. Props: `state`, `strings`, `noticeBuilder`. Read with `ShowcaseScope.of<DemoState>(context, listen: false)` |
+| `ShowcaseState` | `ChangeNotifier` with what every demo remembers. Extend it with the data of the app and call `notifyListeners()` when it changes |
+| `ShowcaseScope` | `InheritedNotifier` above `MaterialApp`. Props: `state`, `strings`, `fontFamily`. Read with `ShowcaseScope.of<DemoState>(context, listen: false)` |
 | `ShowcaseNavigator<P extends Enum>` | Plain `Navigator` for the demo, put as `home` of `MaterialApp`. Props: `home`, `builder(context, page, args)`, `highlights(context, page, state)`. The browser url never changes |
 | `context.showcase` | `push(page, args:)`, `replace`, `pop`, `popToHome`, `pushOnHome` |
 | `Highlight` | One explanation: `title`, `body`, optional `target` (a `WidgetMatcher`), `padding`. `Highlight.type<T>()` matches the first widget of type `T` |
-| `FinishPrompt` | Wrap home in it. Once the demo is finished it offers to start over |
 | `context.showOutOfScope([feature])` | Shows a "not in this demo" notice |
-| `ShowcaseShell` | For `MaterialApp.builder`: adds `insets` and shows notices above everything |
-| `ShowcaseConfig.fromUri` | Reads `?highlights=off`, `?insets=ios` and `?splash=off` from the url |
+| `ShowcaseShell` | For `MaterialApp.builder`: adds the `insets` of the config and shows notices above everything |
+| `ShowcaseConfig.fromUri` | Reads `?highlights=off`, `?insets=ios`, `?splash=off` and `?tour=host` from the url |
+| `ShowcaseState.tour` | The explanation of the page on screen: `canStart`, `start()` |
 | `removeShowcaseSplash` | Call after `runApp`: removes the `#splash` of `web/index.html` after the first frame and a `minimum` duration |
 | `ShowcaseStrings` | All texts of the kit, English by default |
 
 Behaviour worth knowing:
 
-- A page explains itself **once** (per page and first highlight title). After that the explanation waits behind a
-  small info button. This survives a restart of the demo.
+- Explanations **never open by themselves**. The visitor opens them with a small info button, or with `?tour=host`
+  the website does with a button of its own (see [Embedding on a website](#embedding-on-a-website)). They start at
+  the first step every time.
+- The explanations and the notices are in the style of Dutch Coding Company, not of the app. An explanation dims
+  the app around its target and stops touches outside it. Bundle DM Sans in the showcase and pass
+  `fontFamily: 'DM Sans'` to `ShowcaseScope`.
 - A highlight whose target is not built yet waits for it, and the target is scrolled into view.
-- After `finish()`, `FinishPrompt` shows a dialog on home. "Keep looking" closes it; the next `begin()` then resets
-  the demo by itself.
 
 ## Workflow
 
@@ -116,7 +118,7 @@ run `fvm flutter pub get`.
 
 ### Step 2: DemoState
 
-The state replaces the backend. Keep the story short and decide where it ends.
+The state replaces the backend. Keep the story short.
 
 ```dart
 import 'package:dcc_toolkit/showcase.dart';
@@ -124,31 +126,27 @@ import 'package:material_ui/material_ui.dart';
 
 const _startBalance = 12.50;
 
-/// In-memory state of the demo. The story ends after a donation.
-class DemoState({super.highlightsEnabled}) extends ShowcaseState {
+/// In-memory state of the demo.
+class DemoState({super.config}) extends ShowcaseState {
   double balance = _startBalance;
 
   static DemoState of(BuildContext context, {bool listen = true}) =>
       ShowcaseScope.of<DemoState>(context, listen: listen);
 
   void scan() {
-    begin();
     balance += 0.45;
     notifyListeners();
   }
 
   void donate() {
-    begin();
     balance = 0;
-    finish(); // notifies
+    notifyListeners();
   }
-
-  @override
-  void resetData() => balance = _startBalance;
 }
 ```
 
-Call `begin()` at the start of every action, so a finished demo starts over by itself.
+There is no end to the story: the website restarts the demo by reloading it. When the app has an action that should
+start over (signing out, for example), give `DemoState` a method that puts the data back and notifies.
 
 ### Step 3: DemoPage
 
@@ -181,14 +179,12 @@ class const HomePage() extends StatelessWidget {
   Widget build(BuildContext context) {
     final demo = DemoState.of(context);
 
-    return FinishPrompt(
-      child: Scaffold(
-        body: HomeView(
-          balance: demo.balance,
-          onScanPressed: DemoState.of(context, listen: false).scan,
-          onDonatePressed: () => context.showcase.push(DemoPage.donate),
-          onPayoutPressed: () => context.showOutOfScope('Uitbetalen'),
-        ),
+    return Scaffold(
+      body: HomeView(
+        balance: demo.balance,
+        onScanPressed: DemoState.of(context, listen: false).scan,
+        onDonatePressed: () => context.showcase.push(DemoPage.donate),
+        onPayoutPressed: () => context.showOutOfScope('Uitbetalen'),
       ),
     );
   }
@@ -218,8 +214,8 @@ List<Highlight> highlightsFor(DemoPage page, DemoState demo) => switch (page) {
 
 - `Highlight.type<T>()` matches the **first** widget of that type. For a more specific match write a matcher:
   `bool _isScanButton(Widget w) => w is SButton && w.width == SDimensions.scanButtonSize;`
-- Highlights may depend on `demo` (for example a different text after the first scan). A changed first title counts
-  as a new explanation and opens again.
+- Highlights may depend on `demo` (for example a different text after the first scan). A changed first title closes
+  an open explanation.
 - Keep the texts short and in the language of the app.
 
 ### Step 6: ShowcaseApp and main
@@ -231,7 +227,7 @@ class const ShowcaseApp({required final ShowcaseConfig config, super.key}) exten
 }
 
 class _ShowcaseAppState extends State<ShowcaseApp> {
-  late final DemoState _demo = DemoState(highlightsEnabled: widget.config.highlightsEnabled);
+  late final DemoState _demo = DemoState(config: widget.config);
 
   @override
   void dispose() {
@@ -244,13 +240,14 @@ class _ShowcaseAppState extends State<ShowcaseApp> {
     return ShowcaseScope(
       state: _demo,
       strings: dutchStrings,
+      fontFamily: 'DM Sans',
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: const CoreTheme().light,
         localizationsDelegates: const [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates],
         supportedLocales: AppLocalizations.supportedLocales,
         home: DemoPage.navigator(),
-        builder: (context, child) => ShowcaseShell(insets: widget.config.insets, child: child!),
+        builder: (context, child) => ShowcaseShell(child: child!),
       ),
     );
   }
@@ -283,14 +280,9 @@ const dutchStrings = ShowcaseStrings(
   explanation: 'Uitleg',
   outOfScope: 'Dit onderdeel valt buiten deze demo.',
   featureOutOfScope: _featureOutOfScope,
-  finishTitle: 'Demo afgerond',
-  finishMessage: 'Je hebt het hele verhaal gezien. Wil je opnieuw beginnen?',
-  keepLooking: 'Blijf rondkijken',
-  startOver: 'Opnieuw beginnen',
 );
 ```
 
-Pass `noticeBuilder: (context, text) => AppSnackbar(text: text)` to `ShowcaseScope` to make notices look like the app.
 On desktop a mouse should drag-scroll like a finger: give `MaterialApp` a `scrollBehavior` that adds
 `PointerDeviceKind.mouse` to `dragDevices`.
 
@@ -314,6 +306,7 @@ send data. Allow only the own origin:
               background: #FFFFFF; transition: opacity 300ms; }
     #splash img { width: 192px; }
     #splash.splash--hidden { opacity: 0; pointer-events: none; }
+    html, body { overscroll-behavior: none; }
   </style>
 </head>
 <body>
@@ -327,6 +320,9 @@ The `#splash` element is the splash of the app, shown while Flutter loads. Take 
 `flutter_native_splash` config of the app (copy the logo to `web/splash/`), so it looks like the app on a phone. Keep
 the `id` and the `splash--hidden` class; `removeShowcaseSplash` uses them. Keep the transition under a second. The CSP
 blocks inline scripts, so do not add any JavaScript for it.
+
+`overscroll-behavior: none` keeps a scroll over the embedded demo inside it. Without it, Flutter hands every scroll it
+does not use (at the end of a list, or over a part that does not scroll) to the browser, which scrolls the website.
 
 Dummy images go in `web/` (loaded same-origin) or `assets/`.
 
@@ -346,6 +342,18 @@ the highlights depend on the tab.
 Embed the build in an iframe inside a phone frame. Use `?insets=ios` when the frame has no status bar of its own,
 `?highlights=off` for a silent version, `?splash=off` when the website shows its own loader. Build with `SHOWCASE_BASE_HREF=/showcase/ just build_showcase` when it is not
 served from the root.
+
+With `?tour=host` the website starts the explanations instead of the info button in the app. Serve the demo from the
+same origin as the page; `ShowcaseShell` then talks to it with `postMessage`:
+
+```js
+const frame = document.querySelector('iframe');
+window.addEventListener('message', (event) => {
+  if (event.source !== frame.contentWindow || event.origin !== location.origin) return;
+  if (event.data?.type === 'showcase:tour') tourButton.disabled = !event.data.canStart;
+});
+tourButton.onclick = () => frame.contentWindow.postMessage({ type: 'showcase:start-tour' }, location.origin);
+```
 
 ### Easter eggs and extra apps
 
@@ -377,21 +385,21 @@ Any widget can be a page, for example a mini game from another workspace app:
 ## Feedback Loop
 
 1. `fvm dart analyze apps/showcase` -- no issues.
-2. Unit test `DemoState`: start values, each action, `finish()`, and that `begin()` after finishing resets the data.
+2. Unit test `DemoState`: start values and each action.
 3. Widget test the story, with highlights off:
 
    ```dart
-   testWidgets('offers to start over after donating', (tester) async {
+   testWidgets('empties the balance after donating', (tester) async {
      await tester.pumpWidget(const ShowcaseApp(config: ShowcaseConfig(highlightsEnabled: false)));
      await tester.pumpAndSettle();
 
      // ... tap through the story
 
      await tester.pumpAndSettle(const Duration(seconds: 1));
-     expect(find.text(dutchStrings.finishTitle), findsOneWidget);
+     expect(find.text('€ 0,00'), findsOneWidget);
    });
    ```
 
 4. `just build_showcase` -- the web build must compile (this is where `dart:ffi` problems show up).
-5. Serve `apps/showcase/build/web` locally and click through the story in a browser: highlights open once, the ring
-   sits on the right widget, out-of-scope notices appear, and the finish dialog offers to start over.
+5. Serve `apps/showcase/build/web` locally and click through the story in a browser: the info button opens each
+   explanation, the ring and the cutout sit on the right widget, and out-of-scope notices appear.

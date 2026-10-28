@@ -2,15 +2,18 @@ import 'package:dcc_toolkit/dcc_toolkit.dart';
 import 'package:dcc_toolkit/showcase/highlight.dart';
 import 'package:dcc_toolkit/showcase/highlight_overlay.dart';
 import 'package:dcc_toolkit/showcase/showcase_colors.dart';
+import 'package:dcc_toolkit/showcase/showcase_navigator.dart';
 import 'package:dcc_toolkit/showcase/showcase_scope.dart';
 import 'package:dcc_toolkit/showcase/showcase_state.dart';
+import 'package:dcc_toolkit/showcase/showcase_tour.dart';
 import 'package:material_ui/material_ui.dart';
 
 /// Shows the [highlights] of a page on top of [child] while that page is the one on screen.
 ///
 /// The explanation is an [OverlayPortal] in the overlay of the navigator. It lies above the page, below the routes
-/// that are pushed later, and only appears once the page has settled. A page explains itself once, identified by
-/// [id]. After that the explanation waits behind a small button.
+/// that are pushed later, and only appears once the page has settled. It never opens by itself: the visitor opens
+/// it with a small button, or the page around the demo does through [ShowcaseState.tour]. It starts at the first
+/// step every time, and closes when the page leaves the screen or its content, identified by [id], changes.
 ///
 /// Put it inside the route of the page, so [ModalRoute] is the route of that page.
 class const HighlightedPage({
@@ -30,29 +33,72 @@ class _HighlightedPageState extends State<HighlightedPage> {
   final GlobalKey _contentKey = GlobalKey();
   final OverlayPortalController _portalController = OverlayPortalController();
 
+  ShowcaseState? _state;
   int _step = 0;
-  bool _isClosed = false;
-  bool _wasCurrent = false;
-  String? _highlightsId;
+  bool _isOpen = false;
+  bool _isCurrent = false;
+  bool _isOnScreen = false;
+  bool _isReportScheduled = false;
 
-  /// Opens the explanation the first time a page is shown. When the page comes back to the front, or its content
-  /// changes, it only opens again if the visitor has not seen it yet. Otherwise it waits behind a small button.
-  void _syncWithPage({required bool isCurrent, required ShowcaseState state}) {
-    if (isCurrent && (!_wasCurrent || widget.id != _highlightsId)) {
+  /// The page is current when it is the top route of its navigator and nothing covers that navigator.
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _isCurrent = (ModalRoute.of(context)?.isCurrent ?? false) && isShowcaseOnTop(context);
+    if (!_isCurrent) _isOpen = false;
+  }
+
+  @override
+  void didUpdateWidget(HighlightedPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.id != widget.id) _isOpen = false;
+  }
+
+  // Every ShowcaseState holds a TourController; only the pages may update it.
+  TourController? get _tour => _state?.tour as TourController?;
+
+  @override
+  void dispose() {
+    _tour?.hide(this);
+    super.dispose();
+  }
+
+  void _open() {
+    setState(() {
       _step = 0;
-      _isClosed = state.hasSeenHighlights(widget.id);
-      state.markHighlightsSeen(widget.id);
-    }
-    _wasCurrent = isCurrent;
-    _highlightsId = widget.id;
+      _isOpen = true;
+    });
   }
 
   void _next(int total) {
     setState(() {
       if (_step >= total - 1) {
-        _isClosed = true;
+        _isOpen = false;
       } else {
         _step++;
+      }
+    });
+  }
+
+  /// Tells the tour whether this page is on screen and open, after the frame, as listeners may rebuild.
+  ///
+  /// A page counts as on screen from the moment it is current, not only once its transition has ended.
+  /// Otherwise the tour could not start for a moment between two pages that both have an explanation, and a button
+  /// for it would flicker.
+  void _report({required bool isOnScreen}) {
+    _isOnScreen = isOnScreen;
+    if (_isReportScheduled) return;
+
+    _isReportScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _isReportScheduled = false;
+      final tour = _tour;
+      if (!mounted || tour == null) return;
+
+      if (_isOnScreen) {
+        tour.show(this, isOpen: _isOpen, start: _open);
+      } else {
+        tour.hide(this);
       }
     });
   }
@@ -66,13 +112,14 @@ class _HighlightedPageState extends State<HighlightedPage> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ShowcaseScope.of<ShowcaseState>(context);
+    final state = _state = ShowcaseScope.of<ShowcaseState>(context);
     final route = ModalRoute.of(context);
     final content = KeyedSubtree(key: _contentKey, child: widget.child);
 
-    if (!state.highlightsEnabled || widget.highlights.isEmpty || route == null) return content;
+    final hasHighlights = state.config.highlightsEnabled && widget.highlights.isNotEmpty && route != null;
+    _report(isOnScreen: hasHighlights && _isCurrent);
+    if (!hasHighlights) return content;
 
-    _syncWithPage(isCurrent: route.isCurrent, state: state);
     _showPortal();
     final step = _step.clamp(0, widget.highlights.length - 1);
 
@@ -81,13 +128,13 @@ class _HighlightedPageState extends State<HighlightedPage> {
       builder: (context, _) {
         // Compares values, because an animation only reports its new status after the last value was notified.
         final isSettled =
-            route.isCurrent && (route.animation?.value ?? 1) >= 1 && (route.secondaryAnimation?.value ?? 0) <= 0;
+            _isCurrent && (route.animation?.value ?? 1) >= 1 && (route.secondaryAnimation?.value ?? 0) <= 0;
 
         return OverlayPortal(
           controller: _portalController,
           overlayChildBuilder: (context) {
             if (!isSettled) return const SizedBox.shrink();
-            if (_isClosed) return _ReopenButton(onPressed: () => setState(() => _isClosed = false));
+            if (!_isOpen) return state.config.tourOnHost ? const SizedBox.shrink() : _OpenButton(onPressed: _open);
 
             return HighlightOverlay(
               key: ValueKey('${widget.id}:$step'),
@@ -96,7 +143,7 @@ class _HighlightedPageState extends State<HighlightedPage> {
               step: step,
               total: widget.highlights.length,
               onNext: () => _next(widget.highlights.length),
-              onClose: () => setState(() => _isClosed = true),
+              onClose: () => setState(() => _isOpen = false),
             );
           },
           child: content,
@@ -106,13 +153,12 @@ class _HighlightedPageState extends State<HighlightedPage> {
   }
 }
 
-/// Brings the explanation back after it was closed. It is small and sits on the right edge, because the top and
-/// bottom of most screens are taken by the app bar and the primary action.
-class const _ReopenButton({required final VoidCallback onPressed}) extends StatelessWidget {
+/// Opens the explanation. It is small and sits on the right edge, because the top and bottom of most screens are
+/// taken by the app bar and the primary action.
+class const _OpenButton({required final VoidCallback onPressed}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
-    final colors = ShowcaseColors.of(context);
     final strings = ShowcaseScope.stringsOf(context);
 
     return Stack(
@@ -123,15 +169,15 @@ class const _ReopenButton({required final VoidCallback onPressed}) extends State
           child: Tooltip(
             message: strings.explanation,
             child: Material(
-              color: colors.surface.withValues(alpha: 0.92),
+              color: ShowcaseColors.surface,
               elevation: 2,
-              shape: CircleBorder(side: BorderSide(color: colors.accent.withValues(alpha: 0.5))),
+              shape: const CircleBorder(side: BorderSide(color: ShowcaseColors.outline)),
               child: InkWell(
                 customBorder: const CircleBorder(),
                 onTap: onPressed,
-                child: SizedBox.square(
+                child: const SizedBox.square(
                   dimension: Sizes.px32,
-                  child: Icon(Icons.info_outline, size: Sizes.px20, color: colors.accent),
+                  child: Icon(Icons.info_outline, size: Sizes.px20, color: ShowcaseColors.onSurfaceDim),
                 ),
               ),
             ),

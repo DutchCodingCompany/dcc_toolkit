@@ -47,7 +47,7 @@ class _ShowcaseNavigatorState<P extends Enum> extends State<ShowcaseNavigator<P>
 
         final highlights = highlightsBuilder(context, page, ShowcaseScope.of<ShowcaseState>(context));
 
-        // A page explains itself once for each variant of its content, which the first title identifies.
+        // A changed first title is new content, which closes an open explanation.
         return HighlightedPage(
           id: '${page.name}:${highlights.firstOrNull?.title}',
           highlights: highlights,
@@ -61,6 +61,8 @@ class _ShowcaseNavigatorState<P extends Enum> extends State<ShowcaseNavigator<P>
   Widget build(BuildContext context) {
     return _ShowcaseNavigatorScope(
       controller: ShowcaseNavigation._(_navigatorKey, (page, args) => _route(page as P, args)),
+      // Sheets and dialogs of the app often open in the root navigator, above this whole navigator.
+      isOnTop: ModalRoute.of(context)?.isCurrent ?? true,
       child: Navigator(
         key: _navigatorKey,
         onGenerateInitialRoutes: (_, _) => [_route(widget.home, null)],
@@ -102,11 +104,19 @@ class ShowcaseNavigation._(
       _navigator.pushAndRemoveUntil(_route(page, args), (route) => route.isFirst);
 }
 
-class const _ShowcaseNavigatorScope({required final ShowcaseNavigation controller, required super.child})
-    extends InheritedWidget {
+class const _ShowcaseNavigatorScope({
+  required final ShowcaseNavigation controller,
+  required final bool isOnTop,
+  required super.child,
+}) extends InheritedWidget {
   @override
-  bool updateShouldNotify(_ShowcaseNavigatorScope oldWidget) => false;
+  bool updateShouldNotify(_ShowcaseNavigatorScope oldWidget) => isOnTop != oldWidget.isOnTop;
 }
+
+/// Whether nothing covers the navigator of the demo, such as a sheet in the root navigator. True outside a
+/// [ShowcaseNavigator]. Not exported: the pages use it to tell whether they are on screen.
+bool isShowcaseOnTop(BuildContext context) =>
+    context.dependOnInheritedWidgetOfExactType<_ShowcaseNavigatorScope>()?.isOnTop ?? true;
 
 /// Gives access to the navigation of the demo.
 extension ShowcaseNavigationX on BuildContext {
