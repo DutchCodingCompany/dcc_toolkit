@@ -8,7 +8,7 @@ class const ShowcaseStrings({
   /// Moves the last highlight of a page away.
   final String done = 'Done',
 
-  /// Tooltip of the button that brings back an explanation that was closed.
+  /// Tooltip of the button that opens the explanation of a page.
   final String explanation = 'Explanation',
 
   /// Notice for a part of the app that is not in the demo.
@@ -16,10 +16,6 @@ class const ShowcaseStrings({
 
   /// Notice for a named part of the app that is not in the demo.
   final String Function(String feature) featureOutOfScope = _featureOutOfScope,
-  final String finishTitle = 'Demo finished',
-  final String finishMessage = 'You have seen the whole story. Do you want to start over?',
-  final String keepLooking = 'Keep looking around',
-  final String startOver = 'Start over',
 }) {
   /// Creates a [ShowcaseStrings].
   this;

@@ -2,8 +2,6 @@ import 'package:dcc_toolkit/showcase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 
-import 'test_state.dart';
-
 enum _Page { home, first, second, end }
 
 Widget _pageFor(BuildContext context, _Page page, Object? args) => Scaffold(
@@ -16,14 +14,23 @@ Widget _pageFor(BuildContext context, _Page page, Object? args) => Scaffold(
       TextButton(onPressed: () => context.showcase.pushOnHome(_Page.end), child: const Text('end')),
       TextButton(onPressed: context.showcase.popToHome, child: const Text('home')),
       TextButton(onPressed: () => Navigator.maybePop(context), child: const Text('back')),
+      TextButton(
+        onPressed: () => showModalBottomSheet<void>(
+          context: context,
+          useRootNavigator: true,
+          builder: (_) => const SizedBox(height: 200, child: Text('Sheet')),
+        ),
+        child: const Text('sheet'),
+      ),
     ],
   ),
 );
 
-Future<void> _pumpApp(WidgetTester tester, {ShowcaseHighlightsBuilder<_Page>? highlights}) async {
+Future<ShowcaseState> _pumpApp(WidgetTester tester, {ShowcaseHighlightsBuilder<_Page>? highlights}) async {
+  final state = ShowcaseState();
   await tester.pumpWidget(
     ShowcaseScope(
-      state: TestState(),
+      state: state,
       child: MaterialApp(
         localizationsDelegates: GlobalMaterialLocalizations.delegates,
         home: ShowcaseNavigator<_Page>(home: _Page.home, builder: _pageFor, highlights: highlights),
@@ -31,9 +38,11 @@ Future<void> _pumpApp(WidgetTester tester, {ShowcaseHighlightsBuilder<_Page>? hi
     ),
   );
   await _settle(tester);
+
+  return state;
 }
 
-/// Highlights keep animating, so waiting for the frames to settle would take forever.
+/// An open highlight follows its target on every frame, so waiting for the frames to settle would take forever.
 Future<void> _settle(WidgetTester tester) async {
   await tester.pump();
   await tester.pump(const Duration(milliseconds: 600));
@@ -105,15 +114,41 @@ void main() {
   });
 
   testWidgets('explains only the page on top', (tester) async {
-    await _pumpApp(
+    final state = await _pumpApp(
       tester,
       highlights: (context, page, state) => [Highlight(title: 'About ${page.name}', body: 'Explanation')],
     );
+    state.tour.start();
+    await _settle(tester);
     expect(find.text('About home'), findsOneWidget);
 
+    // Without a target the whole page is dimmed, and so out of reach until the explanation is closed.
+    await _tap(tester, 'Done');
     await _tap(tester, 'push first');
+    state.tour.start();
+    await _settle(tester);
 
     expect(find.text('About first'), findsOneWidget);
     expect(find.text('About home'), findsNothing);
+  });
+
+  testWidgets('cannot start the explanation below a sheet in the root navigator', (tester) async {
+    final state = await _pumpApp(
+      tester,
+      highlights: (context, page, state) => [Highlight(title: 'About ${page.name}', body: 'Explanation')],
+    );
+
+    expect(state.tour.canStart, isTrue);
+
+    await _tap(tester, 'sheet');
+
+    expect(find.text('Sheet'), findsOneWidget);
+    expect(state.tour.canStart, isFalse);
+
+    await tester.tapAt(const Offset(10, 10));
+    await _settle(tester);
+
+    expect(find.text('Sheet'), findsNothing);
+    expect(state.tour.canStart, isTrue);
   });
 }

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.0
+* **Breaking:** Showcase explanations no longer open by themselves. The visitor opens them with the info button, or the website does with `ShowcaseState.tour`. `hasSeenHighlights` and `markHighlightsSeen` are removed
+* **Breaking:** Showcase explanations follow the style of Dutch Coding Company instead of the theme of the app, dim the app around the target with a cutout and stop touches outside it. Pass `fontFamily` to `ShowcaseScope` for DM Sans
+* **Breaking:** Showcase notices follow that style as well. `ShowcaseScope.noticeBuilder` is removed
+* **Breaking:** Removed the end of the showcase story: `FinishPrompt`, `ShowcaseState.finish`, `begin`, `reset`, `resetData`, `isFinished`, `takeFinishPrompt` and the strings of the finish dialog. `ShowcaseState` is no longer abstract; a demo that should start over resets its own data
+* **Breaking:** `ShowcaseState` takes the whole `ShowcaseConfig` (`DemoState(config: config)`) instead of `highlightsEnabled`, and `ShowcaseShell` reads its insets from it
+* Added the `?tour=host` url parameter and `ShowcaseConfig.tourOnHost`: the page around the demo starts the explanations through `postMessage`, see [doc/showcase.md](doc/showcase.md)
+* Documented `overscroll-behavior: none` in `web/index.html`, so scrolling over an embedded showcase never scrolls the website
+
 ## 0.1.2
 * Added `removeShowcaseSplash` to show the splash of the app from `web/index.html` while the showcase loads, for at least a fixed duration, and the `?splash=off` url parameter
 

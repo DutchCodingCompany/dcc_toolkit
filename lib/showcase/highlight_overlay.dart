@@ -2,22 +2,22 @@ import 'dart:math' as math;
 
 import 'package:dcc_toolkit/dcc_toolkit.dart';
 import 'package:dcc_toolkit/showcase/highlight.dart';
+import 'package:dcc_toolkit/showcase/showcase_card.dart';
 import 'package:dcc_toolkit/showcase/showcase_colors.dart';
 import 'package:dcc_toolkit/showcase/showcase_scope.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:material_ui/material_ui.dart';
 
-const _spotlightRadius = Radius.circular(Sizes.px16);
+const _spotlightRadius = Radius.circular(16 / figmaScale);
+const double _ringWidth = 2.7 / figmaScale;
 const double _tooltipGap = Sizes.px10;
-const double _screenMargin = Sizes.px16;
-const _cardMaxWidth = 320.0;
 const _maxScrollAttempts = 2;
 
 /// Room the card needs at least below the target before it moves above it.
 const _minCardHeight = 120.0;
 
-/// Marks the [Highlight.target] with a pulsing ring and explains it in a small card next to it. Nothing is
-/// dimmed and touches pass through everything but the card, so the visitor can keep using the app.
+/// Dims the app around the [Highlight.target], marks it with a ring and explains it in a card next to it. Touches
+/// on the dimmed part are stopped, while the target itself can still be used.
 class const HighlightOverlay({
   required final GlobalKey contentKey,
   required final Highlight highlight,
@@ -34,9 +34,8 @@ class const HighlightOverlay({
   State<HighlightOverlay> createState() => _HighlightOverlayState();
 }
 
-class _HighlightOverlayState extends State<HighlightOverlay> with TickerProviderStateMixin {
+class _HighlightOverlayState extends State<HighlightOverlay> with SingleTickerProviderStateMixin {
   late final Ticker _ticker;
-  late final AnimationController _pulse;
 
   Element? _targetElement;
   Rect? _targetRect;
@@ -46,13 +45,11 @@ class _HighlightOverlayState extends State<HighlightOverlay> with TickerProvider
   void initState() {
     super.initState();
     _ticker = createTicker((_) => _track())..start();
-    _pulse = AnimationController(vsync: this, duration: const Duration(milliseconds: 1400))..repeat(reverse: true);
   }
 
   @override
   void dispose() {
     _ticker.dispose();
-    _pulse.dispose();
     super.dispose();
   }
 
@@ -147,27 +144,21 @@ class _HighlightOverlayState extends State<HighlightOverlay> with TickerProvider
 
         return Stack(
           children: [
-            if (spotlight != null)
-              Positioned.fill(
-                child: IgnorePointer(
-                  child: CustomPaint(painter: _RingPainter(spotlight, _pulse, ShowcaseColors.of(context).accent)),
-                ),
+            Positioned.fill(
+              child: CustomPaint(
+                painter: _ScrimPainter(spotlight == null ? null : RRect.fromRectAndRadius(spotlight, _spotlightRadius)),
               ),
+            ),
             _positioned(
               spotlight: spotlight,
               size: size,
               safePadding: padding,
-              child: Align(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: _cardMaxWidth),
-                  child: _HighlightCard(
-                    highlight: highlight,
-                    step: widget.step,
-                    total: widget.total,
-                    onNext: widget.onNext,
-                    onClose: widget.onClose,
-                  ),
-                ),
+              child: _HighlightCard(
+                highlight: highlight,
+                step: widget.step,
+                total: widget.total,
+                onNext: widget.onNext,
+                onClose: widget.onClose,
               ),
             ),
           ],
@@ -183,13 +174,13 @@ class _HighlightOverlayState extends State<HighlightOverlay> with TickerProvider
     required EdgeInsets safePadding,
     required Widget child,
   }) {
-    final fallbackBottom = safePadding.bottom + _screenMargin;
+    final fallbackBottom = safePadding.bottom + cardMargin;
     // Without a target the card goes to the top: the bottom of a screen usually holds its primary action.
     if (spotlight == null) {
       return Positioned(
-        left: _screenMargin,
-        right: _screenMargin,
-        top: safePadding.top + _screenMargin + kToolbarHeight,
+        left: cardMargin,
+        right: cardMargin,
+        top: safePadding.top + cardMargin + kToolbarHeight,
         child: child,
       );
     }
@@ -199,51 +190,57 @@ class _HighlightOverlayState extends State<HighlightOverlay> with TickerProvider
 
     if (spaceBelow >= spaceAbove) {
       return Positioned(
-        left: _screenMargin,
-        right: _screenMargin,
-        top: math.min(
-          spotlight.bottom + _tooltipGap,
-          size.height - safePadding.bottom - _screenMargin - _minCardHeight,
-        ),
+        left: cardMargin,
+        right: cardMargin,
+        top: math.min(spotlight.bottom + _tooltipGap, size.height - safePadding.bottom - cardMargin - _minCardHeight),
         child: child,
       );
     }
 
     return Positioned(
-      left: _screenMargin,
-      right: _screenMargin,
+      left: cardMargin,
+      right: cardMargin,
       bottom: math.max(size.height - spotlight.top + _tooltipGap, fallbackBottom),
       child: child,
     );
   }
 }
 
-class _RingPainter(final Rect spotlight, final Animation<double> pulse, final Color color) extends CustomPainter {
-  this : super(repaint: pulse);
-
+/// Dims everything but the [spotlight] and draws the ring inside its edge. Being hit outside the spotlight is what
+/// keeps touches there from reaching the app.
+class _ScrimPainter(final RRect? spotlight) extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final ring = RRect.fromRectAndRadius(spotlight.inflate(pulse.value * 2), _spotlightRadius);
+    final spotlight = this.spotlight;
+    final scrim = Paint()..color = ShowcaseColors.scrim;
+    if (spotlight == null) {
+      canvas.drawRect(Offset.zero & size, scrim);
+
+      return;
+    }
 
     canvas
-      ..drawRRect(
-        ring.inflate(3),
-        Paint()
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 6
-          ..color = color.withValues(alpha: 0.12 + 0.18 * pulse.value),
+      ..drawPath(
+        Path()
+          ..fillType = PathFillType.evenOdd
+          ..addRect(Offset.zero & size)
+          ..addRRect(spotlight),
+        scrim,
       )
       ..drawRRect(
-        ring,
+        spotlight.deflate(_ringWidth / 2),
         Paint()
           ..style = PaintingStyle.stroke
-          ..strokeWidth = 2
-          ..color = color.withValues(alpha: 0.9),
+          ..strokeWidth = _ringWidth
+          ..color = ShowcaseColors.onSurface,
       );
   }
 
   @override
-  bool shouldRepaint(_RingPainter oldDelegate) => oldDelegate.spotlight != spotlight || oldDelegate.color != color;
+  bool hitTest(Offset position) => !(spotlight?.contains(position) ?? false);
+
+  @override
+  bool shouldRepaint(_ScrimPainter oldDelegate) => oldDelegate.spotlight != spotlight;
 }
 
 class const _HighlightCard({
@@ -255,79 +252,44 @@ class const _HighlightCard({
 }) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final colors = ShowcaseColors.of(context);
-    final textTheme = Theme.of(context).textTheme;
     final strings = ShowcaseScope.stringsOf(context);
     final isLast = step == total - 1;
 
-    return Material(
-      color: colors.surface,
-      elevation: 3,
-      borderRadius: Radiuses.circular10,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(Sizes.px12, Sizes.px10, Sizes.px8, Sizes.px8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: Sizes.px4,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(highlight.title, style: textTheme.titleSmall?.copyWith(color: colors.onSurface)),
-                ),
-                InkResponse(
-                  onTap: onClose,
-                  radius: Sizes.px16,
-                  child: Padding(
-                    padding: Paddings.all4,
-                    child: Icon(Icons.close, size: Sizes.px16, color: colors.onSurface),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: Paddings.right4,
-              child: Text(highlight.body, style: textTheme.bodySmall?.copyWith(color: colors.onSurface)),
-            ),
-            Row(
-              children: [
-                if (total > 1) _StepDots(step: step, total: total, color: colors.accent),
-                const Spacer(),
-                InkWell(
-                  borderRadius: Radiuses.circular8,
-                  onTap: onNext,
-                  child: Padding(
-                    padding: Paddings.horizontal8 + Paddings.vertical4,
-                    child: Text(
-                      isLast ? strings.done : strings.next,
-                      style: textTheme.labelMedium?.copyWith(color: colors.accent, fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+    return ShowcaseCard(
+      title: highlight.title,
+      body: highlight.body,
+      onClose: onClose,
+      actions: Row(
+        spacing: 16 / figmaScale,
+        children: [
+          Expanded(
+            child: total > 1 ? _StepDots(step: step, total: total) : const SizedBox.shrink(),
+          ),
+          ShowcaseButton(
+            label: isLast ? strings.done : strings.next,
+            trailingIcon: isLast ? null : Icons.chevron_right,
+            onPressed: onNext,
+          ),
+        ],
       ),
     );
   }
 }
 
-class const _StepDots({required final int step, required final int total, required final Color color})
-    extends StatelessWidget {
+class const _StepDots({required final int step, required final int total}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      spacing: Sizes.px4,
+      spacing: 4 / figmaScale,
       children: [
         for (var index = 0; index < total; index++)
           DecoratedBox(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: index == step ? color : color.withValues(alpha: 0.25),
+              color: index == step ? null : ShowcaseColors.subtle,
+              gradient: index == step ? ShowcaseColors.accent : null,
             ),
-            child: const SizedBox.square(dimension: Sizes.px6),
+            child: const SizedBox.square(dimension: 6 / figmaScale),
           ),
       ],
     );

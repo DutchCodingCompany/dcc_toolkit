@@ -1,5 +1,4 @@
-import 'package:dcc_toolkit/dcc_toolkit.dart';
-import 'package:dcc_toolkit/showcase/showcase_colors.dart';
+import 'package:dcc_toolkit/showcase/showcase_card.dart';
 import 'package:dcc_toolkit/showcase/showcase_scope.dart';
 import 'package:dcc_toolkit/showcase/showcase_state.dart';
 import 'package:material_ui/material_ui.dart';
@@ -14,14 +13,12 @@ class const ShowcaseNotice({super.key}) extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final builder = ShowcaseScope.noticeBuilderOf(context);
-
     return IgnorePointer(
       child: SafeArea(
         child: Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
-            padding: Paddings.horizontal16 + const EdgeInsets.only(bottom: _bottomOffset),
+            padding: const EdgeInsets.only(left: cardMargin, right: cardMargin, bottom: _bottomOffset),
             child: ValueListenableBuilder(
               valueListenable: ShowcaseScope.of<ShowcaseState>(context, listen: false).notice,
               builder: (context, text, _) => AnimatedSwitcher(
@@ -30,28 +27,12 @@ class const ShowcaseNotice({super.key}) extends StatelessWidget {
                     ? const SizedBox.shrink()
                     : KeyedSubtree(
                         key: ValueKey(text),
-                        child: builder?.call(context, text) ?? _DefaultNotice(text: text),
+                        child: ShowcaseCard(body: text),
                       ),
               ),
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class const _DefaultNotice({required final String text}) extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final colors = ShowcaseColors.of(context);
-
-    return Material(
-      color: colors.onSurface,
-      borderRadius: Radiuses.circular10,
-      child: Padding(
-        padding: Paddings.horizontal16 + Paddings.vertical12,
-        child: Text(text, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: colors.surface)),
       ),
     );
   }

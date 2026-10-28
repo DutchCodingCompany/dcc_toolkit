@@ -8,8 +8,9 @@ class const ShowcaseScope({
   required super.child,
   final ShowcaseStrings strings = const ShowcaseStrings(),
 
-  /// Builds the notice of [ShowcaseState.showNotice], for when it has to look like the rest of the app.
-  final Widget Function(BuildContext context, String text)? noticeBuilder,
+  /// The font of the explanations and notices, which follow the style of Dutch Coding Company: DM Sans, declared
+  /// in the pubspec of the demo. Without it they use the font of the app.
+  final String? fontFamily,
   super.key,
 }) extends InheritedNotifier<ShowcaseState> {
   /// Creates a [ShowcaseScope].
@@ -22,9 +23,8 @@ class const ShowcaseScope({
   /// The texts of the kit.
   static ShowcaseStrings stringsOf(BuildContext context) => _scopeOf(context, listen: false).strings;
 
-  /// The custom notice builder, if any.
-  static Widget Function(BuildContext context, String text)? noticeBuilderOf(BuildContext context) =>
-      _scopeOf(context, listen: false).noticeBuilder;
+  /// The font of the explanations, if any.
+  static String? fontFamilyOf(BuildContext context) => _scopeOf(context, listen: false).fontFamily;
 
   static ShowcaseScope _scopeOf(BuildContext context, {required bool listen}) {
     final scope = listen
